@@ -17,8 +17,12 @@
 
 
 
+  <meta name="description" content="Cartogram"/>
 
 
+
+
+  <meta name="keywords" content="GIS, 可视化, 磊哥的小书桌" />
 
 
 
@@ -38,7 +42,7 @@
 
 
 
-<link rel="canonical" href="https://geolibra.github.io/archives/2018/page/3/"/>
+<link rel="canonical" href="https://geolibra.github.io/2018/12/02/Cartogram/"/>
 
 
 
@@ -100,11 +104,7 @@ var _hmt = _hmt || [];
   window.config = {"title":"磊哥的小书桌","subtitle":null,"description":null,"author":"hgis","language":null,"timezone":null,"url":"https://geolibra.github.io","root":"/","permalink":":year/:month/:day/:title/","permalink_defaults":null,"source_dir":"source","public_dir":"public","tag_dir":"tags","archive_dir":"archives","category_dir":"categories","code_dir":"downloads/code","i18n_dir":":lang","skip_render":null,"new_post_name":":title.md","default_layout":"post","titlecase":false,"external_link":true,"filename_case":0,"render_drafts":false,"post_asset_folder":true,"relative_link":false,"future":true,"highlight":{"enable":true,"auto_detect":false,"line_number":true,"tab_replace":null,"first_line_number":"always1"},"default_category":"uncategorized","category_map":null,"tag_map":null,"date_format":"YYYY-MM-DD","time_format":"HH:mm:ss","per_page":10,"pagination_dir":"page","theme":"even","deploy":{"type":"git","repository":"git@github.com:GeoLibra/GeoLibra.github.io.git","branch":"master"},"ignore":[],"keywords":null,"email":"674530915@qq.com","index_generator":{"per_page":10,"order_by":"-date","path":""},"tag_cloud":{"textFont":"Trebuchet MS, Helvetica","textColour":"\\#eea849","textHeight":25,"outlineColour":"\\#E2E1D1"},"archive_generator":{"per_page":10,"yearly":true,"monthly":true,"daily":false},"category_generator":{"per_page":10},"tag_generator":{"per_page":10},"marked":{"gfm":true,"pedantic":false,"sanitize":false,"tables":true,"breaks":true,"smartLists":true,"smartypants":true,"modifyAnchors":"","autolink":true},"server":{"port":4000,"log":false,"compress":false,"header":true},"since":2018,"favicon":"/favicon.ico","rss":"default","menu":{"Home":"/","Archives":"/archives/","Tags":"/tags","Categories":"/categories","About":"/about"},"color":"default","mode":"default","toc":true,"fancybox":true,"pjax":true,"copyright":{"enable":true,"license":"<a rel=\"license\" href=\"http://creativecommons.org/licenses/by-nc/4.0/\" target=\"_blank\">知识共享署名-非商业性使用 4.0 国际许可协议</a>"},"reward":{"enable":false,"qrCode":{"wechat":null,"alipay":null}},"social":{"email":"674530915@qq.com","stack-overflow":null,"twitter":null,"facebook":null,"linkedin":null,"google":null,"github":"https://github.com/GeoLibra","weibo":null,"zhihu":null,"douban":null,"pocket":null,"tumblr":null,"instagram":null},"leancloud":{"app_id":"ro3TOe5F5DDemxHnSoYVCHli-gzGzoHsz","app_key":"IHyD5EfrggPl57FnwtBEeH0W"},"baidu_analytics":"97659041a2db55d3eb7266f53be7c071","baidu_verification":null,"google_analytics":null,"google_verification":null,"disqus_shortname":null,"changyan":{"appid":null,"appkey":null},"livere_datauid":null,"counter":true,"version":"2.10.1"};
 </script>
 
-    <title>
-  
-    归档 - 磊哥的小书桌
-  
-</title>
+    <title> Cartogram - 磊哥的小书桌 </title>
   </head>
 
   <body><div id="mobile-navbar" class="mobile-navbar">
@@ -234,241 +234,117 @@ var _hmt = _hmt || [];
           <div id="content" class="content">
             
   
-  
-  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          Cartogram
+        
+      </h1>
 
-  <section id="archive" class="archive">
+      <div class="post-meta">
+        <span class="post-time">
+          2018-12-02
+        </span>
+        
+          <span class="post-category">
+            
+              <a href="/categories/可视化/">可视化</a>
+            
+          </span>
+        
+        
+        <span class="post-visits"
+             data-url="/2018/12/02/Cartogram/"
+             data-title="Cartogram">
+          阅读次数 0
+        </span>
+        
+      </div>
+    </header>
+
     
+    
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#简介"><span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用QGIS实现Cartogram"><span class="toc-text">使用QGIS实现Cartogram</span></a></li></ol>
+    </div>
+  </div>
+
+
+
+    <div class="post-content">
+      
+        <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>法国工程师Charles Joseph Minard于1851年发布名为”Cartpgrammes a foyer diagraphiques”的系列地图被认为是”Cartogram”一词的起源。与传统的地图不同，Cartogram以地图的形式表达空间数据的属性信息（如人口、GDP等）而非几何信息（如面积和距离）。由于属性信息和几何信息的数值并不相同，因此，Cartogram相对于传统地图会发生扭曲。Cartogram常见的是两种是区域和距离制图。<br><a id="more"></a></p>
+<h2 id="使用QGIS实现Cartogram"><a href="#使用QGIS实现Cartogram" class="headerlink" title="使用QGIS实现Cartogram"></a>使用QGIS实现Cartogram</h2><p>下载Cartogram插件，利用QGIS制作2017年湖北省各地区GDP的Cartogram图。<br><img src="/2018/12/02/Cartogram/hb.png" title="湖北省GDP"></p>
+
+      
+    </div>
 
     
       
-        
-        
+      
 
+  <div class="post-copyright">
+    <p class="copyright-item">
+      <span>原文作者: </span>
+      <a href="https://geolibra.github.io">hgis</a>
+    </p>
+    <p class="copyright-item">
+      <span>原文链接: </span>
+      <a href="https://geolibra.github.io/2018/12/02/Cartogram/">https://geolibra.github.io/2018/12/02/Cartogram/</a>
+    </p>
+    <p class="copyright-item">
+      <span>许可协议: </span>
+      
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>
+    </p>
+  </div>
+
+
+
+      
+      
+    
+
+    
+      <footer class="post-footer">
         
-          
-          <div class="collection-title">
-            <h2 class="archive-year">2018</h2>
+          <div class="post-tags">
+            
+              <a href="/tags/GIS/">GIS</a>
+            
+              <a href="/tags/可视化/">可视化</a>
+            
           </div>
         
-      
-
-      <div class="archive-post">
-        <span class="archive-post-time">
-          
-            10-20
-          
-        </span>
-        <span class="archive-post-title">
-          <a href="/2018/10/20/nginx-实战/" class="archive-post-link">
-            nginx 实战
-          </a>
-        </span>
-      </div>
-    
-      
         
         
-
-        
-      
-
-      <div class="archive-post">
-        <span class="archive-post-time">
-          
-            10-20
-          
-        </span>
-        <span class="archive-post-title">
-          <a href="/2018/10/20/常用命令/" class="archive-post-link">
-            常用命令
-          </a>
-        </span>
-      </div>
-    
-      
-        
-        
-
-        
-      
-
-      <div class="archive-post">
-        <span class="archive-post-time">
-          
-            10-19
-          
-        </span>
-        <span class="archive-post-title">
-          <a href="/2018/10/19/MNIST数字识别/" class="archive-post-link">
-            MNIST数字识别
-          </a>
-        </span>
-      </div>
-    
-      
-        
-        
-
-        
-      
-
-      <div class="archive-post">
-        <span class="archive-post-time">
-          
-            10-14
-          
-        </span>
-        <span class="archive-post-title">
-          <a href="/2018/10/14/判断点与多边形的关系/" class="archive-post-link">
-            判断点与多边形的关系
-          </a>
-        </span>
-      </div>
-    
-      
-        
-        
-
-        
-      
-
-      <div class="archive-post">
-        <span class="archive-post-time">
-          
-            10-11
-          
-        </span>
-        <span class="archive-post-title">
-          <a href="/2018/10/11/搭建神经网络的八股/" class="archive-post-link">
-            搭建神经网络的八股
-          </a>
-        </span>
-      </div>
-    
-      
-        
-        
-
-        
-      
-
-      <div class="archive-post">
-        <span class="archive-post-time">
-          
-            09-28
-          
-        </span>
-        <span class="archive-post-title">
-          <a href="/2018/09/28/Python3安装Scrapy/" class="archive-post-link">
-            Python3安装Scrapy
-          </a>
-        </span>
-      </div>
-    
-      
-        
-        
-
-        
-      
-
-      <div class="archive-post">
-        <span class="archive-post-time">
-          
-            09-26
-          
-        </span>
-        <span class="archive-post-title">
-          <a href="/2018/09/26/Tensorflow笔记/" class="archive-post-link">
-            Tensorflow笔记
-          </a>
-        </span>
-      </div>
-    
-      
-        
-        
-
-        
-      
-
-      <div class="archive-post">
-        <span class="archive-post-time">
-          
-            09-21
-          
-        </span>
-        <span class="archive-post-title">
-          <a href="/2018/09/21/Google-Develope-Days-2018/" class="archive-post-link">
-            Google Develope Days 2018
-          </a>
-        </span>
-      </div>
-    
-      
-        
-        
-
-        
-      
-
-      <div class="archive-post">
-        <span class="archive-post-time">
-          
-            09-18
-          
-        </span>
-        <span class="archive-post-title">
-          <a href="/2018/09/18/Ubuntu下Python绘图中文显示乱码/" class="archive-post-link">
-            Ubuntu下Python绘图中文显示乱码
-          </a>
-        </span>
-      </div>
-    
-      
-        
-        
-
-        
-      
-
-      <div class="archive-post">
-        <span class="archive-post-time">
-          
-            09-17
-          
-        </span>
-        <span class="archive-post-title">
-          <a href="/2018/09/17/Ubuntu-18-04-搭建Tensorflow开发环境/" class="archive-post-link">
-            Ubuntu 18.04 搭建Tensorflow开发环境
-          </a>
-        </span>
-      </div>
-    
-  </section>
-
-  
-  <nav class="pagination">
-    
-      <a class="prev" href="/archives/2018/page/2/">
-        <i class="iconfont icon-left"></i>
-        <span class="prev-text">上一页</span>
-      </a>
+  <nav class="post-nav">
     
     
-      <a class="next" href="/archives/2018/page/4/">
-        <span class="next-text">下一页</span>
+      <a class="next" href="/2018/12/01/用Python进行卫星影像分析/">
+        <span class="next-text nav-default">用Python进行卫星影像分析</span>
+        <span class="prev-text nav-mobile">下一篇</span>
         <i class="iconfont icon-right"></i>
       </a>
     
   </nav>
 
 
+      </footer>
+    
+
+  </article>
 
 
           </div>
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
       </main>
@@ -551,6 +427,11 @@ var _hmt = _hmt || [];
     </div>
 
     
+  
+  
+
+  
+
 
 
     
