@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+  <meta name="description" content="Caffe 基本介绍"/>
+
+
+
+
+  <meta name="keywords" content="Caffe, 磊哥的小书桌" />
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/default" title="磊哥的小书桌">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.10.1" />
+
+
+
+<link rel="canonical" href="https://geolibra.github.io/2018/11/22/Caffe-基本介绍/"/>
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css" />
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css" />
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.10.1" />
+
+
+
+  <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?97659041a2db55d3eb7266f53be7c071";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.1.1/av-min.js"></script>
+  <script id="leancloud">
+    AV.init({
+      appId: "ro3TOe5F5DDemxHnSoYVCHli-gzGzoHsz",
+      appKey: "IHyD5EfrggPl57FnwtBEeH0W"
+    });
+  </script>
+
+
+
+
+<script>
+  window.config = {"title":"磊哥的小书桌","subtitle":null,"description":null,"author":"hgis","language":null,"timezone":null,"url":"https://geolibra.github.io","root":"/","permalink":":year/:month/:day/:title/","permalink_defaults":null,"source_dir":"source","public_dir":"public","tag_dir":"tags","archive_dir":"archives","category_dir":"categories","code_dir":"downloads/code","i18n_dir":":lang","skip_render":null,"new_post_name":":title.md","default_layout":"post","titlecase":false,"external_link":true,"filename_case":0,"render_drafts":false,"post_asset_folder":true,"relative_link":false,"future":true,"highlight":{"enable":true,"auto_detect":false,"line_number":true,"tab_replace":null,"first_line_number":"always1"},"default_category":"uncategorized","category_map":null,"tag_map":null,"date_format":"YYYY-MM-DD","time_format":"HH:mm:ss","per_page":10,"pagination_dir":"page","theme":"even","deploy":{"type":"git","repository":"git@github.com:GeoLibra/GeoLibra.github.io.git","branch":"master"},"ignore":[],"keywords":null,"email":"674530915@qq.com","index_generator":{"per_page":10,"order_by":"-date","path":""},"tag_cloud":{"textFont":"Trebuchet MS, Helvetica","textColour":"\\#eea849","textHeight":25,"outlineColour":"\\#E2E1D1"},"archive_generator":{"per_page":10,"yearly":true,"monthly":true,"daily":false},"category_generator":{"per_page":10},"tag_generator":{"per_page":10},"marked":{"gfm":true,"pedantic":false,"sanitize":false,"tables":true,"breaks":true,"smartLists":true,"smartypants":true,"modifyAnchors":"","autolink":true},"server":{"port":4000,"log":false,"compress":false,"header":true},"since":2018,"favicon":"/favicon.ico","rss":"default","menu":{"Home":"/","Archives":"/archives/","Tags":"/tags","Categories":"/categories","About":"/about"},"color":"default","mode":"default","toc":true,"fancybox":true,"pjax":true,"copyright":{"enable":true,"license":"<a rel=\"license\" href=\"http://creativecommons.org/licenses/by-nc/4.0/\" target=\"_blank\">知识共享署名-非商业性使用 4.0 国际许可协议</a>"},"reward":{"enable":false,"qrCode":{"wechat":null,"alipay":null}},"social":{"email":"674530915@qq.com","stack-overflow":null,"twitter":null,"facebook":null,"linkedin":null,"google":null,"github":"https://github.com/GeoLibra","weibo":null,"zhihu":null,"douban":null,"pocket":null,"tumblr":null,"instagram":null},"leancloud":{"app_id":"ro3TOe5F5DDemxHnSoYVCHli-gzGzoHsz","app_key":"IHyD5EfrggPl57FnwtBEeH0W"},"baidu_analytics":"97659041a2db55d3eb7266f53be7c071","baidu_verification":null,"google_analytics":null,"google_verification":null,"disqus_shortname":null,"changyan":{"appid":null,"appkey":null},"livere_datauid":null,"counter":true,"version":"2.10.1"};
+</script>
+
+    <title> Caffe 基本介绍 - 磊哥的小书桌 </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">磊哥的小书桌</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            首页
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            归档
+          
+        </li>
+      </a>
+    
+      <a href="/tags">
+        <li class="mobile-menu-item">
+          
+          
+            标签
+          
+        </li>
+      </a>
+    
+      <a href="/categories">
+        <li class="mobile-menu-item">
+          
+          
+            分类
+          
+        </li>
+      </a>
+    
+      <a href="/about">
+        <li class="mobile-menu-item">
+          
+          
+            关于
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">磊哥的小书桌</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/tags">
+            
+            
+              标签
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/categories">
+            
+            
+              分类
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            
+            
+              关于
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          Caffe 基本介绍
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2018-11-22
+        </span>
+        
+          <span class="post-category">
+            
+              <a href="/categories/深度学习/">深度学习</a>
+            
+          </span>
+        
+        
+        <span class="post-visits"
+             data-url="/2018/11/22/Caffe-基本介绍/"
+             data-title="Caffe 基本介绍">
+          阅读次数 0
+        </span>
+        
+      </div>
+    </header>
+
+    
+    
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Caffe基本概念"><span class="toc-text">Caffe基本概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Blob"><span class="toc-text">Blob</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Layer"><span class="toc-text">Layer</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Net"><span class="toc-text">Net</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Solver"><span class="toc-text">Solver</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#caffe-model"><span class="toc-text">caffe model</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Caffe源码解读"><span class="toc-text">Caffe源码解读</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Caffe配置文件"><span class="toc-text">Caffe配置文件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#solver-prototxt"><span class="toc-text">solver.prototxt</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#train-val-prototxt"><span class="toc-text">train_val.prototxt</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#deploy-prototxt"><span class="toc-text">deploy.prototxt</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Caffe可视化工具"><span class="toc-text">Caffe可视化工具</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#深度学习标准层在Caffe中定义"><span class="toc-text">深度学习标准层在Caffe中定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Caffe中参数共享"><span class="toc-text">Caffe中参数共享</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Caffe网络通用设计技巧"><span class="toc-text">Caffe网络通用设计技巧</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Inception结构"><span class="toc-text">Inception结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ResNet结构"><span class="toc-text">ResNet结构</span></a></li></ol></li></ol>
+    </div>
+  </div>
+
+
+
+    <div class="post-content">
+      
+        <p>Caffe(Convolutional Architecture for Fast Feature Embedding)，纯粹的C++/CUDA架构，支持命令行、Python和MATLAB，可以在CPU和GPU之间无缝切换。<br><a id="more"></a></p>
+<h2 id="Caffe基本概念"><a href="#Caffe基本概念" class="headerlink" title="Caffe基本概念"></a>Caffe基本概念</h2><p>Caffe模块包括4个部分</p>
+<h3 id="Blob"><a href="#Blob" class="headerlink" title="Blob"></a>Blob</h3><p>Blob:Caffe中数据的封装，用于layer上流动。Blob其实就是空间连续的多维数组，比如存储图像的时候是个四维数组，通常表示为（n,k,w,h）分别是样本个数、通道数、图像高度、图像宽度。可表示输入输出数据，也可表示参数数据</p>
+<h3 id="Layer"><a href="#Layer" class="headerlink" title="Layer"></a>Layer</h3><p>Layer:输入层、输出层、神经网络层的抽象。网络的基本单元，每一层类型定义了3种计算。</p>
+<ul>
+<li>初始化网络参数<ul>
+<li>创建blobs和layers</li>
+<li>调用layers的setup函数来初始化layers</li>
+</ul>
+</li>
+<li>前向传播</li>
+<li>后向传播</li>
+</ul>
+<h3 id="Net"><a href="#Net" class="headerlink" title="Net"></a>Net</h3><p>Net:神经网络结构，将layer层叠关联起来。</p>
+<ul>
+<li>Net为无回路的有向图。</li>
+</ul>
+<h3 id="Solver"><a href="#Solver" class="headerlink" title="Solver"></a>Solver</h3><p>Solver:定义神经网络训练和测试参数。</p>
+<ul>
+<li>创建训练网络、测试网络</li>
+<li>周期性的测试网络</li>
+<li>调用前向和反向函数进行的迭代优化和参数更新</li>
+<li>solver每轮迭代都会通过前向函数计算输出和损失(loss)，还用反向传播来计算梯度</li>
+</ul>
+<h3 id="caffe-model"><a href="#caffe-model" class="headerlink" title="caffe model"></a>caffe model</h3><ul>
+<li>用于保存和恢复网络参数，后缀为.caffemodel</li>
+<li>solver保存和恢复运动状态，后缀为.solverstate</li>
+</ul>
+<h2 id="Caffe源码解读"><a href="#Caffe源码解读" class="headerlink" title="Caffe源码解读"></a>Caffe源码解读</h2><img src="/2018/11/22/Caffe-基本介绍/caffe.png" title="Caffe源码目录结构">
+<ul>
+<li>data:用于存放下载的训练数据</li>
+<li>docs:帮助文档</li>
+<li>examples一些代码样例</li>
+<li>matlab:Matlab接口文件</li>
+<li>python:Python接口文件</li>
+<li>models:一些配置好的模型参数</li>
+<li>scripts:一些文档和数据用到的脚本</li>
+<li>tools:保存的源码是用于生成二进制处理程序的，也是我们直接使用命令行训练时候的工具</li>
+<li>include:Caffe的有文件.hpp，命名方式一般为网络名字开头</li>
+<li>src:Caffe的源文件.cpp(CPU)  .cu(GPU)</li>
+<li>src/caffe<ul>
+<li>test:用gtest测试caffe的代码</li>
+<li>util:数据转换时用的一些代码</li>
+<li>proto:是一种数据存储格式，帮助caffe提速，注意：在添加网络的时候，需要在这个文件中添加相应的配置，除此之外，还需要添加相应的.hpp和.cpp文件到include和src中</li>
+<li>layers:定义并实现了网络的前向、反向等方法</li>
+<li>Solvers:定义并实现了一系列优化方法，如SGD、Adam等</li>
+</ul>
+</li>
+</ul>
+<h2 id="Caffe配置文件"><a href="#Caffe配置文件" class="headerlink" title="Caffe配置文件"></a>Caffe配置文件</h2><h3 id="solver-prototxt"><a href="#solver-prototxt" class="headerlink" title="solver.prototxt"></a>solver.prototxt</h3><p>配置模型训练的超参数<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">net :=指定待训练模型结构文件，若没有明确指定训练和测试网络，即</span><br><span class="line">train_val.prototxt</span><br><span class="line">test_interval :=测试间隔</span><br><span class="line">test_iteration :=测试时进行的迭代次数，等于测试集容量/测试网络的batch size</span><br><span class="line">base_lr :=基本学习率</span><br><span class="line">Impolicy	学习率变更策略</span><br><span class="line">gamma :=学习率变更策略需要用到的参数</span><br><span class="line">power :=同上</span><br><span class="line">stepsize	学习率变更策略Step的变更步长（固定步长）</span><br><span class="line">stepvalue :=学习率变更策略Multistep的变更步长（可变步长）</span><br><span class="line">max_iter :=模型训练的最大迭代次数</span><br><span class="line">momentum :=动量，这是优化策略（Adam, SGD,…）用到的参数</span><br><span class="line">momentum2 :=优化策略Adam用至丨」的参数</span><br><span class="line">weight_decay :=权重衰减率</span><br><span class="line">display	每隔几次迭代显示一次结果</span><br><span class="line">snapshots快照，每隔几次保存一次模型参数</span><br><span class="line">snapshot prefix :=保存模型文件的前缀，可以是路径</span><br><span class="line"><span class="built_in">type</span> := solver优化策略，即SGD、Adam等</span><br><span class="line">solver_mode :=指定训练模式，即GPU/CPU</span><br><span class="line">devicejd :=指定设备号（使用GPU模式），默认为0</span><br></pre></td></tr></table></figure></p>
+<h3 id="train-val-prototxt"><a href="#train-val-prototxt" class="headerlink" title="train_val.prototxt"></a>train_val.prototxt</h3><p>训练网络,训练时通常将训练网络、测试网络定义为train_val.prototxt或分开定义为train.prototxt和test.prototxt<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">name: <span class="string">"LeNet"</span> </span><br><span class="line">layer &#123;</span><br><span class="line">    name: <span class="string">"mnist"</span> </span><br><span class="line">    <span class="built_in">type</span>: <span class="string">"Data"</span> </span><br><span class="line">    top: <span class="string">"data"</span> </span><br><span class="line">    top: <span class="string">"label"</span> </span><br><span class="line">    include &#123; </span><br><span class="line">        phase: TRAIN </span><br><span class="line">    &#125;</span><br><span class="line">    transform param &#123; </span><br><span class="line">        scale: 0.00390625</span><br><span class="line">    &#125;</span><br><span class="line">    data param &#123;</span><br><span class="line">        <span class="built_in">source</span>: <span class="string">"examples/mnist/mnist_train_lmdbn</span></span><br><span class="line"><span class="string">        batch_size: 64 backend: LMDB</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure></p>
+<p>phase:TRAIN表示应用于train网络中,TEST用在test网络中,去掉该参数,该层会同时出现在训练网络和测试网络。比如loss层，训练网络需要loss计算精度，而在测试网络中不需要loss。<br>在配置文件中可以通过include参数将该层配置到训练网络或是测试网络。</p>
+<h3 id="deploy-prototxt"><a href="#deploy-prototxt" class="headerlink" title="deploy.prototxt"></a>deploy.prototxt</h3><p>进行网络测试。<br>deploy.prototxt与train_val.prototxt的区别在于</p>
+<ul>
+<li>deploy.prototxt没有反向传播部分，因而没有loss层；</li>
+<li>deploy.prototxt会去掉数据层，只需要告诉输入的数据维度；</li>
+<li>deploy.prototxt中将BN层的use_global_stats设置为true</li>
+</ul>
+<h2 id="Caffe可视化工具"><a href="#Caffe可视化工具" class="headerlink" title="Caffe可视化工具"></a>Caffe可视化工具</h2><p><a href="http://ethereon.github.io/netscope/#/editor" target="_blank" rel="noopener">http://ethereon.github.io/netscope/#/editor</a></p>
+<h2 id="深度学习标准层在Caffe中定义"><a href="#深度学习标准层在Caffe中定义" class="headerlink" title="深度学习标准层在Caffe中定义"></a>深度学习标准层在Caffe中定义</h2><ul>
+<li>数据输入层:Data、ImageData、MemoryData</li>
+<li>视觉层:Convolution、Pooling、BN、LRN、im2col</li>
+<li>激活层:ReLU、Sigmoid</li>
+<li>损失层:softmax-loss、Euclidean</li>
+<li>循环层:RNN、LSTM</li>
+<li>工具层:reshape、concat、flatten、slice</li>
+<li>普通层:dropout、全连接embed层</li>
+</ul>
+<p>Layer的定义<br><img src="/2018/11/22/Caffe-基本介绍/layer.png" title="layer定义"><br>Caffe中特殊层的添加</p>
+<ul>
+<li>在./src/caffe/proto/caffe.proto中增加新layer的paramter message</li>
+<li>在./include/caffe/路径下增加新layer的声明文件:**.hpp</li>
+<li>在./src/caffe/layers/目录下实现新层,<strong>.cpp </strong>.cu</li>
+<li>当需要对网络做微调或更进一步的训练时，可以采取模型fineune；若网络模型有改动，则需要修改相应的层名</li>
+<li>sudo sh caffe train –solver=solver.prototxt -weights=net.caffemodel #通过weights加载预训练模型</li>
+</ul>
+<h2 id="Caffe中参数共享"><a href="#Caffe中参数共享" class="headerlink" title="Caffe中参数共享"></a>Caffe中参数共享</h2><img src="/2018/11/22/Caffe-基本介绍/caffe_parm.png" title="Caffe中参数共享">
+<h2 id="Caffe网络通用设计技巧"><a href="#Caffe网络通用设计技巧" class="headerlink" title="Caffe网络通用设计技巧"></a>Caffe网络通用设计技巧</h2><img src="/2018/11/22/Caffe-基本介绍/caffe_method.png" title="Caffe网络通用设计技巧">
+<h3 id="Inception结构"><a href="#Inception结构" class="headerlink" title="Inception结构"></a>Inception结构</h3><p>使用多个卷积核组合获得更丰富的特征<br><img src="/2018/11/22/Caffe-基本介绍/inception.png" title="inception结构"></p>
+<h3 id="ResNet结构"><a href="#ResNet结构" class="headerlink" title="ResNet结构"></a>ResNet结构</h3><p>Skip connect解决梯度弥散<br><img src="/2018/11/22/Caffe-基本介绍/resnet.png" title="ResNet结构"></p>
+
+      
+    </div>
+
+    
+      
+      
+
+  <div class="post-copyright">
+    <p class="copyright-item">
+      <span>原文作者: </span>
+      <a href="https://geolibra.github.io">hgis</a>
+    </p>
+    <p class="copyright-item">
+      <span>原文链接: </span>
+      <a href="https://geolibra.github.io/2018/11/22/Caffe-基本介绍/">https://geolibra.github.io/2018/11/22/Caffe-基本介绍/</a>
+    </p>
+    <p class="copyright-item">
+      <span>许可协议: </span>
+      
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>
+    </p>
+  </div>
+
+
+
+      
+      
+    
+
+    
+      <footer class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/Caffe/">Caffe</a>
+            
+          </div>
+        
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2018/11/22/机器学习公共数据集/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">机器学习公共数据集</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+      <a class="next" href="/2018/11/21/Batch-Normalization/">
+        <span class="next-text nav-default">Batch Normalization</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+
+      </footer>
+    
+
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:674530915@qq.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+          <a href="https://github.com/GeoLibra" class="iconfont icon-github" title="github"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+
+    
+      
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
+  </div>
+
+
+<div class="copyright">
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+  <span class="post-meta-divider">|</span>
+  <span id="busuanzi_container_site_uv">本站访客数<span id="busuanzi_value_site_uv"></span>人</span>
+
+
+  <span class="copyright-year">
+    
+    &copy; 
+    
+    2018
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">hgis</span>
+    <span id="busuanzi_container_site_uv">
+    </span>
+</span>
+</div>
+
+
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+  
+
+  
+
+
+
+    
+  
+
+
+
+  
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/pjax/jquery.pjax.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/nprogress/nprogress.min.js"></script>
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.10.1"></script>
+
+  </body>
+</html>

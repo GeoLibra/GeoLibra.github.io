@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+  <meta name="description" content="自编码网络"/>
+
+
+
+
+  <meta name="keywords" content="Tensorflow, 磊哥的小书桌" />
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/default" title="磊哥的小书桌">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.10.1" />
+
+
+
+<link rel="canonical" href="https://geolibra.github.io/2018/11/13/自编码网络/"/>
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css" />
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css" />
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.10.1" />
+
+
+
+  <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?97659041a2db55d3eb7266f53be7c071";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.1.1/av-min.js"></script>
+  <script id="leancloud">
+    AV.init({
+      appId: "ro3TOe5F5DDemxHnSoYVCHli-gzGzoHsz",
+      appKey: "IHyD5EfrggPl57FnwtBEeH0W"
+    });
+  </script>
+
+
+
+
+<script>
+  window.config = {"title":"磊哥的小书桌","subtitle":null,"description":null,"author":"hgis","language":null,"timezone":null,"url":"https://geolibra.github.io","root":"/","permalink":":year/:month/:day/:title/","permalink_defaults":null,"source_dir":"source","public_dir":"public","tag_dir":"tags","archive_dir":"archives","category_dir":"categories","code_dir":"downloads/code","i18n_dir":":lang","skip_render":null,"new_post_name":":title.md","default_layout":"post","titlecase":false,"external_link":true,"filename_case":0,"render_drafts":false,"post_asset_folder":true,"relative_link":false,"future":true,"highlight":{"enable":true,"auto_detect":false,"line_number":true,"tab_replace":null,"first_line_number":"always1"},"default_category":"uncategorized","category_map":null,"tag_map":null,"date_format":"YYYY-MM-DD","time_format":"HH:mm:ss","per_page":10,"pagination_dir":"page","theme":"even","deploy":{"type":"git","repository":"git@github.com:GeoLibra/GeoLibra.github.io.git","branch":"master"},"ignore":[],"keywords":null,"email":"674530915@qq.com","index_generator":{"per_page":10,"order_by":"-date","path":""},"tag_cloud":{"textFont":"Trebuchet MS, Helvetica","textColour":"\\#eea849","textHeight":25,"outlineColour":"\\#E2E1D1"},"archive_generator":{"per_page":10,"yearly":true,"monthly":true,"daily":false},"category_generator":{"per_page":10},"tag_generator":{"per_page":10},"marked":{"gfm":true,"pedantic":false,"sanitize":false,"tables":true,"breaks":true,"smartLists":true,"smartypants":true,"modifyAnchors":"","autolink":true},"server":{"port":4000,"log":false,"compress":false,"header":true},"since":2018,"favicon":"/favicon.ico","rss":"default","menu":{"Home":"/","Archives":"/archives/","Tags":"/tags","Categories":"/categories","About":"/about"},"color":"default","mode":"default","toc":true,"fancybox":true,"pjax":true,"copyright":{"enable":true,"license":"<a rel=\"license\" href=\"http://creativecommons.org/licenses/by-nc/4.0/\" target=\"_blank\">知识共享署名-非商业性使用 4.0 国际许可协议</a>"},"reward":{"enable":false,"qrCode":{"wechat":null,"alipay":null}},"social":{"email":"674530915@qq.com","stack-overflow":null,"twitter":null,"facebook":null,"linkedin":null,"google":null,"github":"https://github.com/GeoLibra","weibo":null,"zhihu":null,"douban":null,"pocket":null,"tumblr":null,"instagram":null},"leancloud":{"app_id":"ro3TOe5F5DDemxHnSoYVCHli-gzGzoHsz","app_key":"IHyD5EfrggPl57FnwtBEeH0W"},"baidu_analytics":"97659041a2db55d3eb7266f53be7c071","baidu_verification":null,"google_analytics":null,"google_verification":null,"disqus_shortname":null,"changyan":{"appid":null,"appkey":null},"livere_datauid":null,"counter":true,"version":"2.10.1"};
+</script>
+
+    <title> 自编码网络 - 磊哥的小书桌 </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">磊哥的小书桌</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            首页
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            归档
+          
+        </li>
+      </a>
+    
+      <a href="/tags">
+        <li class="mobile-menu-item">
+          
+          
+            标签
+          
+        </li>
+      </a>
+    
+      <a href="/categories">
+        <li class="mobile-menu-item">
+          
+          
+            分类
+          
+        </li>
+      </a>
+    
+      <a href="/about">
+        <li class="mobile-menu-item">
+          
+          
+            关于
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">磊哥的小书桌</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/tags">
+            
+            
+              标签
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/categories">
+            
+            
+              分类
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            
+            
+              关于
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          自编码网络
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2018-11-13
+        </span>
+        
+          <span class="post-category">
+            
+              <a href="/categories/深度学习/">深度学习</a>
+            
+          </span>
+        
+        
+        <span class="post-visits"
+             data-url="/2018/11/13/自编码网络/"
+             data-title="自编码网络">
+          阅读次数 0
+        </span>
+        
+      </div>
+    </header>
+
+    
+    
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#自编码网络介绍及应用"><span class="toc-text">自编码网络介绍及应用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#醉简单的自编码网络"><span class="toc-text">醉简单的自编码网络</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#自编码网络的代码实现"><span class="toc-text">自编码网络的代码实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#提取图片特征并利用特征还原图片"><span class="toc-text">提取图片特征并利用特征还原图片</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#线性解码器"><span class="toc-text">线性解码器</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#提取图片的二位特征，并利用二维特征还原图片"><span class="toc-text">提取图片的二位特征，并利用二维特征还原图片</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实现卷积网络的自编码"><span class="toc-text">实现卷积网络的自编码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#去噪自编码"><span class="toc-text">去噪自编码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#栈式自编码"><span class="toc-text">栈式自编码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#栈式自编码介绍"><span class="toc-text">栈式自编码介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#栈式自编码在深度学习中的意义"><span class="toc-text">栈式自编码在深度学习中的意义</span></a></li></ol></li></ol>
+    </div>
+  </div>
+
+
+
+    <div class="post-content">
+      
+        <h2 id="自编码网络介绍及应用"><a href="#自编码网络介绍及应用" class="headerlink" title="自编码网络介绍及应用"></a>自编码网络介绍及应用</h2><p>自编码网络是非监督学习领域中的一种，可以自动从无标注的数据中学习特征，是一种以重构输入信号为目标的神经网络，可以给出比原始数据更好的特征描述，具有较强的特征学习能力。<br><a id="more"></a></p>
+<h2 id="醉简单的自编码网络"><a href="#醉简单的自编码网络" class="headerlink" title="醉简单的自编码网络"></a>醉简单的自编码网络</h2><p>自编码（Auto-Encoder，AE）网络是输入等于输出的网络，最基本的模型可以视为三层的神经网络，即输入层、隐藏层、输出层。其中，输入层的样本也会充当输出层的标签角色。换句话说，这个神经网络就是一种尽可能复现输入信号的神经网络。<br><img src="/2018/11/13/自编码网络/ae_minist.png" title="让输出信号等于输入信号"></p>
+<p>其中从输入到中间状态的过程叫编码，从中间状态再回到输出的过程叫解码，这样构成的自动编码器可以捕捉代表输入数据最重要的因素，类似于PCA，找到可以代表原信息的主要成分。<br>自编码器要求输出尽可能等于输入，并且其隐藏层必须满足一定的稀疏性，是通过将影藏层中的后一层个数比前一层神经元个数少的方式来实现稀疏效果。相当于隐藏层对输入进行了压缩，并在输出层中解压缩。整个过程中肯定会丢失信息，但训练能够使丢失的信息尽量减少，最大化的保留其主要特征。如果激活函数不使用Sigmoid函数，而使用线性函数，那么便是PCA模型了。</p>
+<h2 id="自编码网络的代码实现"><a href="#自编码网络的代码实现" class="headerlink" title="自编码网络的代码实现"></a>自编码网络的代码实现</h2><h3 id="提取图片特征并利用特征还原图片"><a href="#提取图片特征并利用特征还原图片" class="headerlink" title="提取图片特征并利用特征还原图片"></a>提取图片特征并利用特征还原图片</h3><p>通过构建一个两层降维的自编码网络，将MNIST数据集的数据特征提取出来，并通过这些特征再重建一个MNIST数据集。<br>下面输入MNIST数据集的图片，将其像素点组成的数据（28x28=784）从784维降维到256，再降到128，最后再以同样的方式经过128再经过256，最终还原到原来的图片。过程如下图所示。<br><img src="/2018/11/13/自编码网络/ae_minist2.png" title="自编码实例代码的维度变化过程"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> tensorflow.examples.tutorials.mnist <span class="keyword">import</span> input_data</span><br><span class="line">mnist = input_data.read_data_sets(<span class="string">"../MNIST_data/"</span>, one_hot=<span class="keyword">True</span>)</span><br><span class="line"><span class="comment"># 定义模型</span></span><br><span class="line">learning_rate = <span class="number">0.01</span></span><br><span class="line">n_hidden_1 = <span class="number">256</span>  <span class="comment"># 第一层256个节点</span></span><br><span class="line">n_hidden_2 = <span class="number">128</span>  <span class="comment"># 第二层128个节点</span></span><br><span class="line">n_input = <span class="number">784</span>  <span class="comment"># MNIST数据集中图片的维度</span></span><br><span class="line"></span><br><span class="line">x = tf.placeholder(<span class="string">"float"</span>, [<span class="keyword">None</span>, n_input])</span><br><span class="line">y = x</span><br><span class="line"><span class="comment"># 学习参数</span></span><br><span class="line">weights = &#123;</span><br><span class="line">    <span class="string">'encoder_h1'</span>: tf.Variable(tf.random_normal([n_input, n_hidden_1])),</span><br><span class="line">    <span class="string">'encoder_h2'</span>: tf.Variable(tf.random_normal([n_hidden_1, n_hidden_2])),</span><br><span class="line">    <span class="string">'decoder_h1'</span>: tf.Variable(tf.random_normal([n_hidden_2, n_hidden_1])),</span><br><span class="line">    <span class="string">'decoder_h2'</span>: tf.Variable(tf.random_normal([n_hidden_1, n_input]))</span><br><span class="line">&#125;</span><br><span class="line">biases = &#123;</span><br><span class="line">    <span class="string">'encoder_b1'</span>: tf.Variable(tf.zeros([n_hidden_1])),</span><br><span class="line">    <span class="string">'encoder_b2'</span>: tf.Variable(tf.zeros([n_hidden_2])),</span><br><span class="line">    <span class="string">'decoder_b1'</span>: tf.Variable(tf.zeros([n_hidden_1])),</span><br><span class="line">    <span class="string">'decoder_b2'</span>: tf.Variable(tf.zeros([n_input]))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 编码</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">encoder</span><span class="params">(x)</span>:</span></span><br><span class="line">    layer_1 = tf.nn.sigmoid(</span><br><span class="line">        tf.add(tf.matmul(x, weights[<span class="string">'encoder_h1'</span>]), biases[<span class="string">'encoder_b1'</span>]))</span><br><span class="line">    layer_2 = tf.nn.sigmoid(</span><br><span class="line">        tf.add(</span><br><span class="line">            tf.matmul(layer_1, weights[<span class="string">'encoder_h2'</span>]), biases[<span class="string">'encoder_b2'</span>]))</span><br><span class="line">    <span class="keyword">return</span> layer_2</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 解码</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">decoder</span><span class="params">(x)</span>:</span></span><br><span class="line">    layer_1 = tf.nn.sigmoid(</span><br><span class="line">        tf.add(tf.matmul(x, weights[<span class="string">'decoder_h1'</span>]), biases[<span class="string">'decoder_b1'</span>]))</span><br><span class="line">    layer_2 = tf.nn.sigmoid(</span><br><span class="line">        tf.add(</span><br><span class="line">            tf.matmul(layer_1, weights[<span class="string">'decoder_h2'</span>]), biases[<span class="string">'decoder_b2'</span>]))</span><br><span class="line">    <span class="keyword">return</span> layer_2</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出节点</span></span><br><span class="line">encoder_out = encoder(x)</span><br><span class="line">pred = decoder(encoder_out)</span><br><span class="line"><span class="comment"># cost为有与pred的平方差</span></span><br><span class="line">cost = tf.reduce_mean(tf.pow(y - pred, <span class="number">2</span>))</span><br><span class="line">optimizer = tf.train.RMSPropOptimizer(learning_rate).minimize(cost)</span><br><span class="line"><span class="comment"># 由于输出标签也是输入标签,所以后面直接定义y=x</span></span><br><span class="line"><span class="comment"># 开始训练</span></span><br><span class="line">training_epochs = <span class="number">20</span>  <span class="comment"># 一共迭代20次</span></span><br><span class="line">batch_size = <span class="number">256</span>  <span class="comment"># 每次取256个样本</span></span><br><span class="line">display_step = <span class="number">5</span>  <span class="comment"># 迭代5次输出一次信息</span></span><br><span class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line">    sess.run(tf.global_variables_initializer())</span><br><span class="line">    total_batch = int(mnist.train.num_examples / batch_size)</span><br><span class="line">    <span class="comment"># 开始训练</span></span><br><span class="line">    <span class="keyword">for</span> epoch <span class="keyword">in</span> range(training_epochs):</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(total_batch):</span><br><span class="line">            batch_xs, batch_ys = mnist.train.next_batch(batch_size)  <span class="comment"># 取数据</span></span><br><span class="line">            _, c = sess.run([optimizer, cost], feed_dict=&#123;x: batch_xs&#125;)</span><br><span class="line">            <span class="comment"># 训练模型</span></span><br><span class="line">        <span class="keyword">if</span> epoch % display_step == <span class="number">0</span>:</span><br><span class="line">            print(<span class="string">"Epoch:"</span>, <span class="string">"%04d"</span> % (epoch + <span class="number">1</span>), <span class="string">"cost="</span>, <span class="string">"&#123;:.9f&#125;"</span>.format(c))</span><br><span class="line">    print(<span class="string">"完成"</span>)</span><br><span class="line">    <span class="comment"># 测试模型</span></span><br><span class="line">    correct_predicition = tf.equal(tf.argmax(pred, <span class="number">1</span>), tf.argmax(y, <span class="number">1</span>))</span><br><span class="line">    <span class="comment"># 计算错误率</span></span><br><span class="line">    accuracy = tf.reduce_mean(tf.cast(correct_predicition, <span class="string">"float"</span>))</span><br><span class="line">    print(<span class="string">"accuracy:"</span>, <span class="number">1</span> - accuracy.eval(&#123;</span><br><span class="line">        x: mnist.test.images,</span><br><span class="line">        y: mnist.test.images</span><br><span class="line">    &#125;))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 随意取出10张图片,对比输入和输出</span></span><br><span class="line">    show_num = <span class="number">10</span></span><br><span class="line">    reconstruction = sess.run(</span><br><span class="line">        pred, feed_dict=&#123;x: mnist.test.images[:show_num]&#125;)</span><br><span class="line">    f, a = plt.subplots(<span class="number">2</span>, <span class="number">10</span>, figsize=(<span class="number">10</span>, <span class="number">2</span>))</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(show_num):</span><br><span class="line">        a[<span class="number">0</span>][i].imshow(np.reshape(mnist.test.images[i], (<span class="number">28</span>, <span class="number">28</span>)))</span><br><span class="line">        a[<span class="number">1</span>][i].imshow(np.reshape(reconstruction[i], (<span class="number">28</span>, <span class="number">28</span>)))</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure>
+<p>图片分为上下两行，第一行显示的是输入图片，第二行显示的输出图片。<br><img src="/2018/11/13/自编码网络/rae.png" title="自编码实例输出结果"></p>
+<h3 id="线性解码器"><a href="#线性解码器" class="headerlink" title="线性解码器"></a>线性解码器</h3><p>上例中使用的激活函数输出范围是[0,1]，当对最终提取的特征节点采用该激励函数时，就相当于对输入限制或缩放，是其位于[0,1]范围中，有些数据集如MNIST能方便的将输出缩放到[0,1]中，但是很难满足对输入值的要求。例，PCA白化处理的输入 并不满足[0,1]范围要求。<br>如果你用一个恒等式来作为激励函数，就可以解决这个问题，即将f(z)=z作为激励函数，即没有激励函数。</p>
+<blockquote>
+<p>这个方法只是对最后的输出层而言，对于神经网络中隐含的神经元依然还要使用S型或其他激活函数。</p>
+</blockquote>
+<p>由多个带有S型激活函数的隐含层及一个线性输出层构成的自编码器，称为线性解码器。</p>
+<h4 id="提取图片的二位特征，并利用二维特征还原图片"><a href="#提取图片的二位特征，并利用二维特征还原图片" class="headerlink" title="提取图片的二位特征，并利用二维特征还原图片"></a>提取图片的二位特征，并利用二维特征还原图片</h4><p>在自编码网络中使用线性解码器对MNIST数据特征进行再压缩，并将其映射到直角坐标系上。这里使用4层逐渐压缩将784维分别压缩成256、64、16、2这4个特征向量。<br><img src="/2018/11/13/自编码网络/linear_ae.png" title="线性解码器部分网络结构"></p>
+<p>然后以直角坐标系的形式将数据点显示出来，这样可以更直观的看到自编码器对于同一类图片的聚类效果。</p>
+<blockquote>
+<p>如果想得到更好的特征提取效果，可以将压缩的层数变得更多，（如512、256、128、64、32、16、2），由于Sigmoid函数天生缺陷，无法使用更深的层，所以这里只能做成4层。</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> tensorflow.examples.tutorials.mnist <span class="keyword">import</span> input_data</span><br><span class="line">mnist = input_data.read_data_sets(<span class="string">"../MNIST_data/"</span>, one_hot=<span class="keyword">True</span>)</span><br><span class="line">learning_rate = <span class="number">0.01</span></span><br><span class="line">n_hidden_1 = <span class="number">256</span>  <span class="comment"># 第一层256个节点</span></span><br><span class="line">n_hidden_2 = <span class="number">64</span></span><br><span class="line">n_hidden_3 = <span class="number">16</span></span><br><span class="line">n_hidden_4 = <span class="number">2</span></span><br><span class="line">n_input = <span class="number">784</span>  <span class="comment"># MNIST数据集中图片的维度</span></span><br><span class="line">x = tf.placeholder(<span class="string">"float"</span>, [<span class="keyword">None</span>, n_input])</span><br><span class="line">y = x</span><br><span class="line"><span class="comment"># 学习参数</span></span><br><span class="line">weights = &#123;</span><br><span class="line">    <span class="string">'encoder_h1'</span>: tf.Variable(tf.random_normal([n_input, n_hidden_1])),</span><br><span class="line">    <span class="string">'encoder_h2'</span>: tf.Variable(tf.random_normal([n_hidden_1, n_hidden_2])),</span><br><span class="line">    <span class="string">'encoder_h3'</span>: tf.Variable(tf.random_normal([n_hidden_2, n_hidden_3])),</span><br><span class="line">    <span class="string">'encoder_h4'</span>: tf.Variable(tf.random_normal([n_hidden_3, n_hidden_4])),</span><br><span class="line">    <span class="string">'decoder_h1'</span>: tf.Variable(tf.random_normal([n_hidden_4, n_hidden_3])),</span><br><span class="line">    <span class="string">'decoder_h2'</span>: tf.Variable(tf.random_normal([n_hidden_3, n_hidden_2])),</span><br><span class="line">    <span class="string">'decoder_h3'</span>: tf.Variable(tf.random_normal([n_hidden_2, n_hidden_1])),</span><br><span class="line">    <span class="string">'decoder_h4'</span>: tf.Variable(tf.random_normal([n_hidden_1, n_input]))</span><br><span class="line">&#125;</span><br><span class="line">biases = &#123;</span><br><span class="line">    <span class="string">'encoder_b1'</span>: tf.Variable(tf.zeros([n_hidden_1])),</span><br><span class="line">    <span class="string">'encoder_b2'</span>: tf.Variable(tf.zeros([n_hidden_2])),</span><br><span class="line">    <span class="string">'encoder_b3'</span>: tf.Variable(tf.zeros([n_hidden_3])),</span><br><span class="line">    <span class="string">'encoder_b4'</span>: tf.Variable(tf.zeros([n_hidden_4])),</span><br><span class="line">    <span class="string">'decoder_b1'</span>: tf.Variable(tf.zeros([n_hidden_3])),</span><br><span class="line">    <span class="string">'decoder_b2'</span>: tf.Variable(tf.zeros([n_hidden_2])),</span><br><span class="line">    <span class="string">'decoder_b3'</span>: tf.Variable(tf.zeros([n_hidden_1])),</span><br><span class="line">    <span class="string">'decoder_b4'</span>: tf.Variable(tf.zeros([n_input]))</span><br><span class="line">&#125;</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">定义网络模型</span></span><br><span class="line"><span class="string">在编码的最后一层,没有进行sigmoid变换,是因为生成的二维数据其数据特征已经变得极为重要,</span></span><br><span class="line"><span class="string">所以希望让它透传到解码器中,少一些变换可以最大化的保留原有的主要特征</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">encoder</span><span class="params">(x)</span>:</span></span><br><span class="line">    layer_1 = tf.nn.sigmoid(</span><br><span class="line">        tf.add(tf.matmul(x, weights[<span class="string">'encoder_h1'</span>]), biases[<span class="string">'encoder_b1'</span>]))</span><br><span class="line">    layer_2 = tf.nn.sigmoid(</span><br><span class="line">        tf.add(</span><br><span class="line">            tf.matmul(layer_1, weights[<span class="string">'encoder_h2'</span>]), biases[<span class="string">'encoder_b2'</span>]))</span><br><span class="line">    layer_3 = tf.nn.sigmoid(</span><br><span class="line">        tf.add(</span><br><span class="line">            tf.matmul(layer_2, weights[<span class="string">'encoder_h3'</span>]), biases[<span class="string">'encoder_b3'</span>]))</span><br><span class="line">    layer_4 = tf.add(</span><br><span class="line">        tf.matmul(layer_3, weights[<span class="string">'encoder_h4'</span>]), biases[<span class="string">'encoder_b4'</span>])</span><br><span class="line">    <span class="keyword">return</span> layer_4</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">decoder</span><span class="params">(x)</span>:</span></span><br><span class="line">    layer_1 = tf.nn.sigmoid(</span><br><span class="line">        tf.add(tf.matmul(x, weights[<span class="string">'decoder_h1'</span>]), biases[<span class="string">'decoder_b1'</span>]))</span><br><span class="line">    layer_2 = tf.nn.sigmoid(</span><br><span class="line">        tf.add(</span><br><span class="line">            tf.matmul(layer_1, weights[<span class="string">'decoder_h2'</span>]), biases[<span class="string">'decoder_b2'</span>]))</span><br><span class="line">    layer_3 = tf.nn.sigmoid(</span><br><span class="line">        tf.add(</span><br><span class="line">            tf.matmul(layer_2, weights[<span class="string">'decoder_h3'</span>]), biases[<span class="string">'decoder_b3'</span>]))</span><br><span class="line">    layer_4 = tf.nn.sigmoid(</span><br><span class="line">        tf.add(</span><br><span class="line">            tf.matmul(layer_3, weights[<span class="string">'decoder_h4'</span>]), biases[<span class="string">'decoder_b4'</span>]))</span><br><span class="line">    <span class="keyword">return</span> layer_4</span><br><span class="line">enocder_op = encoder(x)</span><br><span class="line">y_pred = decoder(enocder_op)</span><br><span class="line">cost = tf.reduce_mean(tf.square(y - y_pred))  <span class="comment"># 均方误差损失函数</span></span><br><span class="line"><span class="comment"># cost = tf.reduce_mean(tf.pow(y - y_pred, 2))</span></span><br><span class="line">optimizer = tf.train.AdamOptimizer(learning_rate).minimize(cost)</span><br><span class="line">training_epochs = <span class="number">20</span></span><br><span class="line">batch_size = <span class="number">256</span></span><br><span class="line"><span class="comment"># display_step = 1</span></span><br><span class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line">    sess.run(tf.global_variables_initializer())</span><br><span class="line">    total_batch = int(mnist.train.num_examples / batch_size)</span><br><span class="line">    <span class="keyword">for</span> epoch <span class="keyword">in</span> range(training_epochs):</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(total_batch):</span><br><span class="line">            batch_xs, batch_ys = mnist.train.next_batch(batch_size)</span><br><span class="line">            _, c = sess.run([optimizer, cost], feed_dict=&#123;x: batch_xs&#125;)</span><br><span class="line">        print(<span class="string">"Epoch:"</span>, <span class="string">'%04d'</span> % (epoch + <span class="number">1</span>), <span class="string">'cost='</span>, <span class="string">'&#123;:.9f&#125;'</span>.format(c))</span><br><span class="line">    print(<span class="string">'完成'</span>)</span><br><span class="line">    show_num = <span class="number">10</span></span><br><span class="line">    encode_decode = sess.run(</span><br><span class="line">        y_pred, feed_dict=&#123;x: mnist.test.images[:show_num]&#125;)</span><br><span class="line">    f, a = plt.subplots(<span class="number">2</span>, <span class="number">10</span>, figsize=(<span class="number">10</span>, <span class="number">2</span>))</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(show_num):</span><br><span class="line">        a[<span class="number">0</span>][i].imshow(np.reshape(mnist.test.images[i], (<span class="number">28</span>, <span class="number">28</span>)))</span><br><span class="line">        a[<span class="number">1</span>][i].imshow(np.reshape(encode_decode[i], (<span class="number">28</span>, <span class="number">28</span>)))</span><br><span class="line">    plt.show()</span><br><span class="line">    <span class="comment"># 显示数据的二维特征</span></span><br><span class="line">    a = [np.argmax(<span class="number">1</span>) <span class="keyword">for</span> l <span class="keyword">in</span> mnist.test.labels]  <span class="comment"># 将one_hot转成一般编码</span></span><br><span class="line">    encoder_result = sess.run(enocder_op, feed_dict=&#123;x: mnist.test.images&#125;)</span><br><span class="line">    plt.scatter(encoder_result[:, <span class="number">0</span>], encoder_result[:, <span class="number">1</span>], c=a)</span><br><span class="line">    plt.colorbar()</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure>
+<h3 id="实现卷积网络的自编码"><a href="#实现卷积网络的自编码" class="headerlink" title="实现卷积网络的自编码"></a>实现卷积网络的自编码</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> tensorflow.examples.tutorials.mnist <span class="keyword">import</span> input_data</span><br><span class="line">mnist = input_data.read_data_sets(<span class="string">"../MNIST_data/"</span>, one_hot=<span class="keyword">True</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 最大池化</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">max_pool_with_argmax</span><span class="params">(net, stride)</span>:</span></span><br><span class="line">    _, mask = tf.nn.max_pool_with_argmax(</span><br><span class="line">        net,</span><br><span class="line">        ksize=[<span class="number">1</span>, stride, stride, <span class="number">1</span>],</span><br><span class="line">        strides=[<span class="number">1</span>, stride, stride, <span class="number">1</span>],</span><br><span class="line">        padding=<span class="string">'SAME'</span>)</span><br><span class="line">    mask = tf.stop_gradient(mask)</span><br><span class="line">    net = tf.nn.max_pool(</span><br><span class="line">        net,</span><br><span class="line">        ksize=[<span class="number">1</span>, stride, stride, <span class="number">1</span>],</span><br><span class="line">        strides=[<span class="number">1</span>, stride, stride, <span class="number">1</span>],</span><br><span class="line">        padding=<span class="string">'SAME'</span>)</span><br><span class="line">    <span class="keyword">return</span> net, mask</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 4*4----2*2--=2*2 [6,8,12,16]</span></span><br><span class="line"><span class="comment"># 反池化</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">unpool</span><span class="params">(net, mask, stride)</span>:</span></span><br><span class="line">    ksize = [<span class="number">1</span>, stride, stride, <span class="number">1</span>]</span><br><span class="line">    input_shape = net.get_shape().as_list()</span><br><span class="line"></span><br><span class="line">    output_shape = (input_shape[<span class="number">0</span>], input_shape[<span class="number">1</span>] * ksize[<span class="number">1</span>],</span><br><span class="line">                    input_shape[<span class="number">2</span>] * ksize[<span class="number">2</span>], input_shape[<span class="number">3</span>])</span><br><span class="line"></span><br><span class="line">    one_like_mask = tf.ones_like(mask)</span><br><span class="line">    batch_range = tf.reshape(</span><br><span class="line">        tf.range(output_shape[<span class="number">0</span>], dtype=tf.int64),</span><br><span class="line">        shape=[input_shape[<span class="number">0</span>], <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>])</span><br><span class="line">    b = one_like_mask * batch_range</span><br><span class="line">    y = mask // (output_shape[<span class="number">2</span>] * output_shape[<span class="number">3</span>])</span><br><span class="line">    x = mask % (output_shape[<span class="number">2</span>] * output_shape[<span class="number">3</span>]) // output_shape[<span class="number">3</span>]</span><br><span class="line">    feature_range = tf.range(output_shape[<span class="number">3</span>], dtype=tf.int64)</span><br><span class="line">    f = one_like_mask * feature_range</span><br><span class="line"></span><br><span class="line">    updates_size = tf.size(net)</span><br><span class="line">    indices = tf.transpose(</span><br><span class="line">        tf.reshape(tf.stack([b, y, x, f]), [<span class="number">4</span>, updates_size]))</span><br><span class="line">    values = tf.reshape(net, [updates_size])</span><br><span class="line">    ret = tf.scatter_nd(indices, values, output_shape)</span><br><span class="line">    <span class="keyword">return</span> ret</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">conv2d</span><span class="params">(x, W)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> tf.nn.conv2d(x, W, strides=[<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>], padding=<span class="string">'SAME'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">max_pool_2x2</span><span class="params">(x)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> tf.nn.max_pool(</span><br><span class="line">        x, ksize=[<span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">1</span>], strides=[<span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">1</span>], padding=<span class="string">'SAME'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">encoder</span><span class="params">(x)</span>:</span></span><br><span class="line">    h_conv1 = tf.nn.relu(</span><br><span class="line">        tf.add(conv2d(x, weights[<span class="string">'encoder_conv1'</span>]), biases[<span class="string">'encoder_conv1'</span>]))</span><br><span class="line">    h_conv2 = tf.nn.relu(</span><br><span class="line">        tf.add(</span><br><span class="line">            conv2d(h_conv1, weights[<span class="string">'encoder_conv2'</span>]),</span><br><span class="line">            biases[<span class="string">'encoder_conv2'</span>]))</span><br><span class="line">    <span class="keyword">return</span> h_conv2, h_conv1</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">decoder</span><span class="params">(x, conv1)</span>:</span></span><br><span class="line">    t_conv1 = tf.nn.conv2d_transpose(x - biases[<span class="string">'decoder_conv2'</span>],</span><br><span class="line">                                     weights[<span class="string">'decoder_conv2'</span>], conv1.shape,</span><br><span class="line">                                     [<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>])</span><br><span class="line">    t_x_image = tf.nn.conv2d_transpose(t_conv1 - biases[<span class="string">'decoder_conv1'</span>],</span><br><span class="line">                                       weights[<span class="string">'decoder_conv1'</span>], x_image.shape,</span><br><span class="line">                                       [<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>])</span><br><span class="line">    <span class="keyword">return</span> t_x_image</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 网络模型参数</span></span><br><span class="line">learning_rate = <span class="number">0.01</span></span><br><span class="line">n_conv_1 = <span class="number">16</span></span><br><span class="line">n_conv_2 = <span class="number">32</span></span><br><span class="line">n_input = <span class="number">784</span></span><br><span class="line">batchsize = <span class="number">50</span></span><br><span class="line">x = tf.placeholder(<span class="string">'float'</span>, [batchsize, n_input])</span><br><span class="line">x_image = tf.reshape(x, [<span class="number">-1</span>, <span class="number">28</span>, <span class="number">28</span>, <span class="number">1</span>])</span><br><span class="line"><span class="comment"># 学习参数</span></span><br><span class="line">weights = &#123;</span><br><span class="line">    <span class="string">'encoder_conv1'</span>:</span><br><span class="line">    tf.Variable(tf.truncated_normal([<span class="number">5</span>, <span class="number">5</span>, <span class="number">1</span>, n_conv_1], stddev=<span class="number">0.1</span>)),</span><br><span class="line">    <span class="string">'encoder_conv2'</span>:</span><br><span class="line">    tf.Variable(tf.random_normal([<span class="number">3</span>, <span class="number">3</span>, n_conv_1, n_conv_2], stddev=<span class="number">0.1</span>)),</span><br><span class="line">    <span class="string">'decoder_conv1'</span>:</span><br><span class="line">    tf.Variable(tf.random_normal([<span class="number">5</span>, <span class="number">5</span>, <span class="number">1</span>, n_conv_1], stddev=<span class="number">0.1</span>)),</span><br><span class="line">    <span class="string">'decoder_conv2'</span>:</span><br><span class="line">    tf.Variable(tf.random_normal([<span class="number">3</span>, <span class="number">3</span>, n_conv_1, n_conv_2], stddev=<span class="number">0.1</span>))</span><br><span class="line">&#125;</span><br><span class="line">biases = &#123;</span><br><span class="line">    <span class="string">'encoder_conv1'</span>: tf.Variable(tf.zeros([n_conv_1])),</span><br><span class="line">    <span class="string">'encoder_conv2'</span>: tf.Variable(tf.zeros([n_conv_2])),</span><br><span class="line">    <span class="string">'decoder_conv1'</span>: tf.Variable(tf.zeros([n_conv_1])),</span><br><span class="line">    <span class="string">'decoder_conv2'</span>: tf.Variable(tf.zeros([n_conv_2])),</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">#输出的节点</span></span><br><span class="line">encoder_out, conv1 = encoder(x_image)</span><br><span class="line">h_pool2, mask = max_pool_with_argmax(encoder_out, <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">h_upool = unpool(h_pool2, mask, <span class="number">2</span>)</span><br><span class="line">pred = decoder(h_upool, conv1)</span><br><span class="line"><span class="comment"># 使用平方差为cost</span></span><br><span class="line">cost = tf.reduce_mean(tf.pow(x_image - pred, <span class="number">2</span>))</span><br><span class="line">optimizer = tf.train.RMSPropOptimizer(learning_rate).minimize(cost)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 训练参数</span></span><br><span class="line">training_epochs = <span class="number">20</span>  <span class="comment">#一共迭代20次</span></span><br><span class="line"></span><br><span class="line">display_step = <span class="number">5</span>  <span class="comment">#迭代5次输出一次信息</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动绘话</span></span><br><span class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line">    sess.run(tf.global_variables_initializer())</span><br><span class="line">    total_batch = int(mnist.train.num_examples / batchsize)</span><br><span class="line">    <span class="comment"># 开始训练</span></span><br><span class="line">    <span class="keyword">for</span> epoch <span class="keyword">in</span> range(training_epochs):  <span class="comment">#迭代</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(total_batch):</span><br><span class="line">            batch_xs, batch_ys = mnist.train.next_batch(batchsize)  <span class="comment">#取数据</span></span><br><span class="line">            _, c = sess.run([optimizer, cost], feed_dict=&#123;x: batch_xs&#125;)  <span class="comment"># 训练模型</span></span><br><span class="line">        <span class="keyword">if</span> epoch % display_step == <span class="number">0</span>:  <span class="comment"># 现实日志信息</span></span><br><span class="line">            print(<span class="string">"Epoch:"</span>, <span class="string">'%04d'</span> % (epoch + <span class="number">1</span>), <span class="string">"cost="</span>, <span class="string">"&#123;:.9f&#125;"</span>.format(c))</span><br><span class="line">    print(<span class="string">"完成"</span>)</span><br><span class="line">    <span class="comment"># 测试</span></span><br><span class="line">    batch_xs, batch_ys = mnist.train.next_batch(batchsize)</span><br><span class="line">    <span class="comment"># print("Error:", cost.eval(&#123;x: batch_xs&#125;))</span></span><br><span class="line">    show_num = <span class="number">10</span></span><br><span class="line">    reconstruction = sess.run(</span><br><span class="line">        <span class="comment">#pred, feed_dict=&#123;x: mnist.test.images[:show_num]&#125;)</span></span><br><span class="line">        pred,</span><br><span class="line">        feed_dict=&#123;x: batch_xs&#125;)</span><br><span class="line">    f, a = plt.subplots(<span class="number">2</span>, <span class="number">10</span>, figsize=(<span class="number">10</span>, <span class="number">2</span>))</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(show_num):</span><br><span class="line">        <span class="comment">#a[0][i].imshow(np.reshape(mnist.test.images[i], (28, 28)))</span></span><br><span class="line">        a[<span class="number">0</span>][i].imshow(np.reshape(batch_xs[i], (<span class="number">28</span>, <span class="number">28</span>)))</span><br><span class="line">        a[<span class="number">1</span>][i].imshow(np.reshape(reconstruction[i], (<span class="number">28</span>, <span class="number">28</span>)))</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure>
+<img src="/2018/11/13/自编码网络/conv_ae.png" title="卷积自编码实例">
+<h2 id="去噪自编码"><a href="#去噪自编码" class="headerlink" title="去噪自编码"></a>去噪自编码</h2><p>去噪自动编码器（Denoising Autoencoder，DA），在自动编码的基础上，训练数据加入噪声，输出的标签仍是原始的样本（没有加噪声），这样自动编码器必须学习去除噪声而获得真正没有被噪声污染过的输入特征。<br>在实际训练中，人为加入噪声有两种方式：<br>1）在选择训练数据集时，额外选择一些样本集以外的数据。<br>2）改变已有的样本数据集中的数据（使样本个体不完整，或通过噪声与样本进行的加减乘除之类的运算，使样本数据发生变化）<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> tensorflow.examples.tutorials.mnist <span class="keyword">import</span> input_data</span><br><span class="line">mnist = input_data.read_data_sets(<span class="string">"../MNIST_data/"</span>, one_hot=<span class="keyword">True</span>)</span><br><span class="line">train_X = mnist.train.images</span><br><span class="line">train_Y = mnist.train.labels</span><br><span class="line">test_X = mnist.test.images</span><br><span class="line">test_Y = mnist.test.labels</span><br><span class="line">n_input = <span class="number">784</span></span><br><span class="line">n_hidden_1 = <span class="number">256</span></span><br><span class="line">x = tf.placeholder(<span class="string">'float'</span>, [<span class="keyword">None</span>, n_input])</span><br><span class="line">y = tf.placeholder(<span class="string">'float'</span>, [<span class="keyword">None</span>, n_input])</span><br><span class="line">dropout_keep_prob = tf.placeholder(<span class="string">'float'</span>)</span><br><span class="line">weights = &#123;</span><br><span class="line">    <span class="string">'h1'</span>: tf.Variable(tf.random_normal([n_input, n_hidden_1])),</span><br><span class="line">    <span class="string">'h2'</span>: tf.Variable(tf.random_normal([n_hidden_1, n_hidden_1])),</span><br><span class="line">    <span class="string">'out'</span>: tf.Variable(tf.random_normal([n_hidden_1, n_input]))</span><br><span class="line">&#125;</span><br><span class="line">biases = &#123;</span><br><span class="line">    <span class="string">'b1'</span>: tf.Variable(tf.zeros([n_hidden_1])),</span><br><span class="line">    <span class="string">'b2'</span>: tf.Variable(tf.zeros([n_hidden_1])),</span><br><span class="line">    <span class="string">'out'</span>: tf.Variable(tf.zeros([n_input]))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 网络模型</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">denoise_auto_encoder</span><span class="params">(x, weights, biases, keep_prob)</span>:</span></span><br><span class="line">    layer_1 = tf.nn.sigmoid(tf.add(tf.matmul(x, weights[<span class="string">'h1'</span>]), biases[<span class="string">'b1'</span>]))</span><br><span class="line">    layer_1out = tf.nn.dropout(layer_1, keep_prob)</span><br><span class="line">    layer_2 = tf.nn.sigmoid(</span><br><span class="line">        tf.add(tf.matmul(layer_1out, weights[<span class="string">'h2'</span>]), biases[<span class="string">'b2'</span>]))</span><br><span class="line">    layer_2out = tf.nn.dropout(layer_2, keep_prob)</span><br><span class="line">    <span class="keyword">return</span> tf.nn.sigmoid(</span><br><span class="line">        tf.add(tf.matmul(layer_2out, weights[<span class="string">'out'</span>]), biases[<span class="string">'out'</span>]))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">reconstruction = denoise_auto_encoder(x, weights, biases, dropout_keep_prob)</span><br><span class="line"></span><br><span class="line"><span class="comment"># cost计算</span></span><br><span class="line">cost = tf.reduce_mean(tf.pow(reconstruction - y, <span class="number">2</span>))</span><br><span class="line">optm = tf.train.AdamOptimizer(<span class="number">0.01</span>).minimize(cost)</span><br><span class="line"><span class="comment"># 训练参数</span></span><br><span class="line">epochs = <span class="number">20</span></span><br><span class="line">batch_size = <span class="number">256</span></span><br><span class="line">disp_step = <span class="number">2</span></span><br><span class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line">    sess.run(tf.global_variables_initializer())</span><br><span class="line">    print(<span class="string">'开始训练'</span>)</span><br><span class="line">    <span class="keyword">for</span> epoch <span class="keyword">in</span> range(epochs):</span><br><span class="line">        num_batch = int(mnist.train.num_examples / batch_size)</span><br><span class="line">        total_cost = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(num_batch):</span><br><span class="line">            batch_xs, batch_ys = mnist.train.next_batch(batch_size)</span><br><span class="line">            batch_xs_noisy = batch_xs + <span class="number">0.3</span> * np.random.randn(batch_size, <span class="number">784</span>)</span><br><span class="line">            feeds = &#123;x: batch_xs_noisy, y: batch_xs, dropout_keep_prob: <span class="number">1.</span>&#125;</span><br><span class="line">            sess.run(optm, feed_dict=feeds)</span><br><span class="line">            total_cost += sess.run(cost, feed_dict=feeds)</span><br><span class="line">        <span class="keyword">if</span> epoch % disp_step == <span class="number">0</span>:</span><br><span class="line">            print(<span class="string">"Epoch %02d/%02d average cost:%.6f"</span> %</span><br><span class="line">                  (epoch, epochs, total_cost / num_batch))</span><br><span class="line">    print(<span class="string">'完成'</span>)</span><br><span class="line">    show_num = <span class="number">10</span></span><br><span class="line">    test_noisy = mnist.test.images[:show_num] + <span class="number">0.3</span> * np.random.randn(</span><br><span class="line">        show_num, <span class="number">784</span>)</span><br><span class="line">    encode_decode = sess.run(</span><br><span class="line">        reconstruction, feed_dict=&#123;</span><br><span class="line">            x: test_noisy,</span><br><span class="line">            dropout_keep_prob: <span class="number">1.</span></span><br><span class="line">        &#125;)</span><br><span class="line">    f, a = plt.subplots(<span class="number">3</span>, <span class="number">10</span>, figsize=(<span class="number">10</span>, <span class="number">3</span>))</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(show_num):</span><br><span class="line">        a[<span class="number">0</span>][i].imshow(np.reshape(test_noisy[i], (<span class="number">28</span>, <span class="number">28</span>)))</span><br><span class="line">        a[<span class="number">1</span>][i].imshow(np.reshape(mnist.test.images[i], (<span class="number">28</span>, <span class="number">28</span>)))</span><br><span class="line">        a[<span class="number">2</span>][i].matshow(</span><br><span class="line">            np.reshape(encode_decode[i], (<span class="number">28</span>, <span class="number">28</span>)), cmap=plt.get_cmap(<span class="string">'gray'</span>))</span><br><span class="line">    plt.show()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 测试鲁棒性</span></span><br><span class="line">    randidx = np.random.randint(test_X.shape[<span class="number">0</span>], size=<span class="number">1</span>)</span><br><span class="line">    orgvec = test_X[randidx, :]</span><br><span class="line">    testvec = test_X[randidx, :]</span><br><span class="line">    label = np.argmax(test_Y[randidx, :], <span class="number">1</span>)</span><br><span class="line">    print(<span class="string">'label is %d'</span> % label)</span><br><span class="line">    <span class="comment"># 噪声类型</span></span><br><span class="line">    print(<span class="string">'Salt and Pepper Noise'</span>)</span><br><span class="line">    noisyvec = testvec</span><br><span class="line">    rate = <span class="number">0.15</span></span><br><span class="line">    noiseidx = np.random.randint(</span><br><span class="line">        test_X.shape[<span class="number">1</span>], size=int(test_X.shape[<span class="number">1</span>] * rate))</span><br><span class="line">    noisyvec[<span class="number">0</span>, noiseidx] = <span class="number">1</span> - noisyvec[<span class="number">0</span>, noiseidx]</span><br><span class="line">    outvec = sess.run(</span><br><span class="line">        reconstruction, feed_dict=&#123;</span><br><span class="line">            x: noisyvec,</span><br><span class="line">            dropout_keep_prob: <span class="number">1</span></span><br><span class="line">        &#125;)</span><br><span class="line">    outimg = np.reshape(outvec, (<span class="number">28</span>, <span class="number">28</span>))</span><br><span class="line"></span><br><span class="line">    plt.matshow(np.reshape(orgvec, (<span class="number">28</span>, <span class="number">28</span>)), cmap=plt.get_cmap(<span class="string">'gray'</span>))</span><br><span class="line">    plt.title(<span class="string">'Original Image'</span>)</span><br><span class="line">    plt.colorbar()</span><br><span class="line"></span><br><span class="line">    plt.matshow(np.reshape(noisyvec, (<span class="number">28</span>, <span class="number">28</span>)), cmap=plt.get_cmap(<span class="string">'gray'</span>))</span><br><span class="line">    plt.title(<span class="string">'Input Image'</span>)</span><br><span class="line">    plt.colorbar()</span><br><span class="line"></span><br><span class="line">    plt.matshow(outimg, cmap=plt.get_cmap(<span class="string">'gray'</span>))</span><br><span class="line">    plt.title(<span class="string">'Reconstructed Image'</span>)</span><br><span class="line">    plt.colorbar()</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure></p>
+<h2 id="栈式自编码"><a href="#栈式自编码" class="headerlink" title="栈式自编码"></a>栈式自编码</h2><h3 id="栈式自编码介绍"><a href="#栈式自编码介绍" class="headerlink" title="栈式自编码介绍"></a>栈式自编码介绍</h3><p>栈式自编码神经网络（Stacked Autoencoder，SA），是对自编码网络的一种使用方法，是一个由多层训练好的自编码器组成的神经网络。由于网络中的每一层都是单独训练而来，相当于都初始化了一个合理的数值。所以，这样的网络会更容易训练，并且有更快的收敛性及更高的准确度。栈式自编码常被用于预训练（初始化）深度神经网络之前的权重预训练步骤。例如，在一个分类问题上，可以按照从前向后的顺序执行每一层通过自编码器来训练，最终将网络中最深层输出作为softmax分类器的输入特征，通过softmax层将其分开。<br>下面以训练一个包含两个隐含层的栈式自编码网络为例。<br>1)训练一个自编码器，得到原始输入的一阶特征表示h<sup>(1)</sup><br><img src="/2018/11/13/自编码网络/sa1.png" title="栈式自编码一层结构"><br>2)将上一步输出的特征h<sup>(1)</sup>作为输入，对其进行再一次的自编码，并同时获取特征h<sup>(2)</sup>.<br><img src="/2018/11/13/自编码网络/sa2.png" title="栈式自编码二层结构"><br>3)把上一步的特征h<sup>(2)</sup>连还是哪个softmax分类器，得到了一个图片数字标签分类的模型，结构如下图所示。<br><img src="/2018/11/13/自编码网络/sa3.png" title="栈式自编码三层结构"><br>4)把这3层结合起来，就构成一个包含两个隐藏层加一个softmax的栈式自编码网络，可以对数字图片分类。<br><img src="/2018/11/13/自编码网络/sa4.png" title="栈式自编码级联结构"></p>
+<h3 id="栈式自编码在深度学习中的意义"><a href="#栈式自编码在深度学习中的意义" class="headerlink" title="栈式自编码在深度学习中的意义"></a>栈式自编码在深度学习中的意义</h3><p>优点：</p>
+<ul>
+<li>每一层都可以单独训练，保证将维特征的可控性</li>
+<li>使用栈式自编码逐层降维，可以将复杂问题简单化。</li>
+<li>任意深层，理论上是越深层的神经网络对现实的拟合度越高，但是传统的多层神经网络，由于使用的是误差反向传播方式，导致层越深，传播的误差越小。栈式自编码巧妙地绕过这个问题，直接使用降维后的特征值进行二次训练，可以任意层数的加深。</li>
+</ul>
+<p>栈式自编码通常能够获取到输入的“层次型分组”或“部分-整体分解”结构，自编码器倾向于学习得到与样本相对应的低维向量，该向量可以更好地表示高维样本的数据特征。<br>如果网络的输入是图像，第一层会学习去识别边，二层会学习组合边、构成轮廓角等，更高层会学习组合更形象的特征。</p>
+
+      
+    </div>
+
+    
+      
+      
+
+  <div class="post-copyright">
+    <p class="copyright-item">
+      <span>原文作者: </span>
+      <a href="https://geolibra.github.io">hgis</a>
+    </p>
+    <p class="copyright-item">
+      <span>原文链接: </span>
+      <a href="https://geolibra.github.io/2018/11/13/自编码网络/">https://geolibra.github.io/2018/11/13/自编码网络/</a>
+    </p>
+    <p class="copyright-item">
+      <span>许可协议: </span>
+      
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>
+    </p>
+  </div>
+
+
+
+      
+      
+    
+
+    
+      <footer class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/Tensorflow/">Tensorflow</a>
+            
+          </div>
+        
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2018/11/20/caffe-segnet-配置使用/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">caffe-segnet 配置使用</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+      <a class="next" href="/2018/11/13/SegNet入门/">
+        <span class="next-text nav-default">SegNet入门</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+
+      </footer>
+    
+
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:674530915@qq.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+          <a href="https://github.com/GeoLibra" class="iconfont icon-github" title="github"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+
+    
+      
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
+  </div>
+
+
+<div class="copyright">
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+  <span class="post-meta-divider">|</span>
+  <span id="busuanzi_container_site_uv">本站访客数<span id="busuanzi_value_site_uv"></span>人</span>
+
+
+  <span class="copyright-year">
+    
+    &copy; 
+    
+    2018
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">hgis</span>
+    <span id="busuanzi_container_site_uv">
+    </span>
+</span>
+</div>
+
+
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+  
+
+  
+
+
+
+    
+  
+
+
+
+  
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/pjax/jquery.pjax.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/nprogress/nprogress.min.js"></script>
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.10.1"></script>
+
+  </body>
+</html>

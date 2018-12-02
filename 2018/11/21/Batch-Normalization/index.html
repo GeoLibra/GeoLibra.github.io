@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+  <meta name="description" content="Batch Normalization"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/default" title="磊哥的小书桌">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.10.1" />
+
+
+
+<link rel="canonical" href="https://geolibra.github.io/2018/11/21/Batch-Normalization/"/>
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css" />
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css" />
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.10.1" />
+
+
+
+  <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?97659041a2db55d3eb7266f53be7c071";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.1.1/av-min.js"></script>
+  <script id="leancloud">
+    AV.init({
+      appId: "ro3TOe5F5DDemxHnSoYVCHli-gzGzoHsz",
+      appKey: "IHyD5EfrggPl57FnwtBEeH0W"
+    });
+  </script>
+
+
+
+
+<script>
+  window.config = {"title":"磊哥的小书桌","subtitle":null,"description":null,"author":"hgis","language":null,"timezone":null,"url":"https://geolibra.github.io","root":"/","permalink":":year/:month/:day/:title/","permalink_defaults":null,"source_dir":"source","public_dir":"public","tag_dir":"tags","archive_dir":"archives","category_dir":"categories","code_dir":"downloads/code","i18n_dir":":lang","skip_render":null,"new_post_name":":title.md","default_layout":"post","titlecase":false,"external_link":true,"filename_case":0,"render_drafts":false,"post_asset_folder":true,"relative_link":false,"future":true,"highlight":{"enable":true,"auto_detect":false,"line_number":true,"tab_replace":null,"first_line_number":"always1"},"default_category":"uncategorized","category_map":null,"tag_map":null,"date_format":"YYYY-MM-DD","time_format":"HH:mm:ss","per_page":10,"pagination_dir":"page","theme":"even","deploy":{"type":"git","repository":"git@github.com:GeoLibra/GeoLibra.github.io.git","branch":"master"},"ignore":[],"keywords":null,"email":"674530915@qq.com","index_generator":{"per_page":10,"order_by":"-date","path":""},"tag_cloud":{"textFont":"Trebuchet MS, Helvetica","textColour":"\\#eea849","textHeight":25,"outlineColour":"\\#E2E1D1"},"archive_generator":{"per_page":10,"yearly":true,"monthly":true,"daily":false},"category_generator":{"per_page":10},"tag_generator":{"per_page":10},"marked":{"gfm":true,"pedantic":false,"sanitize":false,"tables":true,"breaks":true,"smartLists":true,"smartypants":true,"modifyAnchors":"","autolink":true},"server":{"port":4000,"log":false,"compress":false,"header":true},"since":2018,"favicon":"/favicon.ico","rss":"default","menu":{"Home":"/","Archives":"/archives/","Tags":"/tags","Categories":"/categories","About":"/about"},"color":"default","mode":"default","toc":true,"fancybox":true,"pjax":true,"copyright":{"enable":true,"license":"<a rel=\"license\" href=\"http://creativecommons.org/licenses/by-nc/4.0/\" target=\"_blank\">知识共享署名-非商业性使用 4.0 国际许可协议</a>"},"reward":{"enable":false,"qrCode":{"wechat":null,"alipay":null}},"social":{"email":"674530915@qq.com","stack-overflow":null,"twitter":null,"facebook":null,"linkedin":null,"google":null,"github":"https://github.com/GeoLibra","weibo":null,"zhihu":null,"douban":null,"pocket":null,"tumblr":null,"instagram":null},"leancloud":{"app_id":"ro3TOe5F5DDemxHnSoYVCHli-gzGzoHsz","app_key":"IHyD5EfrggPl57FnwtBEeH0W"},"baidu_analytics":"97659041a2db55d3eb7266f53be7c071","baidu_verification":null,"google_analytics":null,"google_verification":null,"disqus_shortname":null,"changyan":{"appid":null,"appkey":null},"livere_datauid":null,"counter":true,"version":"2.10.1"};
+</script>
+
+    <title> Batch Normalization - 磊哥的小书桌 </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">磊哥的小书桌</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            首页
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            归档
+          
+        </li>
+      </a>
+    
+      <a href="/tags">
+        <li class="mobile-menu-item">
+          
+          
+            标签
+          
+        </li>
+      </a>
+    
+      <a href="/categories">
+        <li class="mobile-menu-item">
+          
+          
+            分类
+          
+        </li>
+      </a>
+    
+      <a href="/about">
+        <li class="mobile-menu-item">
+          
+          
+            关于
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">磊哥的小书桌</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/tags">
+            
+            
+              标签
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/categories">
+            
+            
+              分类
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            
+            
+              关于
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          Batch Normalization
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2018-11-21
+        </span>
+        
+          <span class="post-category">
+            
+              <a href="/categories/深度学习/">深度学习</a>
+            
+          </span>
+        
+        
+        <span class="post-visits"
+             data-url="/2018/11/21/Batch-Normalization/"
+             data-title="Batch Normalization">
+          阅读次数 0
+        </span>
+        
+      </div>
+    </header>
+
+    
+    
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#BN介绍"><span class="toc-text">BN介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#BN的定义"><span class="toc-text">BN的定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#BN的简单用法"><span class="toc-text">BN的简单用法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#为CIFAR图片分类模型添加BN"><span class="toc-text">为CIFAR图片分类模型添加BN</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#添加BN函数"><span class="toc-text">添加BN函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#为BN函数添加占位符参数"><span class="toc-text">为BN函数添加占位符参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#修改网络结构添加BN层"><span class="toc-text">修改网络结构添加BN层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#加入衰减学习率"><span class="toc-text">加入衰减学习率</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#在运行session中"><span class="toc-text">在运行session中</span></a></li></ol></li></ol>
+    </div>
+  </div>
+
+
+
+    <div class="post-content">
+      
+        <p>Batch Normalization, 批标准化, 和普通的数据标准化类似, 是将分散的数据统一的一种做法, 也是优化神经网络的一种方法。</p>
+<h2 id="BN介绍"><a href="#BN介绍" class="headerlink" title="BN介绍"></a>BN介绍</h2><p>  假如有个极简的网络模型，每一层只有一个节点，没有偏置，那么如果这个网络有三层的话，可以用下式表示其输出值：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Z=x * w1 * w2 * w3</span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<p>假如有两个神经网络，学习出了两套权重（w1:1,w2:1,w3:1）和（w1:0.01,w2:1000,w3:0.01），它们对应的输出z都是相同的。</p>
+<ol>
+<li>反向传播:假设反向传播时计算出的损失值δy为1，那么对于这两套权重的修正值将变为（δw1:1,δw2:1,δw3:1）和（δw1:100,δw2:0.0001,δw3:100）</li>
+<li>更新权重:这时更新过后的两套权重就变成了（δw1:2,δw2:2,δw3:2）和（δw1:100.01,δw2:10000.0001,δw3:100.01）</li>
+<li>第二次正向传播:假设输入样本是1，第一个神经网络值为：Z=1x2x2x2=8；第二个神经网络值为：Z=1x100.1x10000.0001x100.01=100000000</li>
+</ol>
+<p>可以看到两个网络的输出值差别巨大，如果再往下进行，这时计算出的loss值会变得更大，使得网络无法计算，这种现象叫做梯度爆炸。产生梯度爆炸的原因就是因为网络的内部协变量转移（Internal Covariate Shift），即正向传播时的不同层的参数会将反向训练计算时所参照的数据样本分布改变。<br>这就是引入批量正则化的目的，它的作用是<strong>最大限度的保证每次的正向传播输出在同一分布上</strong>，这样反向计算时参照的数据样本分布就会与正向计算时的数据分布一样了。保证了分布统一，对权重的调整才更有意义。</p>
+<p>批量正则化的做法就是将每一层运算出来的数据都归一化成均值为0方差为1的标准高斯分布，这样就会在保留样本分布特征的同时又消除了层与层的分布差异。</p>
+<blockquote>
+<p>在实际应用中，批量正则化的收敛速度非常快，并且具有很强的泛化能力，某种情况下可以完全代替正则化、Dropout。</p>
+</blockquote>
+<h2 id="BN的定义"><a href="#BN的定义" class="headerlink" title="BN的定义"></a>BN的定义</h2><p>Tensorflow中的BN实现：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">tf.nn.batch_normalization(</span><br><span class="line">    x,         <span class="comment"># 代表输入</span></span><br><span class="line">    mean,      <span class="comment"># 代表样本的均值</span></span><br><span class="line">    variabce,  <span class="comment"># 代表方差</span></span><br><span class="line">    offset,    <span class="comment"># 代表偏移,即相加一个转化值,后面会用激活函数来转换,所以这里不需要再转化,直接使用0</span></span><br><span class="line">    scale,     <span class="comment"># 缩放,即乘以一个转化值,同理,一般用1</span></span><br><span class="line">    variance_epsilon, <span class="comment"># 为了避免分母为0的情况,给分母加一个极小值.默认即可</span></span><br><span class="line">    name=<span class="keyword">None</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
+<p>要使用这个函数，还需要另一个函数配合——tf.nn.moments，由它来计算均值和方差，然后使用BN。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tf.nn.moments(x,axes,name=<span class="keyword">None</span>,keep_dims=<span class="keyword">False</span>)</span><br><span class="line"><span class="comment"># axes主要是指定哪个轴来求均值与方差</span></span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>为了求样本的均值和方差，一般会设为保留最后一个维度，对于x来将可以直接使用公式axis=list(range(len(x.get_shape())-1))即可。例如，[128,3,3,12]axes就为[0,1,2],输出的均值方差维度为[12]</p>
+</blockquote>
+<p>我们希望使用<strong>平滑指数衰减</strong>的方法来优化每次的均值和方差，于是就用到了tf.train.ExponentialMovingAverage函数。作用是让上一次的值对本次的值有个衰减后的影响，从而使每次的值连接起来后会相对平滑一些。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shadow_variable=decay * shadow_variable + (1-decay) * variable</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>decay:衰减指数，是在ExponentialMovingAverage中指定的，如0.9</li>
+<li>variable:本批次样本中的值</li>
+<li>等式右边shadow_variable:上次总样本的值</li>
+<li>等式左边shadow_variable:计算出来的本次总样本的值<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line">N_LAYERS = <span class="number">7</span>  <span class="comment"># 一共7个隐藏层</span></span><br><span class="line">N_HIDDEN_UNITS = <span class="number">30</span>  <span class="comment"># 每个隐藏层有30个神经元</span></span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fix_seed</span><span class="params">(seed=<span class="number">1</span>)</span>:</span></span><br><span class="line">    np.random.seed(seed)</span><br><span class="line">    tf.set_random_seed(seed)</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">plot_his</span><span class="params">(inputs, inputs_norm)</span>:</span></span><br><span class="line">    <span class="comment"># plot histogram for the inputs of every layer</span></span><br><span class="line">    <span class="keyword">for</span> j, all_inputs <span class="keyword">in</span> enumerate([inputs, inputs_norm]):</span><br><span class="line">        <span class="keyword">for</span> i, input <span class="keyword">in</span> enumerate(all_inputs):</span><br><span class="line">            plt.subplot(<span class="number">2</span>, len(all_inputs), j * len(all_inputs) + (i + <span class="number">1</span>))</span><br><span class="line">            plt.cla()</span><br><span class="line">            <span class="keyword">if</span> i == <span class="number">0</span>:</span><br><span class="line">                the_range = (<span class="number">-7</span>, <span class="number">10</span>)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                the_range = (<span class="number">-1</span>, <span class="number">1</span>)</span><br><span class="line">            plt.hist(input.ravel(), bins=<span class="number">15</span>, range=the_range, color=<span class="string">'#FF5733'</span>)</span><br><span class="line">            plt.yticks(())</span><br><span class="line">            <span class="keyword">if</span> j == <span class="number">1</span>:</span><br><span class="line">                plt.xticks(the_range)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                plt.xticks(())</span><br><span class="line">            ax = plt.gca()</span><br><span class="line">            ax.spines[<span class="string">'right'</span>].set_color(<span class="string">'none'</span>)</span><br><span class="line">            ax.spines[<span class="string">'top'</span>].set_color(<span class="string">'none'</span>)</span><br><span class="line">        plt.title(<span class="string">"%s normalizing"</span> % (<span class="string">"Without"</span> <span class="keyword">if</span> j == <span class="number">0</span> <span class="keyword">else</span> <span class="string">"With"</span>))</span><br><span class="line">    plt.draw()</span><br><span class="line">    plt.pause(<span class="number">0.01</span>)</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">build_net</span><span class="params">(xs, ys, norm)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">add_layer</span><span class="params">(inputs,</span></span></span><br><span class="line"><span class="function"><span class="params">                  in_size,</span></span></span><br><span class="line"><span class="function"><span class="params">                  out_size,</span></span></span><br><span class="line"><span class="function"><span class="params">                  activation_function=None,</span></span></span><br><span class="line"><span class="function"><span class="params">                  norm=False)</span>:</span></span><br><span class="line">        <span class="comment"># weights and biases (bad initialization for this case)</span></span><br><span class="line">        Weights = tf.Variable(</span><br><span class="line">            tf.random_normal([in_size, out_size], mean=<span class="number">0.</span>, stddev=<span class="number">1.</span>))</span><br><span class="line">        biases = tf.Variable(tf.zeros([<span class="number">1</span>, out_size]) + <span class="number">0.1</span>)</span><br><span class="line"> </span><br><span class="line">        <span class="comment"># fully connected product</span></span><br><span class="line">        Wx_plus_b = tf.matmul(inputs, Weights) + biases</span><br><span class="line"> </span><br><span class="line">        <span class="comment"># normalize fully connected product</span></span><br><span class="line">        <span class="keyword">if</span> norm:</span><br><span class="line">            <span class="comment"># Batch Normalize</span></span><br><span class="line">            fc_mean, fc_var = tf.nn.moments(</span><br><span class="line">                Wx_plus_b,</span><br><span class="line">                axes=[</span><br><span class="line">                    <span class="number">0</span></span><br><span class="line">                ],  <span class="comment"># the dimension you wanna normalize, here [0] for batch</span></span><br><span class="line">                <span class="comment"># for image, you wanna do [0, 1, 2] for [batch, height, width] but not channel</span></span><br><span class="line">            )</span><br><span class="line">            scale = tf.Variable(tf.ones([out_size]))</span><br><span class="line">            shift = tf.Variable(tf.zeros([out_size]))</span><br><span class="line">            epsilon = <span class="number">0.001</span></span><br><span class="line"> </span><br><span class="line">            <span class="comment"># apply moving average for mean and var when train on batch</span></span><br><span class="line">            ema = tf.train.ExponentialMovingAverage(decay=<span class="number">0.5</span>)</span><br><span class="line"> </span><br><span class="line">            <span class="function"><span class="keyword">def</span> <span class="title">mean_var_with_update</span><span class="params">()</span>:</span></span><br><span class="line">                ema_apply_op = ema.apply([fc_mean, fc_var])</span><br><span class="line">                <span class="keyword">with</span> tf.control_dependencies([ema_apply_op]):</span><br><span class="line">                    <span class="keyword">return</span> tf.identity(fc_mean), tf.identity(fc_var)</span><br><span class="line"> </span><br><span class="line">            mean, var = mean_var_with_update()</span><br><span class="line"> </span><br><span class="line">            Wx_plus_b = tf.nn.batch_normalization(Wx_plus_b, mean, var, shift,</span><br><span class="line">                                                  scale, epsilon)</span><br><span class="line">            <span class="comment"># similar with this two steps:</span></span><br><span class="line">            <span class="comment"># Wx_plus_b = (Wx_plus_b - fc_mean) / tf.sqrt(fc_var + 0.001)</span></span><br><span class="line">            <span class="comment"># Wx_plus_b = Wx_plus_b * scale + shift</span></span><br><span class="line"> </span><br><span class="line">        <span class="comment"># activation</span></span><br><span class="line">        <span class="keyword">if</span> activation_function <span class="keyword">is</span> <span class="keyword">None</span>:</span><br><span class="line">            outputs = Wx_plus_b</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            outputs = activation_function(Wx_plus_b)</span><br><span class="line"> </span><br><span class="line">        <span class="keyword">return</span> outputs</span><br><span class="line"> </span><br><span class="line">    fix_seed(<span class="number">1</span>)</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">if</span> norm:</span><br><span class="line">        <span class="comment"># BN for the first input</span></span><br><span class="line">        fc_mean, fc_var = tf.nn.moments(</span><br><span class="line">            xs,</span><br><span class="line">            axes=[<span class="number">0</span>],</span><br><span class="line">        )</span><br><span class="line">        scale = tf.Variable(tf.ones([<span class="number">1</span>]))</span><br><span class="line">        shift = tf.Variable(tf.zeros([<span class="number">1</span>]))</span><br><span class="line">        epsilon = <span class="number">0.001</span></span><br><span class="line">        <span class="comment"># apply moving average for mean and var when train on batch</span></span><br><span class="line">        ema = tf.train.ExponentialMovingAverage(decay=<span class="number">0.5</span>)</span><br><span class="line"> </span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">mean_var_with_update</span><span class="params">()</span>:</span></span><br><span class="line">            ema_apply_op = ema.apply([fc_mean, fc_var])</span><br><span class="line">            <span class="keyword">with</span> tf.control_dependencies([ema_apply_op]):</span><br><span class="line">                <span class="keyword">return</span> tf.identity(fc_mean), tf.identity(fc_var)</span><br><span class="line"> </span><br><span class="line">        mean, var = mean_var_with_update()</span><br><span class="line">        xs = tf.nn.batch_normalization(xs, mean, var, shift, scale, epsilon)</span><br><span class="line"> </span><br><span class="line">    <span class="comment"># record inputs for every layer</span></span><br><span class="line">    layers_inputs = [xs]</span><br><span class="line"> </span><br><span class="line">    <span class="comment"># build hidden layers</span></span><br><span class="line">    <span class="keyword">for</span> l_n <span class="keyword">in</span> range(N_LAYERS):</span><br><span class="line">        layer_input = layers_inputs[l_n]</span><br><span class="line">        in_size = layers_inputs[l_n].get_shape()[<span class="number">1</span>].value</span><br><span class="line"> </span><br><span class="line">        output = add_layer(</span><br><span class="line">            layer_input,  <span class="comment"># input</span></span><br><span class="line">            in_size,  <span class="comment"># input size</span></span><br><span class="line">            N_HIDDEN_UNITS,  <span class="comment"># output size</span></span><br><span class="line">            tf.nn.relu,  <span class="comment"># activation function</span></span><br><span class="line">            norm,  <span class="comment"># normalize before activation</span></span><br><span class="line">        )</span><br><span class="line">        layers_inputs.append(output)  <span class="comment"># add output for next run</span></span><br><span class="line"> </span><br><span class="line">    <span class="comment"># build output layer</span></span><br><span class="line">    prediction = add_layer(layers_inputs[<span class="number">-1</span>], <span class="number">30</span>, <span class="number">1</span>, activation_function=<span class="keyword">None</span>)</span><br><span class="line"> </span><br><span class="line">    cost = tf.reduce_mean(</span><br><span class="line">        tf.reduce_sum(tf.square(ys - prediction), reduction_indices=[<span class="number">1</span>]))</span><br><span class="line">    train_op = tf.train.GradientDescentOptimizer(<span class="number">0.001</span>).minimize(cost)</span><br><span class="line">    <span class="keyword">return</span> [train_op, cost, layers_inputs]</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment"># 创建数据</span></span><br><span class="line">fix_seed(<span class="number">1</span>)</span><br><span class="line">x_data = np.linspace(<span class="number">-7</span>, <span class="number">10</span>, <span class="number">2500</span>)[:, np.newaxis]</span><br><span class="line">np.random.shuffle(x_data)</span><br><span class="line">noise = np.random.normal(<span class="number">0</span>, <span class="number">8</span>, x_data.shape)</span><br><span class="line">y_data = np.square(x_data) - <span class="number">5</span> + noise</span><br><span class="line">plt.scatter(x_data, y_data)</span><br><span class="line">plt.show()</span><br><span class="line"> </span><br><span class="line">xs = tf.placeholder(tf.float32, [<span class="keyword">None</span>, <span class="number">1</span>])  <span class="comment"># [num_samples,num_features]</span></span><br><span class="line">ys = tf.placeholder(tf.float32, [<span class="keyword">None</span>, <span class="number">1</span>])</span><br><span class="line"> </span><br><span class="line">train_op, cost, layers_inputs = build_net(xs, ys, norm=<span class="keyword">False</span>)  <span class="comment"># without BN</span></span><br><span class="line">train_op_norm, cost_norm, layers_inputs_norm = build_net(</span><br><span class="line">    xs, ys, norm=<span class="keyword">True</span>)  <span class="comment"># with BN</span></span><br><span class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line">    init = tf.global_variables_initializer()</span><br><span class="line">    sess.run(init)</span><br><span class="line"> </span><br><span class="line">    cost_his = []</span><br><span class="line">    cost_his_norm = []</span><br><span class="line">    record_step = <span class="number">5</span></span><br><span class="line">    plt.ion()</span><br><span class="line">    plt.figure(figsize=(<span class="number">7</span>, <span class="number">3</span>))</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">250</span>):</span><br><span class="line">        <span class="keyword">if</span> i % <span class="number">50</span> == <span class="number">0</span>:</span><br><span class="line">            <span class="comment"># plot histogram</span></span><br><span class="line">            all_inputs, all_inputs_norm = sess.run(</span><br><span class="line">                [layers_inputs, layers_inputs_norm],</span><br><span class="line">                feed_dict=&#123;</span><br><span class="line">                    xs: x_data,</span><br><span class="line">                    ys: y_data</span><br><span class="line">                &#125;)</span><br><span class="line">            plot_his(all_inputs, all_inputs_norm)</span><br><span class="line"> </span><br><span class="line">        <span class="comment"># train on batch</span></span><br><span class="line">        sess.run([train_op, train_op_norm],</span><br><span class="line">                    feed_dict=&#123;</span><br><span class="line">                        xs: x_data[i * <span class="number">10</span>:i * <span class="number">10</span> + <span class="number">10</span>],</span><br><span class="line">                        ys: y_data[i * <span class="number">10</span>:i * <span class="number">10</span> + <span class="number">10</span>]</span><br><span class="line">                    &#125;)</span><br><span class="line"> </span><br><span class="line">        <span class="keyword">if</span> i % record_step == <span class="number">0</span>:</span><br><span class="line">            cost_his.append(sess.run(cost, feed_dict=&#123;xs: x_data, ys: y_data&#125;))</span><br><span class="line">            cost_his_norm.append(</span><br><span class="line">                sess.run(cost_norm, feed_dict=&#123;</span><br><span class="line">                    xs: x_data,</span><br><span class="line">                    ys: y_data</span><br><span class="line">                &#125;))</span><br><span class="line">    plt.ioff()</span><br><span class="line">    plt.figure()</span><br><span class="line">    plt.plot(</span><br><span class="line">        np.arange(len(cost_his)) * record_step, np.array(cost_his),</span><br><span class="line">        label=<span class="string">'no BN'</span>)  <span class="comment"># no norm</span></span><br><span class="line">    plt.plot(</span><br><span class="line">        np.arange(len(cost_his)) * record_step,</span><br><span class="line">        np.array(cost_his_norm),</span><br><span class="line">        label=<span class="string">'BN'</span>)  <span class="comment"># norm</span></span><br><span class="line">    plt.legend()</span><br><span class="line">    plt.show()</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="BN的简单用法"><a href="#BN的简单用法" class="headerlink" title="BN的简单用法"></a>BN的简单用法</h2><p>上面的函数虽然参数不多，但需要几个函数联合起来使用，于是Tensorflow中的layers模块里又实现了一次BN函数，相当于把几个函数合并到一起。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 需要导入以下模块</span></span><br><span class="line"><span class="keyword">from</span> tensorflow.contrib.layers.python.layers <span class="keyword">import</span> batch_norm</span><br><span class="line"><span class="comment"># 函数的定义</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">batch_norm</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">        inputs,</span></span></span><br><span class="line"><span class="function"><span class="params">        decay=<span class="number">0.999</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">        center=True,</span></span></span><br><span class="line"><span class="function"><span class="params">        scale=False,</span></span></span><br><span class="line"><span class="function"><span class="params">        epsilon=<span class="number">0.001</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">        activation_fn=None,</span></span></span><br><span class="line"><span class="function"><span class="params">        param_initializers=None,</span></span></span><br><span class="line"><span class="function"><span class="params">        param_regularizers=None,</span></span></span><br><span class="line"><span class="function"><span class="params">        updates_collections=ops.GrapKeys.UPDATE_OPS,</span></span></span><br><span class="line"><span class="function"><span class="params">        is_training=True,</span></span></span><br><span class="line"><span class="function"><span class="params">        reuse=None,</span></span></span><br><span class="line"><span class="function"><span class="params">        variables_collections=None,</span></span></span><br><span class="line"><span class="function"><span class="params">        outputs_collections=None,</span></span></span><br><span class="line"><span class="function"><span class="params">        trainable=True,</span></span></span><br><span class="line"><span class="function"><span class="params">        batch_weights=None,</span></span></span><br><span class="line"><span class="function"><span class="params">        fused=False,</span></span></span><br><span class="line"><span class="function"><span class="params">        data_format=DATA_FORMAT_NHWC,</span></span></span><br><span class="line"><span class="function"><span class="params">        zero_debias_moving_mean=False,</span></span></span><br><span class="line"><span class="function"><span class="params">        scope=None,</span></span></span><br><span class="line"><span class="function"><span class="params">        renorm_clipping=None,</span></span></span><br><span class="line"><span class="function"><span class="params">        renorm_decay=<span class="number">0.99</span></span></span></span><br><span class="line"><span class="function"><span class="params">    )</span>:</span></span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>inputs:输入</li>
+<li>decay:移动平均值的衰减速度，是使用了一种叫做平滑指数衰减的方法更新均值方差，一般设为0.9；值太小会导致均值和方差更新太快，而值太大又会导致几乎没有衰减，容易出现过拟合，这种情况一般需要把值调小点</li>
+<li>scale:如果为True，则乘以gamma。如果为False，gamma则不使用。当下一层是线性的时（例如relu），由于缩放可以由下一层完成，所以可以禁用该层。</li>
+<li>epslion:为了避免分母为0，给分母加一个极小值。一般默认即可。</li>
+<li>is_training:当它为True时，代表是训练过程，这时会不断更新样本集的均值与方差。当测试时，设为False，这样就会使用训练样本集的均值与方差</li>
+<li>updates_collections:其默认是tf.GraphKeys.UPDATE_OPS，在训练时提供了一种内置的均值方差更新机制，即通过图（一个计算任务）中的tf.GraphKeys.UPDATE_OPS变量来更新。但是它是在每次当前批次训练完成后才更新均值和方差，这样导致当前数据总是使用前一次的均值和方差，没有得到最新的更新。所以一般都设为None，让均值和方差即时更新。这样做虽然相比默认值在性能稍慢点，但是对模型的训练有较大帮助。</li>
+<li>reuse:支持共享变量，与scope联合使用</li>
+<li>scope:指定变量的作用域variable_scope</li>
+</ul>
+<h2 id="为CIFAR图片分类模型添加BN"><a href="#为CIFAR图片分类模型添加BN" class="headerlink" title="为CIFAR图片分类模型添加BN"></a>为CIFAR图片分类模型添加BN</h2><h3 id="添加BN函数"><a href="#添加BN函数" class="headerlink" title="添加BN函数"></a>添加BN函数</h3><p>在池化函数后加入BN函数<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">avg_pool_6x6</span><span class="params">(x)</span>:</span></span><br><span class="line">  <span class="keyword">return</span> tf.nn.avg_pool(x, ksize=[<span class="number">1</span>, <span class="number">6</span>, <span class="number">6</span>, <span class="number">1</span>],</span><br><span class="line">                        strides=[<span class="number">1</span>, <span class="number">6</span>, <span class="number">6</span>, <span class="number">1</span>], padding=<span class="string">'SAME'</span>)        </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">batch_norm_layer</span><span class="params">(value,train = None, name = <span class="string">'batch_norm'</span>)</span>:</span> </span><br><span class="line">  <span class="keyword">if</span> train <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>:       </span><br><span class="line">      <span class="keyword">return</span> batch_norm(value, decay = <span class="number">0.9</span>,updates_collections=<span class="keyword">None</span>, is_training = <span class="keyword">True</span>)</span><br><span class="line">  <span class="keyword">else</span>:</span><br><span class="line">      <span class="keyword">return</span> batch_norm(value, decay = <span class="number">0.9</span>,updates_collections=<span class="keyword">None</span>, is_training = <span class="keyword">False</span>)</span><br></pre></td></tr></table></figure></p>
+<h3 id="为BN函数添加占位符参数"><a href="#为BN函数添加占位符参数" class="headerlink" title="为BN函数添加占位符参数"></a>为BN函数添加占位符参数</h3><p>由于BN里面需要设置是否为训练状态，所以这里定义一个train将训练转态当成一个占位符来传入<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">x=tf.placeholder(tf.float32,[<span class="keyword">None</span>,<span class="number">24</span>,<span class="number">24</span>,<span class="number">3</span>) <span class="comment"># CIFAR数据集的shape为24x24x3</span></span><br><span class="line">y=tf.placeholder(tf.float32,[<span class="keyword">None</span>,<span class="number">10</span>]) <span class="comment"># 10类</span></span><br><span class="line">train=tf.plcaeholder(tf.float32)</span><br></pre></td></tr></table></figure></p>
+<h3 id="修改网络结构添加BN层"><a href="#修改网络结构添加BN层" class="headerlink" title="修改网络结构添加BN层"></a>修改网络结构添加BN层</h3><p>在第一层h_conv1与第二层h_conv2的输出之前卷积之后加入BN层<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">h_conv1=tf.nn.relu(batch_norm_layer((conv2d(x_image,W_conv1)+b_conv1),train))</span><br><span class="line">h_pool1=max_pool_2x2(h_conv1)</span><br><span class="line">W_conv2=weight_variable([<span class="number">5</span>,<span class="number">5</span>,<span class="number">64</span>,<span class="number">64</span>])</span><br><span class="line">b_conv2=bias_variable([<span class="number">64</span>])</span><br><span class="line">h_conv2=tf.nn.relu(batch_norm_layer((conv2d(h_pool1,W_conv2)+b_conv2),train))</span><br><span class="line">h_pool2=max_pool_2x2(h_conv2)</span><br></pre></td></tr></table></figure></p>
+<h3 id="加入衰减学习率"><a href="#加入衰减学习率" class="headerlink" title="加入衰减学习率"></a>加入衰减学习率</h3><p>将原来的学习率改成衰减学习率，使用0.04的初始值，让其每100次退化0.9<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cross_entropy = -tf.reduce_sum(y*tf.log(y_conv))</span><br><span class="line">global_step = tf.Variable(<span class="number">0</span>, trainable=<span class="keyword">False</span>)</span><br><span class="line">decaylearning_rate = tf.train.exponential_decay(<span class="number">0.04</span>, global_step,<span class="number">1000</span>, <span class="number">0.9</span>)</span><br><span class="line">train_step = tf.train.AdamOptimizer(decaylearning_rate).minimize(cross_entropy,global_step=global_step)</span><br><span class="line">correct_prediction = tf.equal(tf.argmax(y_conv,<span class="number">1</span>), tf.argmax(y,<span class="number">1</span>))</span><br><span class="line">accuracy = tf.reduce_mean(tf.cast(correct_prediction, <span class="string">"float"</span>))</span><br></pre></td></tr></table></figure></p>
+<h3 id="在运行session中"><a href="#在运行session中" class="headerlink" title="在运行session中"></a>在运行session中</h3><p>在session中找到循环的部分，为占位符train添加数值1，表明当前是训练状态。其他地方不动，因为第一步的BN函数设定好train为None，默认是测试状态。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">20000</span>):</span><br><span class="line">  image_batch, label_batch = sess.run([images_train, labels_train])</span><br><span class="line">  label_b = np.eye(<span class="number">10</span>,dtype=float)[label_batch] <span class="comment">#one hot</span></span><br><span class="line">  train_step.run(feed_dict=&#123;x:image_batch, y: label_b,train:<span class="number">1</span>&#125;,session=sess)</span><br></pre></td></tr></table></figure></p>
+<p>完整代码如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> cifar10_input</span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> tensorflow.contrib.layers.python.layers <span class="keyword">import</span> batch_norm</span><br><span class="line"> </span><br><span class="line">batch_size = <span class="number">128</span></span><br><span class="line">data_dir = <span class="string">'/tmp/cifar10_data/cifar-10-batches-bin'</span></span><br><span class="line">print(<span class="string">"begin"</span>)</span><br><span class="line">images_train, labels_train = cifar10_input.inputs(eval_data = <span class="keyword">False</span>,data_dir = data_dir, batch_size = batch_size)</span><br><span class="line">images_test, labels_test = cifar10_input.inputs(eval_data = <span class="keyword">True</span>, data_dir = data_dir, batch_size = batch_size)</span><br><span class="line">print(<span class="string">"begin data"</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">weight_variable</span><span class="params">(shape)</span>:</span></span><br><span class="line">  initial = tf.truncated_normal(shape, stddev=<span class="number">0.1</span>)</span><br><span class="line">  <span class="keyword">return</span> tf.Variable(initial)</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">bias_variable</span><span class="params">(shape)</span>:</span></span><br><span class="line">  initial = tf.constant(<span class="number">0.1</span>, shape=shape)</span><br><span class="line">  <span class="keyword">return</span> tf.Variable(initial)</span><br><span class="line">   </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">conv2d</span><span class="params">(x, W)</span>:</span></span><br><span class="line">  <span class="keyword">return</span> tf.nn.conv2d(x, W, strides=[<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>], padding=<span class="string">'SAME'</span>)</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">max_pool_2x2</span><span class="params">(x)</span>:</span></span><br><span class="line">  <span class="keyword">return</span> tf.nn.max_pool(x, ksize=[<span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">1</span>],</span><br><span class="line">                        strides=[<span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">1</span>], padding=<span class="string">'SAME'</span>)  </span><br><span class="line">                         </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">avg_pool_6x6</span><span class="params">(x)</span>:</span></span><br><span class="line">  <span class="keyword">return</span> tf.nn.avg_pool(x, ksize=[<span class="number">1</span>, <span class="number">6</span>, <span class="number">6</span>, <span class="number">1</span>],</span><br><span class="line">                        strides=[<span class="number">1</span>, <span class="number">6</span>, <span class="number">6</span>, <span class="number">1</span>], padding=<span class="string">'SAME'</span>)</span><br><span class="line">                         </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">batch_norm_layer</span><span class="params">(value,train = None, name = <span class="string">'batch_norm'</span>)</span>:</span> </span><br><span class="line">  <span class="keyword">if</span> train <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>:       </span><br><span class="line">      <span class="keyword">return</span> batch_norm(value, decay = <span class="number">0.9</span>,updates_collections=<span class="keyword">None</span>, is_training = <span class="keyword">True</span>)</span><br><span class="line">  <span class="keyword">else</span>:</span><br><span class="line">      <span class="keyword">return</span> batch_norm(value, decay = <span class="number">0.9</span>,updates_collections=<span class="keyword">None</span>, is_training = <span class="keyword">False</span>)</span><br><span class="line">   </span><br><span class="line"><span class="comment"># tf Graph Input</span></span><br><span class="line">x = tf.placeholder(tf.float32, [<span class="keyword">None</span>, <span class="number">24</span>,<span class="number">24</span>,<span class="number">3</span>]) <span class="comment"># cifar data image of shape 24*24*3</span></span><br><span class="line">y = tf.placeholder(tf.float32, [<span class="keyword">None</span>, <span class="number">10</span>]) <span class="comment"># 0-9 数字=&gt; 10 classes</span></span><br><span class="line">train = tf.placeholder(tf.float32)</span><br><span class="line"> </span><br><span class="line">W_conv1 = weight_variable([<span class="number">5</span>, <span class="number">5</span>, <span class="number">3</span>, <span class="number">64</span>])</span><br><span class="line">b_conv1 = bias_variable([<span class="number">64</span>])</span><br><span class="line"> </span><br><span class="line">x_image = tf.reshape(x, [<span class="number">-1</span>,<span class="number">24</span>,<span class="number">24</span>,<span class="number">3</span>])</span><br><span class="line"> </span><br><span class="line">h_conv1 = tf.nn.relu(batch_norm_layer((conv2d(x_image, W_conv1) + b_conv1),train))</span><br><span class="line">h_pool1 = max_pool_2x2(h_conv1)</span><br><span class="line"> </span><br><span class="line">W_conv2 = weight_variable([<span class="number">5</span>, <span class="number">5</span>, <span class="number">64</span>, <span class="number">64</span>])</span><br><span class="line">b_conv2 = bias_variable([<span class="number">64</span>])</span><br><span class="line"> </span><br><span class="line">h_conv2 = tf.nn.relu(batch_norm_layer((conv2d(h_pool1, W_conv2) + b_conv2),train))</span><br><span class="line">h_pool2 = max_pool_2x2(h_conv2)</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">W_conv3 = weight_variable([<span class="number">5</span>, <span class="number">5</span>, <span class="number">64</span>, <span class="number">10</span>])</span><br><span class="line">b_conv3 = bias_variable([<span class="number">10</span>])</span><br><span class="line">h_conv3 = tf.nn.relu(conv2d(h_pool2, W_conv3) + b_conv3)</span><br><span class="line"> </span><br><span class="line">nt_hpool3=avg_pool_6x6(h_conv3)<span class="comment">#10</span></span><br><span class="line">nt_hpool3_flat = tf.reshape(nt_hpool3, [<span class="number">-1</span>, <span class="number">10</span>])</span><br><span class="line">y_conv=tf.nn.softmax(nt_hpool3_flat)</span><br><span class="line"> </span><br><span class="line"></span><br><span class="line">cross_entropy = -tf.reduce_sum(y*tf.log(y_conv))</span><br><span class="line">global_step = tf.Variable(<span class="number">0</span>, trainable=<span class="keyword">False</span>)</span><br><span class="line">decaylearning_rate = tf.train.exponential_decay(<span class="number">0.04</span>, global_step,<span class="number">1000</span>, <span class="number">0.9</span>)</span><br><span class="line">train_step = tf.train.AdamOptimizer(decaylearning_rate).minimize(cross_entropy,global_step=global_step) </span><br><span class="line">correct_prediction = tf.equal(tf.argmax(y_conv,<span class="number">1</span>), tf.argmax(y,<span class="number">1</span>))</span><br><span class="line">accuracy = tf.reduce_mean(tf.cast(correct_prediction, <span class="string">"float"</span>))</span><br><span class="line">sess = tf.Session()</span><br><span class="line">sess.run(tf.global_variables_initializer())</span><br><span class="line">tf.train.start_queue_runners(sess=sess)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">20000</span>):</span><br><span class="line">  image_batch, label_batch = sess.run([images_train, labels_train])</span><br><span class="line">  label_b = np.eye(<span class="number">10</span>,dtype=float)[label_batch] <span class="comment">#one hot </span></span><br><span class="line">  train_step.run(feed_dict=&#123;x:image_batch, y: label_b,train:<span class="number">1</span>&#125;,session=sess)</span><br><span class="line">  <span class="keyword">if</span> i%<span class="number">200</span> == <span class="number">0</span>:</span><br><span class="line">    train_accuracy = accuracy.eval(feed_dict=&#123;</span><br><span class="line">        x:image_batch, y: label_b&#125;,session=sess)</span><br><span class="line">    print( <span class="string">"step %d, training accuracy %g"</span>%(i, train_accuracy))</span><br><span class="line">image_batch, label_batch = sess.run([images_test, labels_test])</span><br><span class="line">label_b = np.eye(<span class="number">10</span>,dtype=float)[label_batch]<span class="comment">#one hot</span></span><br><span class="line"><span class="keyword">print</span> (<span class="string">"finished！ test accuracy %g"</span>%accuracy.eval(feed_dict=&#123;</span><br><span class="line">     x:image_batch, y: label_b&#125;,session=sess))</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    
+      
+      
+
+  <div class="post-copyright">
+    <p class="copyright-item">
+      <span>原文作者: </span>
+      <a href="https://geolibra.github.io">hgis</a>
+    </p>
+    <p class="copyright-item">
+      <span>原文链接: </span>
+      <a href="https://geolibra.github.io/2018/11/21/Batch-Normalization/">https://geolibra.github.io/2018/11/21/Batch-Normalization/</a>
+    </p>
+    <p class="copyright-item">
+      <span>许可协议: </span>
+      
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>
+    </p>
+  </div>
+
+
+
+      
+      
+    
+
+    
+      <footer class="post-footer">
+        
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2018/11/22/Caffe-基本介绍/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">Caffe 基本介绍</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+      <a class="next" href="/2018/11/21/caffe相关配置文件介绍/">
+        <span class="next-text nav-default">Caffe相关配置文件介绍</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+
+      </footer>
+    
+
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:674530915@qq.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+          <a href="https://github.com/GeoLibra" class="iconfont icon-github" title="github"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+
+    
+      
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
+  </div>
+
+
+<div class="copyright">
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+  <span class="post-meta-divider">|</span>
+  <span id="busuanzi_container_site_uv">本站访客数<span id="busuanzi_value_site_uv"></span>人</span>
+
+
+  <span class="copyright-year">
+    
+    &copy; 
+    
+    2018
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">hgis</span>
+    <span id="busuanzi_container_site_uv">
+    </span>
+</span>
+</div>
+
+
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+  
+
+  
+
+
+
+    
+  
+
+
+
+  
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/pjax/jquery.pjax.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/nprogress/nprogress.min.js"></script>
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.10.1"></script>
+
+  </body>
+</html>

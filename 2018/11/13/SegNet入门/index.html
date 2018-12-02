@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+  <meta name="description" content="SegNet入门"/>
+
+
+
+
+  <meta name="keywords" content="SegNet, 磊哥的小书桌" />
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/default" title="磊哥的小书桌">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.10.1" />
+
+
+
+<link rel="canonical" href="https://geolibra.github.io/2018/11/13/SegNet入门/"/>
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css" />
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css" />
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.10.1" />
+
+
+
+  <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?97659041a2db55d3eb7266f53be7c071";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.1.1/av-min.js"></script>
+  <script id="leancloud">
+    AV.init({
+      appId: "ro3TOe5F5DDemxHnSoYVCHli-gzGzoHsz",
+      appKey: "IHyD5EfrggPl57FnwtBEeH0W"
+    });
+  </script>
+
+
+
+
+<script>
+  window.config = {"title":"磊哥的小书桌","subtitle":null,"description":null,"author":"hgis","language":null,"timezone":null,"url":"https://geolibra.github.io","root":"/","permalink":":year/:month/:day/:title/","permalink_defaults":null,"source_dir":"source","public_dir":"public","tag_dir":"tags","archive_dir":"archives","category_dir":"categories","code_dir":"downloads/code","i18n_dir":":lang","skip_render":null,"new_post_name":":title.md","default_layout":"post","titlecase":false,"external_link":true,"filename_case":0,"render_drafts":false,"post_asset_folder":true,"relative_link":false,"future":true,"highlight":{"enable":true,"auto_detect":false,"line_number":true,"tab_replace":null,"first_line_number":"always1"},"default_category":"uncategorized","category_map":null,"tag_map":null,"date_format":"YYYY-MM-DD","time_format":"HH:mm:ss","per_page":10,"pagination_dir":"page","theme":"even","deploy":{"type":"git","repository":"git@github.com:GeoLibra/GeoLibra.github.io.git","branch":"master"},"ignore":[],"keywords":null,"email":"674530915@qq.com","index_generator":{"per_page":10,"order_by":"-date","path":""},"tag_cloud":{"textFont":"Trebuchet MS, Helvetica","textColour":"\\#eea849","textHeight":25,"outlineColour":"\\#E2E1D1"},"archive_generator":{"per_page":10,"yearly":true,"monthly":true,"daily":false},"category_generator":{"per_page":10},"tag_generator":{"per_page":10},"marked":{"gfm":true,"pedantic":false,"sanitize":false,"tables":true,"breaks":true,"smartLists":true,"smartypants":true,"modifyAnchors":"","autolink":true},"server":{"port":4000,"log":false,"compress":false,"header":true},"since":2018,"favicon":"/favicon.ico","rss":"default","menu":{"Home":"/","Archives":"/archives/","Tags":"/tags","Categories":"/categories","About":"/about"},"color":"default","mode":"default","toc":true,"fancybox":true,"pjax":true,"copyright":{"enable":true,"license":"<a rel=\"license\" href=\"http://creativecommons.org/licenses/by-nc/4.0/\" target=\"_blank\">知识共享署名-非商业性使用 4.0 国际许可协议</a>"},"reward":{"enable":false,"qrCode":{"wechat":null,"alipay":null}},"social":{"email":"674530915@qq.com","stack-overflow":null,"twitter":null,"facebook":null,"linkedin":null,"google":null,"github":"https://github.com/GeoLibra","weibo":null,"zhihu":null,"douban":null,"pocket":null,"tumblr":null,"instagram":null},"leancloud":{"app_id":"ro3TOe5F5DDemxHnSoYVCHli-gzGzoHsz","app_key":"IHyD5EfrggPl57FnwtBEeH0W"},"baidu_analytics":"97659041a2db55d3eb7266f53be7c071","baidu_verification":null,"google_analytics":null,"google_verification":null,"disqus_shortname":null,"changyan":{"appid":null,"appkey":null},"livere_datauid":null,"counter":true,"version":"2.10.1"};
+</script>
+
+    <title> SegNet入门 - 磊哥的小书桌 </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">磊哥的小书桌</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            首页
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            归档
+          
+        </li>
+      </a>
+    
+      <a href="/tags">
+        <li class="mobile-menu-item">
+          
+          
+            标签
+          
+        </li>
+      </a>
+    
+      <a href="/categories">
+        <li class="mobile-menu-item">
+          
+          
+            分类
+          
+        </li>
+      </a>
+    
+      <a href="/about">
+        <li class="mobile-menu-item">
+          
+          
+            关于
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">磊哥的小书桌</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/tags">
+            
+            
+              标签
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/categories">
+            
+            
+              分类
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            
+            
+              关于
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          SegNet入门
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2018-11-13
+        </span>
+        
+          <span class="post-category">
+            
+              <a href="/categories/深度学习/">深度学习</a>
+            
+          </span>
+        
+        
+        <span class="post-visits"
+             data-url="/2018/11/13/SegNet入门/"
+             data-title="SegNet入门">
+          阅读次数 0
+        </span>
+        
+      </div>
+    </header>
+
+    
+    
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#设置caffe和数据集"><span class="toc-text">设置caffe和数据集</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#训练SegNet"><span class="toc-text">训练SegNet</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#测试SegNet"><span class="toc-text">测试SegNet</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#结果"><span class="toc-text">结果</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Bayesian-SegNet"><span class="toc-text">Bayesian SegNet</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#训练"><span class="toc-text">训练</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#测试"><span class="toc-text">测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#结果-1"><span class="toc-text">结果</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SegNet架构"><span class="toc-text">SegNet架构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考文献"><span class="toc-text">参考文献</span></a></li></ol>
+    </div>
+  </div>
+
+
+
+    <div class="post-content">
+      
+        <p>SegNet的实现建立在Caffe深度学习库之上。</p>
+<h2 id="设置caffe和数据集"><a href="#设置caffe和数据集" class="headerlink" title="设置caffe和数据集"></a>设置caffe和数据集</h2><ol>
+<li>下载<a href="https://github.com/alexgkendall/caffe-segnet" target="_blank" rel="noopener">SegNet</a>源码。安装<a href="http://caffe.berkeleyvision.org/installation.html" target="_blank" rel="noopener">caffe</a></li>
+<li><p>SegNet是通过监督学习来预测像素级类标签，因此，需要有相应的地面实况标签的输入图像数据集，标签图像必须是单通道，每个像素都标有其类别。本教程将使用CamVid数据集，其中包含道路场景367个训练集和233个测试集。该数据集在英国剑桥周围拍摄，包含白天和黄昏的场景。将使用11级版本，图像大小为360x480.</p>
+<a id="more"></a>
+<p>从此<a href="https://github.com/alexgkendall/SegNet-Tutorial" target="_blank" rel="noopener">GitHub</a>库以SegNet所需的格式下载此数据以及本教程所需的其余文件。新建SegNet目录，下载的数据均放到此目录下。</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">/SegNet/</span><br><span class="line">    CamVid/</span><br><span class="line">        <span class="built_in">test</span>/</span><br><span class="line">        testannot/</span><br><span class="line">        train/</span><br><span class="line">        trainannot/</span><br><span class="line">        test.txt</span><br><span class="line">        train.txt</span><br><span class="line">    Models/</span><br><span class="line">        <span class="comment"># SegNet and SegNet-Basic model files for training and testing</span></span><br><span class="line">    Scripts/</span><br><span class="line">        compute_bn_statistics.py</span><br><span class="line">        test_segmentation_camvid.py</span><br><span class="line">    caffe-segnet/</span><br><span class="line">        <span class="comment"># caffe implementation</span></span><br></pre></td></tr></table></figure>
+<p> 更新 <code>CamVid/train.txt</code> 和 <code>CamVid/test.txt</code> 以便SegNet获取数据。SegNet需要一个以空格分隔的图片路径和响应的标注图片的路径。</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/path/to/image1.png /another/path/to/label1.png /path/to/image2.png /path/label2.png ...</span><br></pre></td></tr></table></figure>
+<p> 请在文本编辑器中打开这两个文件，然后使用查找和替换工具将”/ SegNet / …”更改为数据的绝对路径。</p>
+</li>
+</ol>
+<h2 id="训练SegNet"><a href="#训练SegNet" class="headerlink" title="训练SegNet"></a>训练SegNet</h2><p>下一步是建立训练模型，可以使用SegNet或SegNet基本模型训练。首先，打开模型文件 <code>Models/segnet_train.prototxt</code> 和推理模型文件 <code>Models/segnet_inference.prototxt</code>。需要修改所有模型的数据层中的数据输入源行。将此替换为数据文件的绝对目录。<br>根据GPU大小，需要在训练模型中修改批量大小。在12GB GPU（如NVIDIA K40或Titan X）上，能够分别使用批量大小为10或6的SegNet-Basic或SegNet。如果你有一个较小的GPU然后尝试使其尽可能大，但即使批量大小低至2或3仍应训练良好。其次，请打开求解器文件<code>Models/segnet_solver.prototxt</code>并更改两行; net和snapshot_prefix目录应该与数据的目录匹配。</p>
+<p>对SegNet-Basic模型，推理模型和求解器原型文件重复上述步骤。创建一个文件夹来存储您的训练权重和求解器详细信息<code>mkdir /SegNet/Models/Training</code>.<br>现在准备训练SegNet！打开终端并发出以下命令：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">./SegNet/caffe-segnet/build/tools/caffe train -gpu 0 -solver /SegNet/Models/segnet_solver.prototxt  <span class="comment"># This will begin training SegNet on GPU 0</span></span><br><span class="line">./SegNet/caffe-segnet/build/tools/caffe train -gpu 0 -solver /SegNet/Models/segnet_basic_solver.prototxt  <span class="comment"># This will begin training SegNet-Basic on GPU 0</span></span><br><span class="line">./SegNet/caffe-segnet/build/tools/caffe train -gpu 0 -solver /SegNet/Models/segnet_solver.prototxt -weights /SegNet/Models/VGG_ILSVRC_16_layers.caffemodel  <span class="comment"># This will begin training SegNet on GPU 0 with a pretrained encoder</span></span><br></pre></td></tr></table></figure></p>
+<p>第三个命令初始化来自在ImageNet上训练的VGG模型的编码器权重。如果您想尝试这个，可以在这里下载这些<a href="http://www.robots.ox.ac.uk/~vgg/research/very_deep/" target="_blank" rel="noopener">权重</a>。<br>对于这个小数据集应该不会花太长时间，在大约50-100个迭代之后，将会收敛。训练精度应该大于90%，然后就可以开始测试。</p>
+<h2 id="测试SegNet"><a href="#测试SegNet" class="headerlink" title="测试SegNet"></a>测试SegNet</h2><p>首先打开脚本<code>Scripts/compute_bn_statistics.py</code> 和 <code>Scripts/test_segmentation_camvid.py</code> 将第10行换成你的SegNet的Caffe安装地址。<br>SegNet中的批量标准化层根据训练期间每个小批量的均值和方差统计数据移动输入要素图。在测试时，我们必须使用整个数据集的统计信息。为此，请运行该脚本<code>Scripts/compute_bn_statistics.py</code>,确保将训练权重文件更改为你要使用的文件。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">python /Segnet/Scripts/compute_bn_statistics.py /SegNet/Models/segnet_train.prototxt /SegNet/Models/Training/segnet_iter_10000.caffemodel /Segnet/Models/Inference/  <span class="comment"># compute BN statistics for SegNet</span></span><br><span class="line">python /Segnet/Scripts/compute_bn_statistics.py /SegNet/Models/segnet_basic_train.prototxt /SegNet/Models/Training/segnet_basic_iter_10000.caffemodel /Segnet/Models/Inference/  <span class="comment"># compute BN statistics for SegNet-Basic</span></span><br></pre></td></tr></table></figure></p>
+<p>该脚本将最终测试权重保存在输出目录中，如<code>/SegNet/Models/Inference/test_weights.caffemodel</code>请将它们重命名为更具描述性的内容。<br>现在我们可以查看SegNet的输出了！<code>test_segmentation_camvid.py</code>将显示每个测试图像的输入图像，真实图像和分割预测图像。尝试这些命令，将权重文件更改为您刚刚处理的权重文件，并使用正确的推理统计信息：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">python /SegNet/Scripts/test_segmentation_camvid.py --model /SegNet/Models/segnet_inference.prototxt --weights /SegNet/Models/Inference/test_weights.caffemodel --iter 233  <span class="comment"># Test SegNet</span></span><br><span class="line">python /SegNet/Scripts/test_segmentation_camvid.py --model /SegNet/Models/segnet_basic_inference.prototxt --weights /SegNet/Models/Inference/test_weights.caffemodel --iter 233  <span class="comment"># Test SegNetBasic</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h2><p>下表显示了我们使用SegNet在CamVid数据集上实现的性能。如果您已正确使用本教程，则应该能够获得前两个结果。最终结果是根据公开数据集中的3.5K额外标记图像进行训练，详情请参阅论文。 webdemo已接受过关于未公开的进一步数据和额外类别（道路标记）的训练。</p>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Global Accuracy</th>
+<th>Class Accuracy</th>
+<th>Mean I/U</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Segnet-Basic</td>
+<td>82.8%</td>
+<td>62.3%</td>
+<td>46.3%</td>
+</tr>
+<tr>
+<td>SegNet (Pretrained Encoder)</td>
+<td>88.6%</td>
+<td>65.9%</td>
+<td>50.2%</td>
+</tr>
+<tr>
+<td>SegNet (3.5K dataset)</td>
+<td>86.8%</td>
+<td>81.3%</td>
+<td>69.1%</td>
+</tr>
+</tbody>
+</table>
+<img src="/2018/11/13/SegNet入门/result.png" title="基于SegNet的分割">
+<p>你也可以训练模型利用<a href="http://mi.eng.cam.ac.uk/projects/segnet/" target="_blank" rel="noopener">SegNet在线demo</a></p>
+<h2 id="Bayesian-SegNet"><a href="#Bayesian-SegNet" class="headerlink" title="Bayesian SegNet"></a>Bayesian SegNet</h2><p>这是Bayesian SegNet的教程，是SegNet的概率扩展。在本教程结束时，您将能够训练一个模型，该模型可以以左侧的真实图像，并生成分割图像（中心）和模型不确定性的度量（右）。<br><img src="/2018/11/13/SegNet入门/result.png" title="BayesianSegNet"></p>
+<p>模型不确定性可用于理解图像分割的可信度，并确定我们可以分配语义标签的特异程度。例如，我们可以说标签是卡车，还是简单的移动车辆？这可以对机器人的行为决策产生强烈影响。<br>该模型不确定性与从softmax分类器获得的“概率”显着不同。 softmax函数近似于类标签之间的相对概率，但不是模型不确定性的总体度量。有关更深入的解释，请查看Yarin的博客文章<a href="http://mlg.eng.cam.ac.uk/yarin/blog_3d801aa532c1ce.html" target="_blank" rel="noopener">What My Deep Model Doesn’t Know…</a></p>
+<h3 id="训练"><a href="#训练" class="headerlink" title="训练"></a>训练</h3><p>Bayesian SegNet模型在架构上是相同的，在最深的6个编码器和解码器单元之后引入了Dropout层。出来这次使用<code>Models/bayesian_segnet_train.prototxt</code> 和 <code>Models/bayesian_segnet_solver.prototxt</code>，其他和上面步骤一样。<br>该模型需要稍微长一点才能进行训练，因为Dropout的引入。然后可以如上所述从训练的模型计算批量标准化统计。请注意，在计算这些批量标准化统计信息时，dropout层使用权重平均技术。</p>
+<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><p>打开<code>Scripts/test_bayesian_segnet.py</code> 修改第14行，Caffe的安装目录。<br>Bayesian SegNet是一个随机模型，使用Monte Carlo dropout抽样来获得权重的不确定性，为了测试这一点，需要准备一个小批量样本，样本中每个图像都是相同图像。为此，请使用<code>test_bayesian_segnet.py</code>,它将显示每个测试图像的输入图像，真实图像，分割预测图像和模型不确定性。运行以下命令，使用正确的推理统计信息将权重文件更改为您刚刚处理的权重文件：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">python /SegNet/Scripts/test_bayesian_segnet.py --model /SegNet/Models/bayesian_segnet_inference.prototxt --weights /SegNet/Models/Inference/test_weights.caffemodel --colours /SegNet/Scripts/camvid11.png --data /SegNet/CamVid/test.txt  <span class="comment"># Test Bayesian SegNet</span></span><br><span class="line">python /SegNet/Scripts/test_bayesian_segnet.py --model /SegNet/Models/bayesian_segnet_basic_inference.prototxt --weights /SegNet/Models/Inference/test_weights.caffemodel --colours /SegNet/Scripts/camvid11.png --data /SegNet/CamVid/test.txt  <span class="comment"># Test Bayesian SegNet Basic</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="结果-1"><a href="#结果-1" class="headerlink" title="结果"></a>结果</h3><p>以下是CamVid数据集的一些示例定性结果。也可以查看各个类的模型不确定性 - 这里显示了一些示例。<br><img src="/2018/11/13/SegNet入门/bs_result.png" title="BayesianSegNet"></p>
+<h2 id="SegNet架构"><a href="#SegNet架构" class="headerlink" title="SegNet架构"></a>SegNet架构</h2><p>该体系结构由一系列非线性处理层（编码器）和一组相应的解码器组成，后面跟着一个按像素分类器。通常，每个编码器由一个或多个具有批量归一化和ReLU非线性的卷积层组成，接着是非重叠的最大池化和子采样。由于池化过程引起的稀疏编码在解码器中使用编码序列中的maxpooling索引进行上采样（参见下图）。 SegNet的一个关键要素是在解码器中使用maxpooling索引来执行低分辨率特征映射的上采样。这具有在分割图像中保留高频细节并且还减少解码器中可训练参数的总数的优点。整个架构可以使用随机梯度下降进行端到端训练。即使没有基于CRF的后处理，原始SegNet预测也趋于平滑。<br><img src="/2018/11/13/SegNet入门/segnet.png" title="SegNet架构"></p>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p>[1] Badrinarayanan, Vijay, Alex Kendall, and Roberto Cipolla. “SegNet: A Deep Convolutional Encoder-Decoder Architecture for Image Segmentation.” arXiv preprint arXiv:1511.00561 (2015). </p>
+<p>[2] Brostow, Gabriel J., Julien Fauqueur, and Roberto Cipolla. “Semantic object classes in video: A high-definition ground truth database.” Pattern Recognition Letters 30.2 (2009): 88-97. </p>
+<p>[3] Ioffe, Sergey, and Christian Szegedy. “Batch normalization: Accelerating deep network training by reducing internal covariate shift.” arXiv preprint arXiv:1502.03167 (2015). </p>
+<p>[4] Kendall, Alex, Vijay Badrinarayanan, and Roberto Cipolla. “Bayesian SegNet: Model Uncertainty in Deep Convolutional Encoder-Decoder Architectures for Scene Understanding.” arXiv preprint arXiv:1511.02680 (2015). </p>
+<p>[5] Gal, Yarin, and Zoubin Ghahramani. “Dropout as a Bayesian approximation: Representing model uncertainty in deep learning.” arXiv preprint arXiv:1506.02142 (2015).</p>
+<p>原文地址:<a href="http://mi.eng.cam.ac.uk/projects/segnet/tutorial.html" target="_blank" rel="noopener">http://mi.eng.cam.ac.uk/projects/segnet/tutorial.html</a></p>
+
+      
+    </div>
+
+    
+      
+      
+
+  <div class="post-copyright">
+    <p class="copyright-item">
+      <span>原文作者: </span>
+      <a href="https://geolibra.github.io">hgis</a>
+    </p>
+    <p class="copyright-item">
+      <span>原文链接: </span>
+      <a href="https://geolibra.github.io/2018/11/13/SegNet入门/">https://geolibra.github.io/2018/11/13/SegNet入门/</a>
+    </p>
+    <p class="copyright-item">
+      <span>许可协议: </span>
+      
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>
+    </p>
+  </div>
+
+
+
+      
+      
+    
+
+    
+      <footer class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/SegNet/">SegNet</a>
+            
+          </div>
+        
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2018/11/13/自编码网络/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">自编码网络</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+      <a class="next" href="/2018/11/13/对抗神经网络-GAN/">
+        <span class="next-text nav-default">对抗神经网络(GAN)</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+
+      </footer>
+    
+
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:674530915@qq.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+          <a href="https://github.com/GeoLibra" class="iconfont icon-github" title="github"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+
+    
+      
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
+  </div>
+
+
+<div class="copyright">
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+  <span class="post-meta-divider">|</span>
+  <span id="busuanzi_container_site_uv">本站访客数<span id="busuanzi_value_site_uv"></span>人</span>
+
+
+  <span class="copyright-year">
+    
+    &copy; 
+    
+    2018
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">hgis</span>
+    <span id="busuanzi_container_site_uv">
+    </span>
+</span>
+</div>
+
+
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+  
+
+  
+
+
+
+    
+  
+
+
+
+  
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/pjax/jquery.pjax.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/nprogress/nprogress.min.js"></script>
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.10.1"></script>
+
+  </body>
+</html>

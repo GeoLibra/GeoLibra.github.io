@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+  <meta name="description" content="Ubuntu 18.04 搭建Tensorflow开发环境"/>
+
+
+
+
+  <meta name="keywords" content="Tensorflow, 磊哥的小书桌" />
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/default" title="磊哥的小书桌">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.10.1" />
+
+
+
+<link rel="canonical" href="https://geolibra.github.io/2018/09/17/Ubuntu-18-04-搭建Tensorflow开发环境/"/>
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css" />
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css" />
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.10.1" />
+
+
+
+  <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?97659041a2db55d3eb7266f53be7c071";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.1.1/av-min.js"></script>
+  <script id="leancloud">
+    AV.init({
+      appId: "ro3TOe5F5DDemxHnSoYVCHli-gzGzoHsz",
+      appKey: "IHyD5EfrggPl57FnwtBEeH0W"
+    });
+  </script>
+
+
+
+
+<script>
+  window.config = {"title":"磊哥的小书桌","subtitle":null,"description":null,"author":"hgis","language":null,"timezone":null,"url":"https://geolibra.github.io","root":"/","permalink":":year/:month/:day/:title/","permalink_defaults":null,"source_dir":"source","public_dir":"public","tag_dir":"tags","archive_dir":"archives","category_dir":"categories","code_dir":"downloads/code","i18n_dir":":lang","skip_render":null,"new_post_name":":title.md","default_layout":"post","titlecase":false,"external_link":true,"filename_case":0,"render_drafts":false,"post_asset_folder":true,"relative_link":false,"future":true,"highlight":{"enable":true,"auto_detect":false,"line_number":true,"tab_replace":null,"first_line_number":"always1"},"default_category":"uncategorized","category_map":null,"tag_map":null,"date_format":"YYYY-MM-DD","time_format":"HH:mm:ss","per_page":10,"pagination_dir":"page","theme":"even","deploy":{"type":"git","repository":"git@github.com:GeoLibra/GeoLibra.github.io.git","branch":"master"},"ignore":[],"keywords":null,"email":"674530915@qq.com","index_generator":{"per_page":10,"order_by":"-date","path":""},"tag_cloud":{"textFont":"Trebuchet MS, Helvetica","textColour":"\\#eea849","textHeight":25,"outlineColour":"\\#E2E1D1"},"archive_generator":{"per_page":10,"yearly":true,"monthly":true,"daily":false},"category_generator":{"per_page":10},"tag_generator":{"per_page":10},"marked":{"gfm":true,"pedantic":false,"sanitize":false,"tables":true,"breaks":true,"smartLists":true,"smartypants":true,"modifyAnchors":"","autolink":true},"server":{"port":4000,"log":false,"compress":false,"header":true},"since":2018,"favicon":"/favicon.ico","rss":"default","menu":{"Home":"/","Archives":"/archives/","Tags":"/tags","Categories":"/categories","About":"/about"},"color":"default","mode":"default","toc":true,"fancybox":true,"pjax":true,"copyright":{"enable":true,"license":"<a rel=\"license\" href=\"http://creativecommons.org/licenses/by-nc/4.0/\" target=\"_blank\">知识共享署名-非商业性使用 4.0 国际许可协议</a>"},"reward":{"enable":false,"qrCode":{"wechat":null,"alipay":null}},"social":{"email":"674530915@qq.com","stack-overflow":null,"twitter":null,"facebook":null,"linkedin":null,"google":null,"github":"https://github.com/GeoLibra","weibo":null,"zhihu":null,"douban":null,"pocket":null,"tumblr":null,"instagram":null},"leancloud":{"app_id":"ro3TOe5F5DDemxHnSoYVCHli-gzGzoHsz","app_key":"IHyD5EfrggPl57FnwtBEeH0W"},"baidu_analytics":"97659041a2db55d3eb7266f53be7c071","baidu_verification":null,"google_analytics":null,"google_verification":null,"disqus_shortname":null,"changyan":{"appid":null,"appkey":null},"livere_datauid":null,"counter":true,"version":"2.10.1"};
+</script>
+
+    <title> Ubuntu 18.04 搭建Tensorflow开发环境 - 磊哥的小书桌 </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">磊哥的小书桌</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            首页
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            归档
+          
+        </li>
+      </a>
+    
+      <a href="/tags">
+        <li class="mobile-menu-item">
+          
+          
+            标签
+          
+        </li>
+      </a>
+    
+      <a href="/categories">
+        <li class="mobile-menu-item">
+          
+          
+            分类
+          
+        </li>
+      </a>
+    
+      <a href="/about">
+        <li class="mobile-menu-item">
+          
+          
+            关于
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">磊哥的小书桌</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/tags">
+            
+            
+              标签
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/categories">
+            
+            
+              分类
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            
+            
+              关于
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          Ubuntu 18.04 搭建Tensorflow开发环境
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2018-09-17
+        </span>
+        
+          <span class="post-category">
+            
+              <a href="/categories/深度学习/">深度学习</a>
+            
+          </span>
+        
+        
+        <span class="post-visits"
+             data-url="/2018/09/17/Ubuntu-18-04-搭建Tensorflow开发环境/"
+             data-title="Ubuntu 18.04 搭建Tensorflow开发环境">
+          阅读次数 0
+        </span>
+        
+      </div>
+    </header>
+
+    
+    
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#环境介绍"><span class="toc-text">环境介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#更新NVIDIA驱动"><span class="toc-text">更新NVIDIA驱动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Python及Virtualenv"><span class="toc-text">Python及Virtualenv</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#降低gcc版本"><span class="toc-text">降低gcc版本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装CUDA-9-0"><span class="toc-text">安装CUDA 9.0</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装cuDNN-7-0"><span class="toc-text">安装cuDNN 7.0</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装bazel"><span class="toc-text">安装bazel</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装Tensorflow-GPU"><span class="toc-text">安装Tensorflow-GPU</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#VS-Code进行开发"><span class="toc-text">VS Code进行开发</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装keras"><span class="toc-text">安装keras</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用Jupyter"><span class="toc-text">使用Jupyter</span></a></li></ol>
+    </div>
+  </div>
+
+
+
+    <div class="post-content">
+      
+        <h3 id="环境介绍"><a href="#环境介绍" class="headerlink" title="环境介绍"></a>环境介绍</h3><p>系统:Ubuntu 18.04.1<br>显卡:GTX 1050 Ti<br>其他:Python 3.6 + Tensorflow 1.10.1<br><a id="more"></a> </p>
+<h3 id="更新NVIDIA驱动"><a href="#更新NVIDIA驱动" class="headerlink" title="更新NVIDIA驱动"></a>更新NVIDIA驱动</h3><ol>
+<li><p>更新 </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get upgrade</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>选择software &amp; updates-&gt;Additional Drivers,选择对应的NVIDIA驱动.  </p>
+<img src="/2018/09/17/Ubuntu-18-04-搭建Tensorflow开发环境/nvidia.png" title="nvidia驱动">
+</li>
+</ol>
+<h3 id="Python及Virtualenv"><a href="#Python及Virtualenv" class="headerlink" title="Python及Virtualenv"></a>Python及Virtualenv</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install python3-pip python3-dev python3-virtualenv</span><br></pre></td></tr></table></figure>
+<h3 id="降低gcc版本"><a href="#降低gcc版本" class="headerlink" title="降低gcc版本"></a>降低gcc版本</h3><blockquote>
+<p>因为Ubuntu18的gcc是7,而CUDA 9.0 要求的gcc版本的5.x或6.x.</p>
+</blockquote>
+<p>执行以下命令进行降级<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install gcc-6</span><br><span class="line">sudo apt install g++-6</span><br><span class="line">gcc --version</span><br></pre></td></tr></table></figure></p>
+<h3 id="安装CUDA-9-0"><a href="#安装CUDA-9-0" class="headerlink" title="安装CUDA 9.0"></a>安装<a href="https://developer.nvidia.com/cuda-90-download-archive" target="_blank" rel="noopener">CUDA 9.0</a></h3><p>下载对应版本安装<br><img src="/2018/09/17/Ubuntu-18-04-搭建Tensorflow开发环境/cuda9.png" title="cuda9.0"><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo bash cuda_9.0.176_384.81_linux.run --override</span><br><span class="line">sudo bash cuda_9.0.176.1_linux.run  --override</span><br><span class="line">sudo bash cuda_9.0.176.2_linux.run</span><br><span class="line">sudo bash cuda_9.0.176.3_linux.run</span><br><span class="line">sudo bash cuda_9.0.176.4_linux.run</span><br></pre></td></tr></table></figure></p>
+<p>注意安装过程中 <code>Install NVIDIA Accelerated Graphics Driver</code> 选择n，因为前面安装的才是相匹配的驱动。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">Description</span><br><span class="line"></span><br><span class="line">The NVIDIA CUDA Toolkit provides <span class="built_in">command</span>-line and graphical</span><br><span class="line">tools <span class="keyword">for</span> building, debugging and optimizing the performance</span><br><span class="line">Do you accept the previously <span class="built_in">read</span> EULA?</span><br><span class="line">accept/decline/quit: accept</span><br><span class="line"></span><br><span class="line">Install NVIDIA Accelerated Graphics Driver <span class="keyword">for</span> Linux-x86_64 384.81?</span><br><span class="line">(y)es/(n)o/(q)uit: n</span><br><span class="line"></span><br><span class="line">Install the CUDA 9.0 Toolkit?</span><br><span class="line">(y)es/(n)o/(q)uit: y</span><br><span class="line"></span><br><span class="line">Enter Toolkit Location</span><br><span class="line"> [ default is /usr/<span class="built_in">local</span>/cuda-9.0 ]: </span><br><span class="line"></span><br><span class="line">Do you want to install a symbolic link at /usr/<span class="built_in">local</span>/cuda?</span><br><span class="line">(y)es/(n)o/(q)uit: y</span><br><span class="line"></span><br><span class="line">Install the CUDA 9.0 Samples?</span><br><span class="line">(y)es/(n)o/(q)uit: y</span><br><span class="line"></span><br><span class="line">Enter CUDA Samples Location</span><br><span class="line"> [ default is /home/cqc ]: </span><br><span class="line"></span><br><span class="line">Installing the CUDA Toolkit <span class="keyword">in</span> /usr/<span class="built_in">local</span>/cuda-9.0 ...</span><br></pre></td></tr></table></figure></p>
+<p>安装完毕后执行如下命令:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo cp -rf ld.so.conf ld.so.conf.bak</span><br><span class="line">sudo vi f ld.so.conf.bak</span><br></pre></td></tr></table></figure></p>
+<p>添加CUDA 9.0 到库文件LD_LIBRARY_PATH:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">include /usr/<span class="built_in">local</span>/cuda-9.0/lib64</span><br></pre></td></tr></table></figure></p>
+<p>利用降级的gcc进行如下设置<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo ln -s /usr/bin/gcc-6 /usr/<span class="built_in">local</span>/cuda/bin/gcc</span><br><span class="line">sudo ln -s /usr/bin/g++-6 /usr/<span class="built_in">local</span>/cuda/bin/g++</span><br></pre></td></tr></table></figure></p>
+<h3 id="安装cuDNN-7-0"><a href="#安装cuDNN-7-0" class="headerlink" title="安装cuDNN 7.0"></a>安装cuDNN 7.0</h3><p>解压安装包并复制到CUDA Toolkit的目录<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">tar -xzvf  cudnn-9.0-linux-x64-v7.tgz</span><br><span class="line">sudo cp cuda/include/cudnn.h /usr/<span class="built_in">local</span>/cuda/include</span><br><span class="line">sudo cp cuda/lib64/libcudnn*  /usr/<span class="built_in">local</span>/cuda/lib64</span><br><span class="line">sudo chmod a+r /usr/<span class="built_in">local</span>/cuda/include/cudnn.h  /usr/<span class="built_in">local</span>/cuda/lib64/libcudnn*</span><br></pre></td></tr></table></figure></p>
+<p>将cuda的一些必要路径添加到系统环境变量里.<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi ~/.bashrc</span><br></pre></td></tr></table></figure></p>
+<p>需要添加一下内容.<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> PATH=<span class="variable">$&#123;PATH&#125;</span>:/usr/<span class="built_in">local</span>/cuda-9.0/bin</span><br><span class="line"><span class="built_in">export</span> LD_LIBRARY_PATH=<span class="variable">$&#123;LD_LIBRARY_PATH&#125;</span>/usr/<span class="built_in">local</span>/cuda-9.0/lib64:/usr/<span class="built_in">local</span>/cuda-9.0/lib:/usr/<span class="built_in">local</span>/cuda/extras/CUPTI/lib64</span><br></pre></td></tr></table></figure></p>
+<p>执行以下命令使之生效<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> ~/.profile</span><br></pre></td></tr></table></figure></p>
+<h3 id="安装bazel"><a href="#安装bazel" class="headerlink" title="安装bazel"></a>安装<a href="https://github.com/bazelbuild/bazel/releases" target="_blank" rel="noopener">bazel</a></h3><p>下载并安装.<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo bash ./bazel-0.7.0-installer-linux-x86_64.sh</span><br></pre></td></tr></table></figure></p>
+<p>安装成功的标志.<br><img src="/2018/09/17/Ubuntu-18-04-搭建Tensorflow开发环境/bazel.png" title="bazel"></p>
+<h3 id="安装Tensorflow-GPU"><a href="#安装Tensorflow-GPU" class="headerlink" title="安装Tensorflow-GPU"></a>安装Tensorflow-GPU</h3><ol>
+<li><p>确保pip大于8.  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip3 install --upgrade pip3</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建Python虚拟环境.  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">virtualenv --system-site-packages -p python3 ~/tensorflow</span><br></pre></td></tr></table></figure>
+<p>~/tensorflow是自己选择的位置并创建的目录.  </p>
+</li>
+<li><p>激活虚拟环境.  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> ~/tensorflow/bin/activate</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装Tensorflow.  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip3 install --upgrade tensorflow-gpu</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>验证.  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import tensorflow as tf</span><br><span class="line">hello = tf.constant(<span class="string">'Hello, TensorFlow!'</span>)</span><br><span class="line">sess = tf.Session()</span><br><span class="line"><span class="built_in">print</span>(sess.run(hello))</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="VS-Code进行开发"><a href="#VS-Code进行开发" class="headerlink" title="VS Code进行开发"></a>VS Code进行开发</h3><ol>
+<li>下载并安装VS Code</li>
+<li>安装Python扩展插件(Python extension for Visual Studio Code)  </li>
+<li>选择Python执行环境<br><code>ctrl + shift + p</code>,输入<code>Python:Select Interpreter</code>,选择你的Python安装目录</li>
+<li><p>在VS Code的Terminal中激活Virtualenv环境中的Tensorflow。  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> ~/tensorflow/bin/activate</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>运行Tensorflow的Python程序  </p>
+<img src="/2018/09/17/Ubuntu-18-04-搭建Tensorflow开发环境/VSCode.png" title="运行Tensorflow成功的结果">
+</li>
+</ol>
+<h3 id="安装keras"><a href="#安装keras" class="headerlink" title="安装keras"></a>安装keras</h3><p>使用pip进行安装.<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip3 install keras</span><br></pre></td></tr></table></figure></p>
+<h3 id="使用Jupyter"><a href="#使用Jupyter" class="headerlink" title="使用Jupyter"></a>使用Jupyter</h3><p>安装Jupyter.<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pip3 install jupyter</span><br></pre></td></tr></table></figure></p>
+<p>运行jupyter.<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jupyter notebook</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    
+      
+      
+
+  <div class="post-copyright">
+    <p class="copyright-item">
+      <span>原文作者: </span>
+      <a href="https://geolibra.github.io">hgis</a>
+    </p>
+    <p class="copyright-item">
+      <span>原文链接: </span>
+      <a href="https://geolibra.github.io/2018/09/17/Ubuntu-18-04-搭建Tensorflow开发环境/">https://geolibra.github.io/2018/09/17/Ubuntu-18-04-搭建Tensorflow开发环境/</a>
+    </p>
+    <p class="copyright-item">
+      <span>许可协议: </span>
+      
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>
+    </p>
+  </div>
+
+
+
+      
+      
+    
+
+    
+      <footer class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/Tensorflow/">Tensorflow</a>
+            
+          </div>
+        
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2018/09/18/Ubuntu下Python绘图中文显示乱码/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">Ubuntu下Python绘图中文显示乱码</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+      <a class="next" href="/2018/09/13/区块链/">
+        <span class="next-text nav-default">区块链</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+
+      </footer>
+    
+
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:674530915@qq.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+          <a href="https://github.com/GeoLibra" class="iconfont icon-github" title="github"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+
+    
+      
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
+  </div>
+
+
+<div class="copyright">
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+  <span class="post-meta-divider">|</span>
+  <span id="busuanzi_container_site_uv">本站访客数<span id="busuanzi_value_site_uv"></span>人</span>
+
+
+  <span class="copyright-year">
+    
+    &copy; 
+    
+    2018
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">hgis</span>
+    <span id="busuanzi_container_site_uv">
+    </span>
+</span>
+</div>
+
+
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+  
+
+  
+
+
+
+    
+  
+
+
+
+  
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/pjax/jquery.pjax.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/nprogress/nprogress.min.js"></script>
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.10.1"></script>
+
+  </body>
+</html>

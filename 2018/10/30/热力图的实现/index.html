@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+  <meta name="description" content="热力图的实现"/>
+
+
+
+
+  <meta name="keywords" content="GIS, 可视化, 算法, 磊哥的小书桌" />
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/default" title="磊哥的小书桌">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.10.1" />
+
+
+
+<link rel="canonical" href="https://geolibra.github.io/2018/10/30/热力图的实现/"/>
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css" />
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css" />
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.10.1" />
+
+
+
+  <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?97659041a2db55d3eb7266f53be7c071";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.1.1/av-min.js"></script>
+  <script id="leancloud">
+    AV.init({
+      appId: "ro3TOe5F5DDemxHnSoYVCHli-gzGzoHsz",
+      appKey: "IHyD5EfrggPl57FnwtBEeH0W"
+    });
+  </script>
+
+
+
+
+<script>
+  window.config = {"title":"磊哥的小书桌","subtitle":null,"description":null,"author":"hgis","language":null,"timezone":null,"url":"https://geolibra.github.io","root":"/","permalink":":year/:month/:day/:title/","permalink_defaults":null,"source_dir":"source","public_dir":"public","tag_dir":"tags","archive_dir":"archives","category_dir":"categories","code_dir":"downloads/code","i18n_dir":":lang","skip_render":null,"new_post_name":":title.md","default_layout":"post","titlecase":false,"external_link":true,"filename_case":0,"render_drafts":false,"post_asset_folder":true,"relative_link":false,"future":true,"highlight":{"enable":true,"auto_detect":false,"line_number":true,"tab_replace":null,"first_line_number":"always1"},"default_category":"uncategorized","category_map":null,"tag_map":null,"date_format":"YYYY-MM-DD","time_format":"HH:mm:ss","per_page":10,"pagination_dir":"page","theme":"even","deploy":{"type":"git","repository":"git@github.com:GeoLibra/GeoLibra.github.io.git","branch":"master"},"ignore":[],"keywords":null,"email":"674530915@qq.com","index_generator":{"per_page":10,"order_by":"-date","path":""},"tag_cloud":{"textFont":"Trebuchet MS, Helvetica","textColour":"\\#eea849","textHeight":25,"outlineColour":"\\#E2E1D1"},"archive_generator":{"per_page":10,"yearly":true,"monthly":true,"daily":false},"category_generator":{"per_page":10},"tag_generator":{"per_page":10},"marked":{"gfm":true,"pedantic":false,"sanitize":false,"tables":true,"breaks":true,"smartLists":true,"smartypants":true,"modifyAnchors":"","autolink":true},"server":{"port":4000,"log":false,"compress":false,"header":true},"since":2018,"favicon":"/favicon.ico","rss":"default","menu":{"Home":"/","Archives":"/archives/","Tags":"/tags","Categories":"/categories","About":"/about"},"color":"default","mode":"default","toc":true,"fancybox":true,"pjax":true,"copyright":{"enable":true,"license":"<a rel=\"license\" href=\"http://creativecommons.org/licenses/by-nc/4.0/\" target=\"_blank\">知识共享署名-非商业性使用 4.0 国际许可协议</a>"},"reward":{"enable":false,"qrCode":{"wechat":null,"alipay":null}},"social":{"email":"674530915@qq.com","stack-overflow":null,"twitter":null,"facebook":null,"linkedin":null,"google":null,"github":"https://github.com/GeoLibra","weibo":null,"zhihu":null,"douban":null,"pocket":null,"tumblr":null,"instagram":null},"leancloud":{"app_id":"ro3TOe5F5DDemxHnSoYVCHli-gzGzoHsz","app_key":"IHyD5EfrggPl57FnwtBEeH0W"},"baidu_analytics":"97659041a2db55d3eb7266f53be7c071","baidu_verification":null,"google_analytics":null,"google_verification":null,"disqus_shortname":null,"changyan":{"appid":null,"appkey":null},"livere_datauid":null,"counter":true,"version":"2.10.1"};
+</script>
+
+    <title> 热力图的实现 - 磊哥的小书桌 </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">磊哥的小书桌</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            首页
+          
+        </li>
+      </a>
+    
+      <a href="/archives/">
+        <li class="mobile-menu-item">
+          
+          
+            归档
+          
+        </li>
+      </a>
+    
+      <a href="/tags">
+        <li class="mobile-menu-item">
+          
+          
+            标签
+          
+        </li>
+      </a>
+    
+      <a href="/categories">
+        <li class="mobile-menu-item">
+          
+          
+            分类
+          
+        </li>
+      </a>
+    
+      <a href="/about">
+        <li class="mobile-menu-item">
+          
+          
+            关于
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">磊哥的小书桌</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/archives/">
+            
+            
+              归档
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/tags">
+            
+            
+              标签
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/categories">
+            
+            
+              分类
+            
+          </a>
+        </li>
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/about">
+            
+            
+              关于
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          热力图的实现
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2018-10-30
+        </span>
+        
+          <span class="post-category">
+            
+              <a href="/categories/可视化/">可视化</a>
+            
+          </span>
+        
+        
+        <span class="post-visits"
+             data-url="/2018/10/30/热力图的实现/"
+             data-title="热力图的实现">
+          阅读次数 0
+        </span>
+        
+      </div>
+    </header>
+
+    
+    
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#简介"><span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现原理"><span class="toc-text">实现原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现"><span class="toc-text">实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#数据"><span class="toc-text">数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建mask"><span class="toc-text">创建mask</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#设置alpha"><span class="toc-text">设置alpha</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#设置颜色梯度"><span class="toc-text">设置颜色梯度</span></a></li></ol></li></ol>
+    </div>
+  </div>
+
+
+
+    <div class="post-content">
+      
+        <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>热力图是以特殊高亮的形式显示访客热衷的页面区域和访客所在的地理区域的图示。<br><img src="/2018/10/30/热力图的实现/heatmap.png" title="热力图"><br><a id="more"></a></p>
+<h2 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h2><ol>
+<li>为离散点信息创建一个Mask，Mask是一个圆形区域，半径为该点可以对最终图像产生影响的半径。</li>
+<li>对每个Mask圆形区域使用渐变的灰度带由内向外填充，中心点权重为1，越向边缘辐射，权重越低，边缘部分权重为0。Mask渐变过程可以使用如线性变化、二次曲线等。</li>
+<li>将离散点的Mask叠加，产生一幅灰度图像。由于灰度值的叠加，值越大颜色越亮，在灰度带中显得越白。相邻Mask重叠区域进行权重叠加操作，最终灰度图每个像素点的数值大小就是所有和其有关的Mask中的权重之和。离散点密度越高的地方灰度值越大，图像越亮。</li>
+<li>以叠加后的灰度值为索引，从一条有256种颜色的色带中映射颜色，并对图像重新着色，从而实现热力图。</li>
+</ol>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><h3 id="数据"><a href="#数据" class="headerlink" title="数据"></a>数据</h3><p>数据格式可以自由定义，只要每个点上包含 <code>坐标</code> 和 <code>权重</code> 这两个必要信息。</p>
+<h3 id="创建mask"><a href="#创建mask" class="headerlink" title="创建mask"></a>创建mask</h3><p>创建一个由黑到白的渐变圆<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//创建一个径向渐变</span></span><br><span class="line"><span class="keyword">let</span> gradient=ctx.createRadialGradient(x,y,<span class="number">0</span>,x,y,radius);</span><br><span class="line">gradient.addColorStop(<span class="number">0</span>,<span class="string">'rgba(0,0,0,1)'</span>);</span><br><span class="line">gradient.addColorStop(<span class="number">1</span>,<span class="string">'rgba(0,0,0,0)'</span>);</span><br><span class="line">ctx.fillStyle=gradient;</span><br><span class="line">ctx.fill();</span><br></pre></td></tr></table></figure></p>
+<img src="/2018/10/30/热力图的实现/point.png" title="单个点mask">
+<h3 id="设置alpha"><a href="#设置alpha" class="headerlink" title="设置alpha"></a>设置alpha</h3><p> 在计算机图形学中，一个RGB颜色模型的真彩图形，用由红、绿、蓝三个色彩信息通道合成的，每个通道用了8位色彩深度，共计24位，包含了所有彩色信息。为实现图形的透明效果，采取在图形文件的处理与存储中附加上另一个8位信息的方法，这个附加的代表图形中各个素点透明度的通道信息就被叫做Alpha通道。Alpha通道使用8位二进制数，就可以表示256级灰度，即256级的透明度。白色（值为255）的Alpha像素用以定义不透明的彩色像素，而黑色（值为0）的Alpha通道像素用以定义透明像素，介于黑白之间的灰度（值为30-255）的Alpha像素用以定义不同程度的半透明像素。因而通过一个32位总线的图形卡来显示带Alpha通道的图形，就可能呈现出透明或半透明的视觉效果。<br>由于热力图是一个个数据点叠加上去的，那么在最后一个点画完之前是不能确定图上任意一点的颜色的。<br><img src="/2018/10/30/热力图的实现/alpha.png" title="alpha原理"></p>
+<p>上图中箭头指向的区域为什么是黄色的，是因为上下侧的绿色部分叠加后权重提升，从而编程黄色，也就是说下面的圆完成绘制之前并不能确定箭头处的颜色。<br>一个像素点的状态是由rgba4个元素决定的，在热力图中的颜色渐变并不是简单的线性叠加。但纯色灰度图像却可以，右边的图像是黑白的，严格来说只是纯黑色，只是alpha值不同。alpha值可以线性累加。也就是<br>只需要不断向canvas画小圆就行，每画一个圆，如果和前面图片重叠，那么重叠区域的alpha值会自动积累在canvas上。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">let x=heatData[i][<span class="number">0</span>],</span><br><span class="line">    y=heatData[i][<span class="number">1</span>],</span><br><span class="line">    w=heatData[i][<span class="number">2</span>];</span><br><span class="line">//创建一个由黑到白的渐变圆</span><br><span class="line">ctx.beginPath();</span><br><span class="line">//设置globalAlpha</span><br><span class="line">let alpha=(w-minW)/(maxW-minW);</span><br><span class="line">ctx.globalAlpha=alpha;</span><br><span class="line">ctx.arc(x,y,radius,<span class="number">0</span>,<span class="number">2</span>*Math.PI,true);</span><br><span class="line">//创建一个径向渐变</span><br><span class="line">let gradient=ctx.createRadialGradient(x,y,<span class="number">0</span>,x,y,radius);</span><br><span class="line">gradient.addColorStop(<span class="number">0</span>,<span class="string">'rgba(0,0,0,1)'</span>);</span><br><span class="line">gradient.addColorStop(<span class="number">1</span>,<span class="string">'rgba(0,0,0,0)'</span>);</span><br><span class="line"></span><br><span class="line">ctx.fillStyle=gradient;</span><br><span class="line">ctx.fill();</span><br><span class="line">ctx.closePath();</span><br></pre></td></tr></table></figure></p>
+
+<h3 id="设置颜色梯度"><a href="#设置颜色梯度" class="headerlink" title="设置颜色梯度"></a>设置颜色梯度</h3><ol>
+<li>首先生成一个颜色字典，规定数据从低到高该使用哪些颜色，然后把它拉成一个线性结构，给出一个比值就能得到一个对应的颜色（比如可以生成的颜色字典，在这个字典里0对应蓝色1对应红色）。</li>
+<li>遍历黑白图像的每一个像素，读取它的alpha值（0-1），按照该前面的配置，查询颜色字典，填色。</li>
+<li>得到彩色图像<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//可以通过canvas提供的getImageData返回ImageData对象,该对象拷贝了画布指定矩形的像素数据</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">ImageData对象中的每个像素,都包含rgba四个信息</span></span><br><span class="line"><span class="comment">r-红色 g-绿色 b-蓝色 a-alpha通道</span></span><br><span class="line"><span class="comment">ImageData:&#123;</span></span><br><span class="line"><span class="comment">    width,</span></span><br><span class="line"><span class="comment">    height,</span></span><br><span class="line"><span class="comment">    data:[0,0,255,0,0,...] //其中每四项分别对应一个像素点</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">canvas的方法putimageData()可以将像素级的数据放回到画布中</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//建立一条长度为256px的颜色渐变带</span></span><br><span class="line"><span class="keyword">let</span> createColorRamp=<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> colorCanvas=<span class="built_in">document</span>.createElement(<span class="string">'canvas'</span>);</span><br><span class="line">    <span class="keyword">let</span> colorCtx=colorCanvas.getContext(<span class="string">'2d'</span>);</span><br><span class="line">    <span class="keyword">let</span> gradientColor=&#123;</span><br><span class="line">        <span class="number">0.2</span>:<span class="string">'rgba(0,0,255,0.2)'</span>,</span><br><span class="line">        <span class="number">0.3</span>:<span class="string">'rgba(43,111,231,0.3)'</span>,</span><br><span class="line">        <span class="number">0.4</span>:<span class="string">'rgba(2,192,241,0.4)'</span>,</span><br><span class="line">        <span class="number">0.6</span>:<span class="string">'rgba(44,222,148,0.6)'</span>,</span><br><span class="line">        <span class="number">0.8</span>:<span class="string">'rgba(254,237,83,0.8)'</span>,</span><br><span class="line">        <span class="number">0.9</span>:<span class="string">'rgba(255,118,50,0.9)'</span>,</span><br><span class="line">        <span class="number">1.0</span>:<span class="string">'rgba(255,64,28,1)'</span></span><br><span class="line">    &#125;;</span><br><span class="line">    colorCanvas.width=<span class="number">256</span>;</span><br><span class="line">    colorCanvas.height=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">let</span> gradient=colorCtx.createLinearGradient(<span class="number">0</span>,<span class="number">0</span>,<span class="number">256</span>,<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> key <span class="keyword">in</span> gradientColor)&#123;</span><br><span class="line">        gradient.addColorStop(key,gradientColor[key]);</span><br><span class="line">    &#125;</span><br><span class="line">    colorCtx.fillStyle=gradient;</span><br><span class="line">    colorCtx.fillRect(<span class="number">0</span>,<span class="number">0</span>,<span class="number">256</span>,<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">return</span> colorCtx.getImageData(<span class="number">0</span>,<span class="number">0</span>,<span class="number">256</span>,<span class="number">1</span>).data</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//映射颜色过程</span></span><br><span class="line"><span class="keyword">let</span> toColor=createColorRamp();</span><br><span class="line"><span class="keyword">let</span> img=ctx.getImageData(<span class="number">0</span>,<span class="number">0</span>,canvas.width,canvas.height);</span><br><span class="line"><span class="keyword">let</span> imgData=img.data;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> i=<span class="number">3</span>;i&lt;imgData.length;i++)&#123;</span><br><span class="line">    <span class="keyword">let</span> alpha=imgData[i];</span><br><span class="line">    <span class="keyword">let</span> offset=alpha * <span class="number">4</span>;</span><br><span class="line">    <span class="keyword">if</span>(offset)&#123;</span><br><span class="line">        imgData[i<span class="number">-3</span>]=toColor[offset];</span><br><span class="line">        imgData[i<span class="number">-2</span>]=toColor[offset+<span class="number">1</span>];</span><br><span class="line">        imgData[i<span class="number">-1</span>]=toColor[offset+<span class="number">2</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">ctx.putImageData(img,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,canvas.width,canvas.height);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>最终渲染效果如下：<br>
+<div style="min-height: 200px; width: 200px;" id="map">
+</div>
+<script type="text/javascript">
+ let heatData=[];
+    let maxW=0,
+        minW=999;
+    for(let i=0;i<1000;i++){
+        let w=Math.random()*100;
+        if(maxW<w){
+            maxW=w
+        }
+        if(minW>w){
+            minW=w
+        }
+        heatData.push([
+            Math.random()*500,
+            Math.random()*500,
+            w
+        ]);
+    }
+    let canvas=document.createElement('canvas');
+    canvas.width=500;
+    canvas.height=500;
+    document.getElementById('map').appendChild(canvas);
+    let ctx=canvas.getContext('2d');
+    let radius=15;
+    //设置填充样式
+    ctx.fillStyle='rgba(255,30,0,0.1)';
+    for(let i=0;i<heatData.length;i++){
+        let x=heatData[i][0],
+            y=heatData[i][1],
+            w=heatData[i][2];
+        //创建一个由黑到白的渐变圆
+        ctx.beginPath();
+        //设置globalAlpha
+        let alpha=(w-minW)/(maxW-minW);
+//        alpha=alpha>1?1:alpha;
+        ctx.globalAlpha=alpha;
+        ctx.arc(x,y,radius,0,2*Math.PI,true);
+        //创建一个径向渐变
+        let gradient=ctx.createRadialGradient(x,y,0,x,y,radius);
+        gradient.addColorStop(0,'rgba(0,0,0,1)');
+        gradient.addColorStop(1,'rgba(0,0,0,0)');
+        ctx.fillStyle=gradient;
+        ctx.fill();
+        ctx.closePath();
+    }
+    let createColorRamp=()=>{
+        let colorCanvas=document.createElement('canvas');
+        let colorCtx=colorCanvas.getContext('2d');
+        let gradientColor={
+            0.2:'rgba(0,0,255,0.2)',
+            0.3:'rgba(43,111,231,0.3)',
+            0.4:'rgba(2,192,241,0.4)',
+            0.6:'rgba(44,222,148,0.6)',
+            0.8:'rgba(254,237,83,0.8)',
+            0.9:'rgba(255,118,50,0.9)',
+            1.0:'rgba(255,64,28,1)'
+        };
+        colorCanvas.width=256;
+        colorCanvas.height=1;
+        let gradient=colorCtx.createLinearGradient(0,0,256,1);
+        for(let key in gradientColor){
+            gradient.addColorStop(key,gradientColor[key]);
+        }
+        colorCtx.fillStyle=gradient;
+        colorCtx.fillRect(0,0,256,1);
+        return colorCtx.getImageData(0,0,256,1).data
+    }
+    let toColor=createColorRamp();
+    let img=ctx.getImageData(0,0,canvas.width,canvas.height);
+    let imgData=img.data;
+    for(let i=3;i<imgData.length;i++){
+        let alpha=imgData[i];
+        let offset=alpha * 4;
+        if(offset){
+        imgData[i-3]=toColor[offset];
+        imgData[i-2]=toColor[offset+1];
+        imgData[i-1]=toColor[offset+2];
+        }
+    }
+    ctx.putImageData(img,0,0,0,0,canvas.width,canvas.height);
+</script>
+</p>
+
+      
+    </div>
+
+    
+      
+      
+
+  <div class="post-copyright">
+    <p class="copyright-item">
+      <span>原文作者: </span>
+      <a href="https://geolibra.github.io">hgis</a>
+    </p>
+    <p class="copyright-item">
+      <span>原文链接: </span>
+      <a href="https://geolibra.github.io/2018/10/30/热力图的实现/">https://geolibra.github.io/2018/10/30/热力图的实现/</a>
+    </p>
+    <p class="copyright-item">
+      <span>许可协议: </span>
+      
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>
+    </p>
+  </div>
+
+
+
+      
+      
+    
+
+    
+      <footer class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/GIS/">GIS</a>
+            
+              <a href="/tags/可视化/">可视化</a>
+            
+              <a href="/tags/算法/">算法</a>
+            
+          </div>
+        
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2018/11/13/对抗神经网络-GAN/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">对抗神经网络(GAN)</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+      <a class="next" href="/2018/10/29/Dymaxion-map/">
+        <span class="next-text nav-default">Dymaxion map</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+
+      </footer>
+    
+
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:674530915@qq.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+          <a href="https://github.com/GeoLibra" class="iconfont icon-github" title="github"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+
+    
+      
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
+  </div>
+
+
+<div class="copyright">
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span>次</span>
+  <span class="post-meta-divider">|</span>
+  <span id="busuanzi_container_site_uv">本站访客数<span id="busuanzi_value_site_uv"></span>人</span>
+
+
+  <span class="copyright-year">
+    
+    &copy; 
+    
+    2018
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">hgis</span>
+    <span id="busuanzi_container_site_uv">
+    </span>
+</span>
+</div>
+
+
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+  
+
+  
+
+
+
+    
+  
+
+
+
+  
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/pjax/jquery.pjax.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/nprogress/nprogress.min.js"></script>
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.10.1"></script>
+
+  </body>
+</html>
