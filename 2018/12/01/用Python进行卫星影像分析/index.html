@@ -265,6 +265,13 @@ var _hmt = _hmt || [];
 
     
     
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#目的"><span class="toc-text">目的</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#研究区域"><span class="toc-text">研究区域</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#卫星影像综述"><span class="toc-text">卫星影像综述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#设置环境"><span class="toc-text">设置环境</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#获取数据"><span class="toc-text">获取数据</span></a></li></ol>
+    </div>
+  </div>
+
 
 
     <div class="post-content">
@@ -274,7 +281,18 @@ var _hmt = _hmt || [];
 <center> <a href="https://www.wired.com/2015/03/orbital-insight/" target="_blank" rel="noopener">卫星拍摄油桶图像</a> </center>
 
 <p>因此，卫星影像领域是一个宝贵的数据资源，当充分利用时，可以为我们提供可操作的信息以便分析。</p>
-
+<h2 id="目的"><a href="#目的" class="headerlink" title="目的"></a>目的</h2><p>本文中，我们将利用卫星影像检测一个地区的植被。旨在让读者熟悉卫星影像数据的概念，以及如何分析数据来调查现实世界的环境和人道主义挑战。</p>
+<h2 id="研究区域"><a href="#研究区域" class="headerlink" title="研究区域"></a>研究区域</h2><p>我特别想知道印度中部的植被密度。因此，本文中的数据集属于该区域。和其他地区的分析方式是一样的。</p>
+<h2 id="卫星影像综述"><a href="#卫星影像综述" class="headerlink" title="卫星影像综述"></a>卫星影像综述</h2><p>卫星影像由卫星收集的地球（或其他行星）的图像。政府或私人公司拥有这些卫星。<a href="https://en.wikipedia.org/wiki/Satellite_imagery" target="_blank" rel="noopener">卫星影像</a>公司通过向政府和企业（如<a href="https://en.wikipedia.org/wiki/Apple_Maps" target="_blank" rel="noopener">苹果地图</a>和<a href="https://en.wikipedia.org/wiki/Google_Maps" target="_blank" rel="noopener">谷歌地图</a>）发放许可证来销售图像。</p>
+<h3 id="设置环境"><a href="#设置环境" class="headerlink" title="设置环境"></a>设置环境</h3><p>需要系列依赖库：</p>
+<ul>
+<li><a href="https://pypi.org/project/planet/" target="_blank" rel="noopener">Planet’s Python Client</a></li>
+<li><a href="https://github.com/mapbox/rasterio" target="_blank" rel="noopener">Rasterio</a>地理信息系统使用GeoTIFF和其他格式来组织和存储栅格数据集如卫星影像和地形模型。Rasterio是一个读写这些格式的Python库，并提供了基于Numpy的N数组和GeoJSON的Python API。</li>
+<li><a href="http://www.numpy.org/" target="_blank" rel="noopener">numpy</a></li>
+<li><a href="https://matplotlib.org/" target="_blank" rel="noopener">matplotlib</a></li>
+<li><a href="http://docs.python-requests.org/en/master/" target="_blank" rel="noopener">requests</a></li>
+</ul>
+<h2 id="获取数据"><a href="#获取数据" class="headerlink" title="获取数据"></a>获取数据</h2>
       
     </div>
 
