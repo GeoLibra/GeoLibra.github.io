@@ -1,12 +1,10 @@
 @charset "UTF-8";
 body {
   background: url("../../img/map.jpg") !important;
-  background-repeat: no-repeat !important;
-  background-attachment: fixed !important;
   background-position: 50% 50% !important; }
 
 .slideout-panel {
-  background-color: rgba(246, 243, 238, 0.8) !important; }
+  background-color: rgba(246, 243, 238, 0.9) !important; }
 
 #days {
   display: block;
