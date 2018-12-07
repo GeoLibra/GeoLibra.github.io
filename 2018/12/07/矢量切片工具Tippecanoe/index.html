@@ -280,7 +280,8 @@ var _hmt = _hmt || [];
 <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> git@github.com:mapbox/tippecanoe.git</span><br><span class="line"><span class="built_in">cd</span> tippecanoe</span><br><span class="line">make -j</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
 <a id="more"></a>
 <h2 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tippecanoe -e [文件夹名称] -z [最大缩放等级] -Z [最小缩放等级] -pC XX.geojson</span><br></pre></td></tr></table></figure>
-<p>如果未指定文件，则从标准输入读取GeoJSON。如果指定了多个文件，则每个文件都放在自己的图层中。GeoJSON要素无需包含在FeatureCollection中。<br>可以将多个GeoJSON要素或文件连接在一起，它将解析要素并忽略它遇到的任何其他对象。</p>
+<p>如果未指定文件，则从标准输入读取GeoJSON。如果指定了多个文件，则每个文件都放在自己的图层中。GeoJSON要素无需包含在FeatureCollection中。<br>可以将多个GeoJSON要素或文件连接在一起，它将解析要素并忽略它遇到的任何其他对象。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tippecanoe -e tile -s EPSG:4326 -z 7 -Z 5  -pC china.geojson</span><br></pre></td></tr></table></figure></p>
+<p>将china.geojson文件进行矢量切片，传入的坐标系为4326，切片等级5-7，切片生成的目录名称为tile，可以看到tile目录下生产的pbf格式的瓦片文件以及metadata.json文件。</p>
 <h2 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h2><ol>
 <li><p>fatal error: sqlite3.h: No such file or directory</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install libsqlite3-dev</span><br></pre></td></tr></table></figure>
