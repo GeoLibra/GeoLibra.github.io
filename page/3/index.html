@@ -238,6 +238,66 @@ var _hmt = _hmt || [];
     <header class="post-header">
       <h1 class="post-title">
         
+          <a class="post-link" href="/2018/11/13/对抗神经网络-GAN/">对抗神经网络(GAN)</a>
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2018-11-13
+        </span>
+        
+          <span class="post-category">
+            
+              <a href="/categories/深度学习/">深度学习</a>
+            
+          </span>
+        
+        
+        <span class="post-visits"
+             data-url="/2018/11/13/对抗神经网络-GAN/"
+             data-title="对抗神经网络(GAN)">
+          阅读次数 0
+        </span>
+        
+      </div>
+    </header>
+
+    
+    
+
+
+    <div class="post-content">
+      
+        
+        
+          
+        
+
+        
+          <h2 id="GAN理论知识"><a href="#GAN理论知识" class="headerlink" title="GAN理论知识"></a>GAN理论知识</h2><p>GAN由generator（生成模型）和descriminator（判别式模型）两部分组成。</p>
+<ul>
+<li>generator：主要从训练数据中产生相同分布的samples，对于输入x，类别标签y，在生成式模型中估计其联合概率分布（两个及以上随机变量组成的随机向量的概率分布）。</li>
+<li>descriminator：判断输入是真实数据还是generator生成的数据，即估计样本属于某类的条件概率分布。它采用传统的监督学习的方法。<br>二者结合后，经过大量次数的迭代训练会使generator尽可能模拟出以假乱真的样本，而discriminator会有更精确的鉴别真伪数据的能力，最终整个GAN会达到所谓的纳什均衡，即discriminator对于generator的数据鉴别结果为正确率和错误了各占50%。
+          <div class="read-more">
+            <a href="/2018/11/13/对抗神经网络-GAN/" class="read-more-link">阅读更多</a>
+          </div>
+        
+      
+    </div>
+
+    
+
+    
+
+  </article>
+
+      
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
           <a class="post-link" href="/2018/10/30/热力图的实现/">热力图的实现</a>
         
       </h1>
@@ -733,64 +793,6 @@ var _hmt = _hmt || [];
 <li>查看python版本。<img src="/2018/09/28/Python3安装Scrapy/pythonv.png" title="查看python版本">
           <div class="read-more">
             <a href="/2018/09/28/Python3安装Scrapy/" class="read-more-link">阅读更多</a>
-          </div>
-        
-      
-    </div>
-
-    
-
-    
-
-  </article>
-
-      
-        
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2018/09/26/Tensorflow笔记/">Tensorflow笔记</a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <span class="post-time">
-          2018-09-26
-        </span>
-        
-          <span class="post-category">
-            
-              <a href="/categories/深度学习/">深度学习</a>
-            
-          </span>
-        
-        
-        <span class="post-visits"
-             data-url="/2018/09/26/Tensorflow笔记/"
-             data-title="Tensorflow笔记">
-          阅读次数 0
-        </span>
-        
-      </div>
-    </header>
-
-    
-    
-
-
-    <div class="post-content">
-      
-        
-        
-          
-        
-
-        
-          <h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><p>基于Tensorflow的NN：<strong>张量（Tensor）</strong>表示数据，用<strong>计算图</strong>搭建神经网络，用<strong>会话</strong>执行计算图，优化线上的权重（参数），得到模型。</p>
-<h3 id="张量（tensor）"><a href="#张量（tensor）" class="headerlink" title="张量（tensor）"></a>张量（tensor）</h3><p>多维数组（列表）；阶：张量的维数；张量可以表示0到n阶的数组。在张量中并没有真正保存数字，保存的是如何得到这些数字的计算过程。<br>
-          <div class="read-more">
-            <a href="/2018/09/26/Tensorflow笔记/" class="read-more-link">阅读更多</a>
           </div>
         
       
