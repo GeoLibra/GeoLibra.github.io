@@ -268,7 +268,7 @@ var _hmt = _hmt || [];
   <div class="post-toc" id="post-toc">
     <h2 class="post-toc-title">文章目录</h2>
     <div class="post-toc-content">
-      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Haar-classifiers"><span class="toc-text">Haar classifiers</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HOG-Histogram-of-Oriented-Gradients"><span class="toc-text">HOG : Histogram of Oriented Gradients</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MTCNN"><span class="toc-text">MTCNN</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MobileNet"><span class="toc-text">MobileNet</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#目标检测"><span class="toc-text">目标检测</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#卷积神经网络"><span class="toc-text">卷积神经网络</span></a>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#人脸检测"><span class="toc-text">人脸检测</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Haar-classifiers"><span class="toc-text">Haar classifiers</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HOG-Histogram-of-Oriented-Gradients"><span class="toc-text">HOG : Histogram of Oriented Gradients</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MTCNN"><span class="toc-text">MTCNN</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MobileNet"><span class="toc-text">MobileNet</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#目标检测"><span class="toc-text">目标检测</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#卷积神经网络"><span class="toc-text">卷积神经网络</span></a></li></ol>
     </div>
   </div>
 
@@ -276,19 +276,46 @@ var _hmt = _hmt || [];
 
     <div class="post-content">
       
-        <p>本文介绍了有关计算机深度学习的有趣内容。<br><img src="/2018/12/09/Learning-computer-vision/start.jpg" title="语义分割自动驾驶"></p>
-<center>用于自动驾驶的语义分割</center><br><a id="more"></a><br><br>近年来，计算机视觉取得了很大的进展。<br>技术：<br><em> 人脸检测(Face detection)：Haar, HOG, MTCNN, Mobilenet
-</em> 人脸识别(Face recognition)：CNN, Facenet<br><em> 目标识别(Object recognition)：alexnet, inceptionnet, resnet
-</em> 迁移学习(Transfer learning)：在新的问题上用较少的资源训练较大的神经网络<br><em> 图像分割(Image segmentation )：rcnn
-</em> GAN<br><em> 计算机视觉硬件：选择什么，GPU很重要
-</em> 集成视觉的UI应用程序：ownphotos<br><br>应用:<br><em> 个人相册
-</em> 自动驾驶汽车<br><em> 无人机
-</em> 验证码识别/OCR<br><em> 网站/应用程序的图片过滤
-</em> 自动标记图片的应用<br><em> 从视频(电视节目、电影)从提起信息
-</em> 视觉问答<br><em> 艺术<br><br>相关学者：  
-</em> 深度学习创始人： andrew ng, yann lecun, bengio yoshua, hinton joffrey<br><em> <a href="https://medium.com/@ageitgey" target="_blank" rel="noopener">adam geitgey</a>,有许多关于视觉的有趣文章，比如 <a href="https://medium.com/@ageitgey/machine-learning-is-fun-part-4-modern-face-recognition-with-deep-learning-c3cffc121d78" target="_blank" rel="noopener">https://medium.com/@ageitgey/machine-learning-is-fun-part-4-modern-face-recognition-with-deep-learning-c3cffc121d78</a> 具有全脸检测/对其/识别<br><br>课程：
-</em> deep learning @ coursera<br><em> machine learning @ coursera<br><br>相关领域:  
-</em> 深度强化学习，使用CNN作为输入层，查看ppo和dqn<br>* 与NLP的交互：lstm 2 cnn<br><br>## 人脸检测<br><img src="/2018/12/09/Learning-computer-vision/face_detection.jpg" title="人脸检测"><br><center>人脸检测是在面部放置检测框</center>
+        <p>本文介绍了有关计算机深度学习的有趣内容。<br><img src="/2018/12/09/Learning-computer-vision/start.jpg" title="语义分割自动驾驶"><center>用于自动驾驶的语义分割</center><br><a id="more"></a><br>近年来，计算机视觉取得了很大的进展。<br>技术:  </p>
+<ul>
+<li>人脸检测(Face detection)：Haar, HOG, MTCNN, Mobilenet</li>
+<li>人脸识别(Face recognition)：CNN, Facenet</li>
+<li>目标识别(Object recognition)：alexnet, inceptionnet, resnet</li>
+<li>迁移学习(Transfer learning)：在新的问题上用较少的资源训练较大的神经网络</li>
+<li>图像分割(Image segmentation )：rcnn</li>
+<li>GAN</li>
+<li>计算机视觉硬件：选择什么，GPU很重要</li>
+<li>集成视觉的UI应用程序：ownphotos</li>
+</ul>
+<p>应用:  </p>
+<ul>
+<li>个人相册</li>
+<li>自动驾驶汽车</li>
+<li>无人机</li>
+<li>验证码识别/OCR</li>
+<li>网站/应用程序的图片过滤</li>
+<li>自动标记图片的应用</li>
+<li>从视频(电视节目、电影)从提起信息</li>
+<li>视觉问答</li>
+<li>艺术</li>
+</ul>
+<p>相关学者:   </p>
+<ul>
+<li>深度学习创始人： andrew ng, yann lecun, bengio yoshua, hinton joffrey</li>
+<li><a href="https://medium.com/@ageitgey" target="_blank" rel="noopener">adam geitgey</a>,有许多关于视觉的有趣文章，比如 <a href="https://medium.com/@ageitgey/machine-learning-is-fun-part-4-modern-face-recognition-with-deep-learning-c3cffc121d78" target="_blank" rel="noopener">https://medium.com/@ageitgey/machine-learning-is-fun-part-4-modern-face-recognition-with-deep-learning-c3cffc121d78</a> 具有全脸检测/对其/识别</li>
+</ul>
+<p>课程：  </p>
+<ul>
+<li>deep learning @ coursera</li>
+<li>machine learning @ coursera</li>
+</ul>
+<p>相关领域:    </p>
+<ul>
+<li>深度强化学习，使用CNN作为输入层，查看ppo和dqn</li>
+<li>与NLP的交互：lstm 2 cnn</li>
+</ul>
+<h2 id="人脸检测"><a href="#人脸检测" class="headerlink" title="人脸检测"></a>人脸检测</h2><img src="/2018/12/09/Learning-computer-vision/face_detection.jpg" title="人脸检测">
+<center>人脸检测是在面部放置检测框</center>
 
 <p>人脸检测是检测人脸的任务，有几种算法可以实现。<br><a href="https://github.com/nodefluxio/face-detector-benchmark" target="_blank" rel="noopener">face-detector-benchmark</a>为这些方法的速度提供基准，易于重用实现。</p>
 <h3 id="Haar-classifiers"><a href="#Haar-classifiers" class="headerlink" title="Haar classifiers"></a>Haar classifiers</h3><img src="/2018/12/09/Learning-computer-vision/haar_features.jpg" title="haar_features">
