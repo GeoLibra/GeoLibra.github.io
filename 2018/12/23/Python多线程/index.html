@@ -17,8 +17,12 @@
 
 
 
+  <meta name="description" content="Python多线程"/>
 
 
+
+
+  <meta name="keywords" content="Python, 磊哥的小书桌" />
 
 
 
@@ -38,7 +42,7 @@
 
 
 
-<link rel="canonical" href="https://geolibra.github.io/"/>
+<link rel="canonical" href="https://geolibra.github.io/2018/12/23/Python多线程/"/>
 
 
 
@@ -100,7 +104,7 @@ var _hmt = _hmt || [];
   window.config = {"title":"磊哥的小书桌","subtitle":null,"description":null,"author":"hgis","language":null,"timezone":null,"url":"https://geolibra.github.io","root":"/","permalink":":year/:month/:day/:title/","permalink_defaults":null,"source_dir":"source","public_dir":"public","tag_dir":"tags","archive_dir":"archives","category_dir":"categories","code_dir":"downloads/code","i18n_dir":":lang","skip_render":null,"new_post_name":":title.md","default_layout":"post","titlecase":false,"external_link":true,"filename_case":0,"render_drafts":false,"post_asset_folder":true,"relative_link":false,"future":true,"highlight":{"enable":true,"auto_detect":false,"line_number":true,"tab_replace":null,"first_line_number":"always1"},"default_category":"uncategorized","category_map":null,"tag_map":null,"date_format":"YYYY-MM-DD","time_format":"HH:mm:ss","per_page":10,"pagination_dir":"page","theme":"even","deploy":{"type":"git","repository":"git@github.com:GeoLibra/GeoLibra.github.io.git","branch":"master"},"ignore":[],"keywords":null,"email":"674530915@qq.com","index_generator":{"per_page":10,"order_by":"-date","path":""},"tag_cloud":{"textFont":"Trebuchet MS, Helvetica","textColour":"\\#eea849","textHeight":25,"outlineColour":"\\#E2E1D1"},"archive_generator":{"per_page":10,"yearly":true,"monthly":true,"daily":false},"category_generator":{"per_page":10},"tag_generator":{"per_page":10},"marked":{"gfm":true,"pedantic":false,"sanitize":false,"tables":true,"breaks":true,"smartLists":true,"smartypants":true,"modifyAnchors":"","autolink":true},"server":{"port":4000,"log":false,"compress":false,"header":true},"since":2018,"favicon":"/favicon.ico","rss":"default","menu":{"Home":"/","Archives":"/archives/","Tags":"/tags","Categories":"/categories","About":"/about"},"color":"default","mode":"default","toc":true,"fancybox":true,"pjax":true,"copyright":{"enable":true,"license":"<a rel=\"license\" href=\"http://creativecommons.org/licenses/by-nc/4.0/\" target=\"_blank\">知识共享署名-非商业性使用 4.0 国际许可协议</a>"},"reward":{"enable":false,"qrCode":{"wechat":null,"alipay":null}},"social":{"email":"674530915@qq.com","stack-overflow":null,"twitter":null,"facebook":null,"linkedin":null,"google":null,"github":"https://github.com/GeoLibra","weibo":null,"zhihu":null,"douban":null,"pocket":null,"tumblr":null,"instagram":null},"leancloud":{"app_id":"ro3TOe5F5DDemxHnSoYVCHli-gzGzoHsz","app_key":"IHyD5EfrggPl57FnwtBEeH0W"},"baidu_analytics":"97659041a2db55d3eb7266f53be7c071","baidu_verification":null,"google_analytics":null,"google_verification":null,"disqus_shortname":null,"changyan":{"appid":null,"appkey":null},"livere_datauid":null,"counter":true,"version":"2.10.1"};
 </script>
 
-    <title> 磊哥的小书桌 </title>
+    <title> Python多线程 - 磊哥的小书桌 </title>
   </head>
 
   <body><div id="mobile-navbar" class="mobile-navbar">
@@ -230,15 +234,11 @@ var _hmt = _hmt || [];
           <div id="content" class="content">
             
   
-  <section id="posts" class="posts">
-    
-      
-        
   <article class="post">
     <header class="post-header">
       <h1 class="post-title">
         
-          <a class="post-link" href="/2018/12/23/Python多线程/">Python多线程</a>
+          Python多线程
         
       </h1>
 
@@ -265,15 +265,18 @@ var _hmt = _hmt || [];
 
     
     
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#使用函数创建多线程"><span class="toc-text">使用函数创建多线程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用Threading模块创建线程"><span class="toc-text">使用Threading模块创建线程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#线程同步"><span class="toc-text">线程同步</span></a></li></ol>
+    </div>
+  </div>
+
 
 
     <div class="post-content">
       
-        
-        
-
-        
-          <p>Python中使用线程有两种方式：函数或者用类来包装线程对象。</p>
+        <p>Python中使用线程有两种方式：函数或者用类来包装线程对象。</p>
 <h2 id="使用函数创建多线程"><a href="#使用函数创建多线程" class="headerlink" title="使用函数创建多线程"></a>使用函数创建多线程</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">threading._start_new_thread(function,args[,kwargs])</span><br></pre></td></tr></table></figure>
 <ul>
 <li>function - 线程函数</li>
@@ -285,570 +288,70 @@ var _hmt = _hmt || [];
 <h2 id="使用Threading模块创建线程"><a href="#使用Threading模块创建线程" class="headerlink" title="使用Threading模块创建线程"></a>使用Threading模块创建线程</h2><p>使用Threading模块创建线程，直接从threading.Thread继承，然后重写<code>__init__</code>方法和<code>run</code>方法：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line">exitFlag=<span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyThread</span><span class="params">(threading.Thread)</span>:</span> <span class="comment"># 继承父类threding.Thread</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,threadId,name,counter)</span>:</span></span><br><span class="line">        threading.Thread.__init__(self)</span><br><span class="line">        self.threadId=threadId</span><br><span class="line">        self.name=name</span><br><span class="line">        self.counter=counter</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="comment"># 将要执行的代码写到run函数里面 线程在创建后会直接运行run函数</span></span><br><span class="line">        print(<span class="string">"Starting "</span>+self.name)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">print_time</span><span class="params">(threadName,delay,counter)</span>:</span></span><br><span class="line">    <span class="keyword">while</span> counter:</span><br><span class="line">        <span class="keyword">if</span> exitFlag:</span><br><span class="line">            threadName.exit()</span><br><span class="line">        time.sleep(delay)</span><br><span class="line">        print(<span class="string">"%s:  %s"</span> % (threadName,time.ctime(time.time())))</span><br><span class="line">        counter-=<span class="number">1</span></span><br><span class="line"><span class="comment"># 创建新线程</span></span><br><span class="line">thread1=MyThread(<span class="number">1</span>,<span class="string">"Thread_1"</span>,<span class="number">1</span>)</span><br><span class="line">thread2=MyThread(<span class="number">2</span>,<span class="string">"Thread_2"</span>,<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 开启线程</span></span><br><span class="line">thread1.start()</span><br><span class="line">thread2.start()</span><br><span class="line"></span><br><span class="line">print(<span class="string">"Exiting Main Threading"</span>)</span><br></pre></td></tr></table></figure></p>
 <h2 id="线程同步"><a href="#线程同步" class="headerlink" title="线程同步"></a>线程同步</h2><p>如果多个线程共同对某个数据修改，则可能出现不可预料的结果，为了保证数据的正确性，需要对多个线程进行同步。<br>视同Threading的Lock和Rlock可以实现简单的线程同步，这两个对象都有acquire方法和release方法，对于那些需要每次只允许一个线程操作的数据，可以将其操作放到acquire和release方法之间。<br>多线程的优势在于可以同时运行多个任务。但当多线程需要共享数据时，可能存在数据不同步的问题。考虑到这样一种情况：一个列表里所有元素都是0，线程set从后向前把所有元素改成1，而线程print负责从前往后读取列表并打印。<br>那么可能线程set开始的时候，线程print便来打印列表了，输出就成了一半1一半0，这是由于数据不同步造成的。为了避免这种情况，引入锁的概念。<br>锁有两种状态——锁定和未锁定。每当一个线程比如set要访问共享数据时，必须先获得锁定；如果已经有别的线程比如print获得锁定了，那么就让线程set暂停，也就是同步阻塞；等到线程print访问完毕，释放锁以后，再让线程set继续。</p>
 
-        
       
     </div>
 
     
+      
+      
 
-    
+  <div class="post-copyright">
+    <p class="copyright-item">
+      <span>原文作者: </span>
+      <a href="https://geolibra.github.io">hgis</a>
+    </p>
+    <p class="copyright-item">
+      <span>原文链接: </span>
+      <a href="https://geolibra.github.io/2018/12/23/Python多线程/">https://geolibra.github.io/2018/12/23/Python多线程/</a>
+    </p>
+    <p class="copyright-item">
+      <span>许可协议: </span>
+      
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>
+    </p>
+  </div>
 
-  </article>
+
 
       
-        
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2018/12/16/GIS数据下载集锦/">GIS数据下载集锦</a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <span class="post-time">
-          2018-12-16
-        </span>
-        
-          <span class="post-category">
-            
-              <a href="/categories/GIS/">GIS</a>
-            
-          </span>
-        
-        
-        <span class="post-visits"
-             data-url="/2018/12/16/GIS数据下载集锦/"
-             data-title="GIS数据下载集锦">
-          阅读次数 0
-        </span>
-        
-      </div>
-    </header>
-
-    
-    
-
-
-    <div class="post-content">
       
-        
-        
-          
-        
+    
 
+    
+      <footer class="post-footer">
         
-          <h2 id="Natural-Earth-Data"><a href="#Natural-Earth-Data" class="headerlink" title="Natural Earth Data"></a>Natural Earth Data</h2><p>地址：<a href="http://www.naturalearthdata.com/" target="_blank" rel="noopener">http://www.naturalearthdata.com/</a><br><img src="/2018/12/16/GIS数据下载集锦/NaturalEarth.png" title="NaturalEarth"></p>
-<p>Natural Earth Data提供高中低三种不同分辨率的全球矢量数据集，包括行政区划、道路交通、城市、水系、海岸线等。Natural Earth Data的最大优势就是数据是开放性的，用户有传播和修改数据的权限。<br>
-          <div class="read-more">
-            <a href="/2018/12/16/GIS数据下载集锦/" class="read-more-link">阅读更多</a>
+          <div class="post-tags">
+            
+              <a href="/tags/Python/">Python</a>
+            
           </div>
         
-      
-    </div>
-
-    
-
-    
-
-  </article>
-
-      
-        
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2018/12/14/Python小技巧/">Python小技巧</a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <span class="post-time">
-          2018-12-14
-        </span>
-        
-          <span class="post-category">
-            
-              <a href="/categories/Python/">Python</a>
-            
-          </span>
         
         
-        <span class="post-visits"
-             data-url="/2018/12/14/Python小技巧/"
-             data-title="Python小技巧">
-          阅读次数 0
-        </span>
-        
-      </div>
-    </header>
-
+  <nav class="post-nav">
     
     
-
-
-    <div class="post-content">
-      
-        
-        
-          
-        
-
-        
-          <p>本文介绍一些Python使用的小技巧。</p>
-<h2 id="实现进度条"><a href="#实现进度条" class="headerlink" title="实现进度条"></a>实现进度条</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys, time</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> datetime</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">progressbar</span><span class="params">(t_n)</span>:</span></span><br><span class="line">    sys.stdout.write(<span class="string">'\r'</span>)</span><br><span class="line">    sys.stdout.write(t_n)</span><br><span class="line">    sys.stdout.flush()</span><br><span class="line">starttime = datetime.datetime.now()</span><br><span class="line"><span class="keyword">for</span> progress <span class="keyword">in</span> range(<span class="number">100</span>):</span><br><span class="line">    time.sleep(<span class="number">0.5</span>)</span><br><span class="line">    endtime = datetime.datetime.now()</span><br><span class="line">    progressbar(<span class="string">"Download progress: %d%%,running time: %s \r"</span> % (progress,(endtime - starttime)))</span><br><span class="line"><span class="comment"># 第二种  通过清屏方式实现</span></span><br><span class="line">starttime = datetime.datetime.now()</span><br><span class="line"><span class="keyword">for</span> progress <span class="keyword">in</span> range(<span class="number">100</span>):</span><br><span class="line">    time.sleep(<span class="number">0.5</span>)</span><br><span class="line">    endtime = datetime.datetime.now()</span><br><span class="line">    os.system(<span class="string">'cls'</span>)  <span class="comment"># windows</span></span><br><span class="line">    <span class="comment"># os.system('clear') # Linux</span></span><br><span class="line">    print(<span class="string">"Download progress: %d%%,running time: %s"</span> % (progress,(endtime - starttime)))</span><br><span class="line"><span class="comment"># 通过tqdm模块</span></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">from</span> tqdm <span class="keyword">import</span> tqdm</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> tqdm(range(<span class="number">1</span>, <span class="number">500</span>)):</span><br><span class="line">    time.sleep(<span class="number">0.01</span>)</span><br></pre></td></tr></table></figure>
-          <div class="read-more">
-            <a href="/2018/12/14/Python小技巧/" class="read-more-link">阅读更多</a>
-          </div>
-        
-      
-    </div>
-
-    
-
-    
-
-  </article>
-
-      
-        
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2018/12/12/Python高级技巧/">Python高级技巧</a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <span class="post-time">
-          2018-12-12
-        </span>
-        
-          <span class="post-category">
-            
-              <a href="/categories/Python/">Python</a>
-            
-          </span>
-        
-        
-        <span class="post-visits"
-             data-url="/2018/12/12/Python高级技巧/"
-             data-title="Python高级技巧">
-          阅读次数 0
-        </span>
-        
-      </div>
-    </header>
-
-    
-    
-
-
-    <div class="post-content">
-      
-        
-        
-          
-        
-
-        
-          <h2 id="函数式编程"><a href="#函数式编程" class="headerlink" title="函数式编程"></a>函数式编程</h2><h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><img src="/2018/12/12/Python高级技巧/fun.png" title="函数式编程">
-<p>函数式编程特点：  </p>
-<ul>
-<li>把计算视为函数而不是指令</li>
-<li>纯函数式编程：不需要变量，没有副作用，测试简单</li>
-<li>支持高阶函数</li>
-</ul>
-          <div class="read-more">
-            <a href="/2018/12/12/Python高级技巧/" class="read-more-link">阅读更多</a>
-          </div>
-        
-      
-    </div>
-
-    
-
-    
-
-  </article>
-
-      
-        
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2018/12/09/Learning-computer-vision/">Learning computer vision</a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <span class="post-time">
-          2018-12-09
-        </span>
-        
-          <span class="post-category">
-            
-              <a href="/categories/深度学习/">深度学习</a>
-            
-          </span>
-        
-        
-        <span class="post-visits"
-             data-url="/2018/12/09/Learning-computer-vision/"
-             data-title="Learning computer vision">
-          阅读次数 0
-        </span>
-        
-      </div>
-    </header>
-
-    
-    
-
-
-    <div class="post-content">
-      
-        
-        
-          
-        
-
-        
-          <p>本文介绍了有关计算机深度学习的有趣内容。<br><img src="/2018/12/09/Learning-computer-vision/start.jpg" title="语义分割自动驾驶"><center>用于自动驾驶的语义分割</center><br>
-          <div class="read-more">
-            <a href="/2018/12/09/Learning-computer-vision/" class="read-more-link">阅读更多</a>
-          </div>
-        
-      
-    </div>
-
-    
-
-    
-
-  </article>
-
-      
-        
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2018/12/07/矢量切片工具Tippecanoe/">矢量切片工具Tippecanoe</a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <span class="post-time">
-          2018-12-07
-        </span>
-        
-          <span class="post-category">
-            
-              <a href="/categories/GIS/">GIS</a>
-            
-          </span>
-        
-        
-        <span class="post-visits"
-             data-url="/2018/12/07/矢量切片工具Tippecanoe/"
-             data-title="矢量切片工具Tippecanoe">
-          阅读次数 0
-        </span>
-        
-      </div>
-    </header>
-
-    
-    
-
-
-    <div class="post-content">
-      
-        
-        
-          
-        
-
-        
-          <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>Tippecanoe是一款开源的矢量切片工具，在处理大数据量时有较大优势。</p>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> git@github.com:mapbox/tippecanoe.git</span><br><span class="line"><span class="built_in">cd</span> tippecanoe</span><br><span class="line">make -j</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
-          <div class="read-more">
-            <a href="/2018/12/07/矢量切片工具Tippecanoe/" class="read-more-link">阅读更多</a>
-          </div>
-        
-      
-    </div>
-
-    
-
-    
-
-  </article>
-
-      
-        
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2018/12/06/English/">English</a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <span class="post-time">
-          2018-12-06
-        </span>
-        
-          <span class="post-category">
-            
-              <a href="/categories/English/">English</a>
-            
-          </span>
-        
-        
-        <span class="post-visits"
-             data-url="/2018/12/06/English/"
-             data-title="English">
-          阅读次数 0
-        </span>
-        
-      </div>
-    </header>
-
-    
-    
-
-
-    <div class="post-content">
-      
-        
-        
-          
-        
-
-        
-          <h2 id="Phrase"><a href="#Phrase" class="headerlink" title="Phrase"></a>Phrase</h2><ul>
-<li>mountains of data 大数据</li>
-<li>small bar 小酒吧</li>
-<li>small retailer  小型零售商</li>
-<li>customer experience 顾客体验</li>
-<li>the supply chain 供应链</li>
-<li>state-of-the-art 使用最先进技术的，体现最高水平的</li>
-<li>Existing studies 现有研究</li>
-<li>ultimately 最后，最终，基本上</li>
-<li>To address this issue 为了解决这个问题，针对这个问题</li>
-<li>subsequently 其后，随后
-          <div class="read-more">
-            <a href="/2018/12/06/English/" class="read-more-link">阅读更多</a>
-          </div>
-        
-      
-    </div>
-
-    
-
-    
-
-  </article>
-
-      
-        
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2018/12/05/一行Python/">一行Python</a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <span class="post-time">
-          2018-12-05
-        </span>
-        
-          <span class="post-category">
-            
-              <a href="/categories/Python/">Python</a>
-            
-          </span>
-        
-        
-        <span class="post-visits"
-             data-url="/2018/12/05/一行Python/"
-             data-title="一行Python">
-          阅读次数 0
-        </span>
-        
-      </div>
-    </header>
-
-    
-    
-
-
-    <div class="post-content">
-      
-        
-        
-          
-        
-
-        
-          <h2 id="HTTP"><a href="#HTTP" class="headerlink" title="HTTP"></a>HTTP</h2><p>一行代码实现一个HTTP服务器<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -m http.server <span class="number">8080</span></span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p>注意：Python2中的SimpleHTTPServer在Python3中已经合并到http.server</p>
-</blockquote>
-<p>输入<code>localhost:8080</code>即可访问，如果目录下有一个index.html的文件，则会成为一个默认页面，若没有，则会显示目录列表。<br>
-          <div class="read-more">
-            <a href="/2018/12/05/一行Python/" class="read-more-link">阅读更多</a>
-          </div>
-        
-      
-    </div>
-
-    
-
-    
-
-  </article>
-
-      
-        
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2018/12/02/Cartogram/">Cartogram</a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <span class="post-time">
-          2018-12-02
-        </span>
-        
-          <span class="post-category">
-            
-              <a href="/categories/可视化/">可视化</a>
-            
-          </span>
-        
-        
-        <span class="post-visits"
-             data-url="/2018/12/02/Cartogram/"
-             data-title="Cartogram">
-          阅读次数 0
-        </span>
-        
-      </div>
-    </header>
-
-    
-    
-
-
-    <div class="post-content">
-      
-        
-        
-          
-        
-
-        
-          <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>法国工程师Charles Joseph Minard于1851年发布名为”Cartpgrammes a foyer diagraphiques”的系列地图被认为是”Cartogram”一词的起源。与传统的地图不同，Cartogram以地图的形式表达空间数据的属性信息（如人口、GDP等）而非几何信息（如面积和距离）。由于属性信息和几何信息的数值并不相同，因此，Cartogram相对于传统地图会发生扭曲。Cartogram常见的是两种是区域和距离制图。
-          <div class="read-more">
-            <a href="/2018/12/02/Cartogram/" class="read-more-link">阅读更多</a>
-          </div>
-        
-      
-    </div>
-
-    
-
-    
-
-  </article>
-
-      
-        
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2018/12/01/用Python进行卫星影像分析/">用Python进行卫星影像分析</a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <span class="post-time">
-          2018-12-01
-        </span>
-        
-          <span class="post-category">
-            
-              <a href="/categories/GIS/">GIS</a>
-            
-          </span>
-        
-        
-        <span class="post-visits"
-             data-url="/2018/12/01/用Python进行卫星影像分析/"
-             data-title="用Python进行卫星影像分析">
-          阅读次数 0
-        </span>
-        
-      </div>
-    </header>
-
-    
-    
-
-
-    <div class="post-content">
-      
-        
-        
-          
-        
-
-        
-          <img src="/2018/12/01/用Python进行卫星影像分析/source.png" title="数据源"><center><a href="https://www.planet.com/explorer/#/area-coverage/0.53,1/cloud_cover/0,0.25/types/PSScene4Band/mosaic/global_monthly_2018_10_mosaic/center/13.440,2.162/zoom/2" target="_blank" rel="noopener">数据源</a></center><br><center>数据是当今的新石油，但如果这些数据被实际用于监测世界各地的石油呢？</center><br>石油是一个涉及许多国家的地区，长期以来一直是风暴的中心。监测全球石油库存并不容易，因为没有人清楚地球上剩余的石油量。<br>
-          <div class="read-more">
-            <a href="/2018/12/01/用Python进行卫星影像分析/" class="read-more-link">阅读更多</a>
-          </div>
-        
-      
-    </div>
-
-    
-
-    
-
-  </article>
-
-      
-      
-  <nav class="pagination">
-    
-    
-      <a class="next" href="/page/2/">
-        <span class="next-text">下一页</span>
+      <a class="next" href="/2018/12/16/GIS数据下载集锦/">
+        <span class="next-text nav-default">GIS数据下载集锦</span>
+        <span class="prev-text nav-mobile">下一篇</span>
         <i class="iconfont icon-right"></i>
       </a>
     
   </nav>
 
 
+      </footer>
     
-  </section>
+
+  </article>
+
 
           </div>
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
       </main>
@@ -931,6 +434,11 @@ var _hmt = _hmt || [];
     </div>
 
     
+  
+  
+
+  
+
 
 
     
