@@ -268,7 +268,7 @@ var _hmt = _hmt || [];
   <div class="post-toc" id="post-toc">
     <h2 class="post-toc-title">文章目录</h2>
     <div class="post-toc-content">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#浏览器标志"><span class="toc-text">浏览器标志</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#操作系统标志"><span class="toc-text">操作系统标志</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#浏览器标志"><span class="toc-text">浏览器标志</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#操作系统标志"><span class="toc-text">操作系统标志</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#windows"><span class="toc-text">windows</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Linux"><span class="toc-text">Linux</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mac-os"><span class="toc-text">mac os</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#加密等级标识"><span class="toc-text">加密等级标识</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#引擎版本"><span class="toc-text">引擎版本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#浏览器版本"><span class="toc-text">浏览器版本</span></a></li></ol>
     </div>
   </div>
 
@@ -277,9 +277,8 @@ var _hmt = _hmt || [];
     <div class="post-content">
       
         <p>User Agent，用户代理，是HTTP协议中的一部分。是一种向访问网站提供你所使用的浏览器类型及版本、操作系统及版本、浏览器内核等信息的标识。通过这个标识，用户所访问的网站可以显示不同的排版从而为用户提供更好的体验或者进行信息统计。<br><a id="more"></a></p>
-<h2 id="浏览器标志"><a href="#浏览器标志" class="headerlink" title="浏览器标志"></a>浏览器标志</h2><p>由于历史上的浏览器大战，当时想获得图文并茂的网页，就必须宣称自己是 Mozilla 浏览器。此事导致如今User-Agent里通常都带有Mozilla字样。</p>
-<h2 id="操作系统标志"><a href="#操作系统标志" class="headerlink" title="操作系统标志"></a>操作系统标志</h2><p>windows</p>
-<table>
+<h2 id="浏览器标志"><a href="#浏览器标志" class="headerlink" title="浏览器标志"></a>浏览器标志</h2><p>在<a href="https://zh.wikipedia.org/wiki/%E6%B5%8F%E8%A7%88%E5%99%A8%E5%A4%A7%E6%88%98" target="_blank" rel="noopener">浏览器大战</a>期间，很多网络服务器的配置只给被识别为某些版本的Mozilla的客户端发送需要高级功能的网页。<br>因此，为获取更好的网页，绝大多数网页浏览器使用Mozilla标志</p>
+<h2 id="操作系统标志"><a href="#操作系统标志" class="headerlink" title="操作系统标志"></a>操作系统标志</h2><h3 id="windows"><a href="#windows" class="headerlink" title="windows"></a>windows</h3><table>
 <thead>
 <tr>
 <th>标志</th>
@@ -325,8 +324,8 @@ var _hmt = _hmt || [];
 </tr>
 </tbody>
 </table>
-<p>Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36<br>Linux </p>
-<table>
+<p>Wow64是允许在64位Windows上执行32位x86应用程序的软件<br>Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36  </p>
+<h3 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h3><table>
 <thead>
 <tr>
 <th>标志</th>
@@ -348,7 +347,33 @@ var _hmt = _hmt || [];
 </tr>
 </tbody>
 </table>
-<p>参考：<br><a href="https://webaim.org/blog/user-agent-string-history/" target="_blank" rel="noopener">https://webaim.org/blog/user-agent-string-history/</a></p>
+<p>Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36<br>Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:64.0) Gecko/20100101 Firefox/64.0</p>
+<h3 id="mac-os"><a href="#mac-os" class="headerlink" title="mac os"></a>mac os</h3><table>
+<thead>
+<tr>
+<th>标志</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Macintosh; Intel Mac OS X 10_9_0</td>
+<td>Intel x86 或者 x86_64</td>
+</tr>
+<tr>
+<td>Macintosh; PPC Mac OS X 10_9_0</td>
+<td>PowerPC</td>
+</tr>
+<tr>
+<td>Macintosh; Intel Mac OS X 10.12;</td>
+<td>不用下划线，用点</td>
+</tr>
+</tbody>
+</table>
+<h2 id="加密等级标识"><a href="#加密等级标识" class="headerlink" title="加密等级标识"></a>加密等级标识</h2><p>在用户代理字符串中使用字母U, I和N以指定加密强度。直至1996年，美国政府允许了通过长于40位密钥的加密被出口为止，供应商推出不同浏览器版本，各自具有不同加密强度。“U”代表美国（为具有128-位加密的版本）；“I”代表国际—浏览器具有40-位加密且可以在全世界任何地方被使用—而“N”代表（事实上）“没有”（没有加密）。随着出口限制的解除，绝大多数供应商支持了256-位加密。<br>例如，iPad上的Safari：<br>Mozilla/5.0 (iPad; U; CPU OS 3_2_1 like Mac OS X; en-us) AppleWebKit/531.21.10 (KHTML, like Gecko) Mobile/7B405</p>
+<h2 id="引擎版本"><a href="#引擎版本" class="headerlink" title="引擎版本"></a>引擎版本</h2><p>浏览器使用的主流渲染引擎有：Gecko(Firefox)、WebKit(Safari)、KHTML、Presto、Trident、Tasman等，格式为：渲染引擎/版本信息.<br>历史上苹果依靠WebKit内核开发了Safari浏览器，WebKit包含了WebCore引擎，而WebCore由从KHTML衍生而来。由于历史原因，KHTML引擎需要声明自己是“like Gecko”，所以引擎部分这么写。后来Google开发Chrome也使用了WebKit内核，于是也跟着这么写。<br>Chrome想要伪装成Safari，Safari使用了WebKit渲染引擎，而WebKit伪装KHTML，KHTML伪装成Gecko的。同时所有的浏览器又都宣称自己是Mozilla</p>
+<h2 id="浏览器版本"><a href="#浏览器版本" class="headerlink" title="浏览器版本"></a>浏览器版本</h2><p><code>Chrome/71.0.3578.98</code> 其中71.0是大版本,3578是一个持续增大的数字,98则是修补漏洞的小版本。</p>
+<p>参考：<br><a href="https://webaim.org/blog/user-agent-string-history/" target="_blank" rel="noopener">https://webaim.org/blog/user-agent-string-history/</a><br><a href="https://www.cnblogs.com/lanrenxinxin/p/4977488.html" target="_blank" rel="noopener">https://www.cnblogs.com/lanrenxinxin/p/4977488.html</a></p>
 
       
     </div>
