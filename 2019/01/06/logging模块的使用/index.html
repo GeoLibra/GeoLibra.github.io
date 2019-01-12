@@ -791,14 +791,15 @@ var _hmt = _hmt || [];
 <ul>
 <li>使用Python代码显式的创建loggers, handlers和formatters并分别调用它们的配置函数；</li>
 <li>创建一个日志配置文件，然后使用fileConfig()函数来读取该文件的内容；</li>
-<li><p>创建一个包含配置信息的dict，然后把它传递个dictConfig()函数；</p>
-<h3 id="向日志输出中添加上下文信息"><a href="#向日志输出中添加上下文信息" class="headerlink" title="向日志输出中添加上下文信息"></a>向日志输出中添加上下文信息</h3><p>除了传递给日志记录函数的参数外，有时候我们还想在日志输出中包含一些额外的上下文信息。比如，在一个网络应用中，可能希望在日志中记录客户端的特定信息，如：远程客户端的IP地址和用户名。这里我们来介绍以下几种实现方式：</p>
-</li>
-<li><p>通过向日志记录函数传递一个extra参数引入上下文信息</p>
-</li>
-<li>使用LoggerAdapters引入上下文信息</li>
-<li>使用Filters引入上下文信息<br>参考:<br><a href="https://blog.csdn.net/sollor525/article/details/79152526" target="_blank" rel="noopener">https://blog.csdn.net/sollor525/article/details/79152526</a><br><a href="https://www.cnblogs.com/liujiacai/p/7804848.html" target="_blank" rel="noopener">https://www.cnblogs.com/liujiacai/p/7804848.html</a></li>
+<li>创建一个包含配置信息的dict，然后把它传递个dictConfig()函数；</li>
 </ul>
+<h3 id="向日志输出中添加上下文信息"><a href="#向日志输出中添加上下文信息" class="headerlink" title="向日志输出中添加上下文信息"></a>向日志输出中添加上下文信息</h3><p>除了传递给日志记录函数的参数外，有时候我们还想在日志输出中包含一些额外的上下文信息。比如，在一个网络应用中，可能希望在日志中记录客户端的特定信息，如：远程客户端的IP地址和用户名。这里我们来介绍以下几种实现方式：</p>
+<ul>
+<li>通过向日志记录函数传递一个extra参数引入上下文信息</li>
+<li>使用LoggerAdapters引入上下文信息</li>
+<li>使用Filters引入上下文信息</li>
+</ul>
+<p>参考:<br><a href="https://blog.csdn.net/sollor525/article/details/79152526" target="_blank" rel="noopener">https://blog.csdn.net/sollor525/article/details/79152526</a><br><a href="https://www.cnblogs.com/liujiacai/p/7804848.html" target="_blank" rel="noopener">https://www.cnblogs.com/liujiacai/p/7804848.html</a></p>
 
       
     </div>
