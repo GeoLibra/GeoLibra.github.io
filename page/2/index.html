@@ -238,6 +238,73 @@ var _hmt = _hmt || [];
     <header class="post-header">
       <h1 class="post-title">
         
+          <a class="post-link" href="/2018/12/06/English/">English</a>
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2018-12-06
+        </span>
+        
+          <span class="post-category">
+            
+              <a href="/categories/English/">English</a>
+            
+          </span>
+        
+        
+        <span class="post-visits"
+             data-url="/2018/12/06/English/"
+             data-title="English">
+          阅读次数 0
+        </span>
+        
+      </div>
+    </header>
+
+    
+    
+
+
+    <div class="post-content">
+      
+        
+        
+          
+        
+
+        
+          <h2 id="Phrase"><a href="#Phrase" class="headerlink" title="Phrase"></a>Phrase</h2><ul>
+<li>mountains of data 大数据</li>
+<li>small bar 小酒吧</li>
+<li>small retailer  小型零售商</li>
+<li>customer experience 顾客体验</li>
+<li>the supply chain 供应链</li>
+<li>state-of-the-art 使用最先进技术的，体现最高水平的</li>
+<li>Existing studies 现有研究</li>
+<li>ultimately 最后，最终，基本上</li>
+<li>To address this issue 为了解决这个问题，针对这个问题</li>
+<li>subsequently 其后，随后
+          <div class="read-more">
+            <a href="/2018/12/06/English/" class="read-more-link">阅读更多</a>
+          </div>
+        
+      
+    </div>
+
+    
+
+    
+
+  </article>
+
+      
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
           <a class="post-link" href="/2018/12/05/一行Python/">一行Python</a>
         
       </h1>
@@ -753,66 +820,6 @@ var _hmt = _hmt || [];
 <li>rar：打包压缩文件，最初用于dos，基于Windows。压缩率比zip高，但速度慢，随机访问速度也慢。
           <div class="read-more">
             <a href="/2018/11/24/Python解压文件/" class="read-more-link">阅读更多</a>
-          </div>
-        
-      
-    </div>
-
-    
-
-    
-
-  </article>
-
-      
-        
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2018/11/24/Python下载文件/">Python下载文件</a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <span class="post-time">
-          2018-11-24
-        </span>
-        
-          <span class="post-category">
-            
-              <a href="/categories/Python/">Python</a>
-            
-          </span>
-        
-        
-        <span class="post-visits"
-             data-url="/2018/11/24/Python下载文件/"
-             data-title="Python下载文件">
-          阅读次数 0
-        </span>
-        
-      </div>
-    </header>
-
-    
-    
-
-
-    <div class="post-content">
-      
-        
-        
-          
-        
-
-        
-          <p>本文主要介绍使用Python3下载文件的常用方法。</p>
-<h2 id="urllib"><a href="#urllib" class="headerlink" title="urllib"></a>urllib</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">report_hook</span><span class="params">(count, block_size, total_size)</span>:</span></span><br><span class="line">    <span class="string">'''回调函数</span></span><br><span class="line"><span class="string">        @count:已经下载的数据块</span></span><br><span class="line"><span class="string">        @block_size:数据块的大小</span></span><br><span class="line"><span class="string">        @total_size:远程文件的大小</span></span><br><span class="line"><span class="string">        '''</span></span><br><span class="line">    print(<span class="string">'%02d%%'</span>%(<span class="number">100.0</span> * count * block_size/ total_size))</span><br><span class="line"><span class="keyword">from</span> urllib <span class="keyword">import</span> request</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line">url=<span class="string">'https://www.python.org/ftp/python/3.7.1/python-3.7.1-amd64.exe'</span></span><br><span class="line">filename = os.path.basename(url)</span><br><span class="line"><span class="comment"># 第一个参数网络地址；第二个参数 本地保存位置</span></span><br><span class="line">request.urlretrieve(url,filename,report_hook)</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>注意，Python3.3之后不在使用urllib2。<br>
-          <div class="read-more">
-            <a href="/2018/11/24/Python下载文件/" class="read-more-link">阅读更多</a>
           </div>
         
       

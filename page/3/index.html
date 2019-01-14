@@ -238,6 +238,66 @@ var _hmt = _hmt || [];
     <header class="post-header">
       <h1 class="post-title">
         
+          <a class="post-link" href="/2018/11/24/Python下载文件/">Python下载文件</a>
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2018-11-24
+        </span>
+        
+          <span class="post-category">
+            
+              <a href="/categories/Python/">Python</a>
+            
+          </span>
+        
+        
+        <span class="post-visits"
+             data-url="/2018/11/24/Python下载文件/"
+             data-title="Python下载文件">
+          阅读次数 0
+        </span>
+        
+      </div>
+    </header>
+
+    
+    
+
+
+    <div class="post-content">
+      
+        
+        
+          
+        
+
+        
+          <p>本文主要介绍使用Python3下载文件的常用方法。</p>
+<h2 id="urllib"><a href="#urllib" class="headerlink" title="urllib"></a>urllib</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">report_hook</span><span class="params">(count, block_size, total_size)</span>:</span></span><br><span class="line">    <span class="string">'''回调函数</span></span><br><span class="line"><span class="string">        @count:已经下载的数据块</span></span><br><span class="line"><span class="string">        @block_size:数据块的大小</span></span><br><span class="line"><span class="string">        @total_size:远程文件的大小</span></span><br><span class="line"><span class="string">        '''</span></span><br><span class="line">    print(<span class="string">'%02d%%'</span>%(<span class="number">100.0</span> * count * block_size/ total_size))</span><br><span class="line"><span class="keyword">from</span> urllib <span class="keyword">import</span> request</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line">url=<span class="string">'https://www.python.org/ftp/python/3.7.1/python-3.7.1-amd64.exe'</span></span><br><span class="line">filename = os.path.basename(url)</span><br><span class="line"><span class="comment"># 第一个参数网络地址；第二个参数 本地保存位置</span></span><br><span class="line">request.urlretrieve(url,filename,report_hook)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意，Python3.3之后不在使用urllib2。<br>
+          <div class="read-more">
+            <a href="/2018/11/24/Python下载文件/" class="read-more-link">阅读更多</a>
+          </div>
+        
+      
+    </div>
+
+    
+
+    
+
+  </article>
+
+      
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
           <a class="post-link" href="/2018/11/22/机器学习公共数据集/">机器学习公共数据集</a>
         
       </h1>
@@ -749,63 +809,6 @@ var _hmt = _hmt || [];
           <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>热力图是以特殊高亮的形式显示访客热衷的页面区域和访客所在的地理区域的图示。<br><img src="/2018/10/30/热力图的实现/heatmap.png" title="热力图"><br>
           <div class="read-more">
             <a href="/2018/10/30/热力图的实现/" class="read-more-link">阅读更多</a>
-          </div>
-        
-      
-    </div>
-
-    
-
-    
-
-  </article>
-
-      
-        
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2018/10/29/Dymaxion-map/">Dymaxion map</a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <span class="post-time">
-          2018-10-29
-        </span>
-        
-          <span class="post-category">
-            
-              <a href="/categories/GIS/">GIS</a>
-            
-          </span>
-        
-        
-        <span class="post-visits"
-             data-url="/2018/10/29/Dymaxion-map/"
-             data-title="Dymaxion map">
-          阅读次数 0
-        </span>
-        
-      </div>
-    </header>
-
-    
-    
-
-
-    <div class="post-content">
-      
-        
-        
-          
-        
-
-        
-          <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>Dymaxion map又称富勒地图，是世界地图在二十面体表面上的投影，可以展开并展平为二维。平面地图严重中断，以保持形状和大小。该投影是由Buckminster Fuller发明的。Dymaxion投影仅适用于整个地球的表现形式。它不是一个gnomonic投影，全局数据从切面的中心点向外扩展到边缘。相反，Dymaxion地图的每个三角形边缘与相应地球上的部分大圆的比例相匹配，并且每个方面内的其他点向中间缩小，而不是扩大到周边。<br><img src="/2018/10/29/Dymaxion-map/Dymaxion.gif" title="Dymaxion地图投影动画"><br>
-          <div class="read-more">
-            <a href="/2018/10/29/Dymaxion-map/" class="read-more-link">阅读更多</a>
           </div>
         
       
