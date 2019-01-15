@@ -238,6 +238,132 @@ var _hmt = _hmt || [];
     <header class="post-header">
       <h1 class="post-title">
         
+          <a class="post-link" href="/2018/11/26/TensorFlow中的NHWC与NCHW/">TensorFlow中的NHWC与NCHW</a>
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2018-11-26
+        </span>
+        
+          <span class="post-category">
+            
+              <a href="/categories/深度学习/">深度学习</a>
+            
+          </span>
+        
+        
+        <span class="post-visits"
+             data-url="/2018/11/26/TensorFlow中的NHWC与NCHW/"
+             data-title="TensorFlow中的NHWC与NCHW">
+          阅读次数 0
+        </span>
+        
+      </div>
+    </header>
+
+    
+    
+
+
+    <div class="post-content">
+      
+        
+        
+          
+        
+
+        
+          <p>N、C、H、W代表的意义如下：</p>
+<ul>
+<li>N:一个batch内图片的数量</li>
+<li>H:垂直高度方向的像素个数</li>
+<li>W:水平宽度方向的像素个数</li>
+<li>C:通道数，例如灰度图像为1，彩色RGB图像为3</li>
+</ul>
+          <div class="read-more">
+            <a href="/2018/11/26/TensorFlow中的NHWC与NCHW/" class="read-more-link">阅读更多</a>
+          </div>
+        
+      
+    </div>
+
+    
+
+    
+
+  </article>
+
+      
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          <a class="post-link" href="/2018/11/24/Python解压文件/">Python解压文件</a>
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2018-11-24
+        </span>
+        
+          <span class="post-category">
+            
+              <a href="/categories/Python/">Python</a>
+            
+          </span>
+        
+        
+        <span class="post-visits"
+             data-url="/2018/11/24/Python解压文件/"
+             data-title="Python解压文件">
+          阅读次数 0
+        </span>
+        
+      </div>
+    </header>
+
+    
+    
+
+
+    <div class="post-content">
+      
+        
+        
+          
+        
+
+        
+          <p>本文主要介绍以下五种压缩文件的处理：</p>
+<ul>
+<li>gz：即gzip，通常只能压缩一个文件。与tar结合起来可以实现先打包再压缩</li>
+<li>tar：linux系统下的打包工具，只打包不压缩</li>
+<li>tgz：即tar.gz，先用tar打包，然后再用gz压缩得到的文件</li>
+<li>zip：不同于gzip，虽然使用相似的算法，可以打包压缩多个文件，不过分别压缩文件，压缩率低于tar</li>
+<li>rar：打包压缩文件，最初用于dos，基于Windows。压缩率比zip高，但速度慢，随机访问速度也慢。
+          <div class="read-more">
+            <a href="/2018/11/24/Python解压文件/" class="read-more-link">阅读更多</a>
+          </div>
+        
+      
+    </div>
+
+    
+
+    
+
+  </article>
+
+      
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
           <a class="post-link" href="/2018/11/24/Python下载文件/">Python下载文件</a>
         
       </h1>
@@ -692,123 +818,6 @@ var _hmt = _hmt || [];
 <li><p>SegNet是通过监督学习来预测像素级类标签，因此，需要有相应的地面实况标签的输入图像数据集，标签图像必须是单通道，每个像素都标有其类别。本教程将使用CamVid数据集，其中包含道路场景367个训练集、233个测试集和101个验证集。该数据集在英国剑桥周围拍摄，包含白天和黄昏的场景。将使用图像大小为360x480的11类版本。</p>
           <div class="read-more">
             <a href="/2018/11/13/SegNet入门/" class="read-more-link">阅读更多</a>
-          </div>
-        
-      
-    </div>
-
-    
-
-    
-
-  </article>
-
-      
-        
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2018/11/13/对抗神经网络-GAN/">对抗神经网络(GAN)</a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <span class="post-time">
-          2018-11-13
-        </span>
-        
-          <span class="post-category">
-            
-              <a href="/categories/深度学习/">深度学习</a>
-            
-          </span>
-        
-        
-        <span class="post-visits"
-             data-url="/2018/11/13/对抗神经网络-GAN/"
-             data-title="对抗神经网络(GAN)">
-          阅读次数 0
-        </span>
-        
-      </div>
-    </header>
-
-    
-    
-
-
-    <div class="post-content">
-      
-        
-        
-          
-        
-
-        
-          <h2 id="GAN理论知识"><a href="#GAN理论知识" class="headerlink" title="GAN理论知识"></a>GAN理论知识</h2><p>GAN由generator（生成模型）和descriminator（判别式模型）两部分组成。</p>
-<ul>
-<li>generator：主要从训练数据中产生相同分布的samples，对于输入x，类别标签y，在生成式模型中估计其联合概率分布（两个及以上随机变量组成的随机向量的概率分布）。</li>
-<li>descriminator：判断输入是真实数据还是generator生成的数据，即估计样本属于某类的条件概率分布。它采用传统的监督学习的方法。<br>二者结合后，经过大量次数的迭代训练会使generator尽可能模拟出以假乱真的样本，而discriminator会有更精确的鉴别真伪数据的能力，最终整个GAN会达到所谓的纳什均衡，即discriminator对于generator的数据鉴别结果为正确率和错误了各占50%。
-          <div class="read-more">
-            <a href="/2018/11/13/对抗神经网络-GAN/" class="read-more-link">阅读更多</a>
-          </div>
-        
-      
-    </div>
-
-    
-
-    
-
-  </article>
-
-      
-        
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2018/10/30/热力图的实现/">热力图的实现</a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <span class="post-time">
-          2018-10-30
-        </span>
-        
-          <span class="post-category">
-            
-              <a href="/categories/可视化/">可视化</a>
-            
-          </span>
-        
-        
-        <span class="post-visits"
-             data-url="/2018/10/30/热力图的实现/"
-             data-title="热力图的实现">
-          阅读次数 0
-        </span>
-        
-      </div>
-    </header>
-
-    
-    
-
-
-    <div class="post-content">
-      
-        
-        
-          
-        
-
-        
-          <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>热力图是以特殊高亮的形式显示访客热衷的页面区域和访客所在的地理区域的图示。<br><img src="/2018/10/30/热力图的实现/heatmap.png" title="热力图"><br>
-          <div class="read-more">
-            <a href="/2018/10/30/热力图的实现/" class="read-more-link">阅读更多</a>
           </div>
         
       
