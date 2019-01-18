@@ -238,6 +238,57 @@ var _hmt = _hmt || [];
     <header class="post-header">
       <h1 class="post-title">
         
+          <a class="post-link" href="/2019/01/18/字符编码/">字符编码</a>
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2019-01-18
+        </span>
+        
+        
+        <span class="post-visits"
+             data-url="/2019/01/18/字符编码/"
+             data-title="字符编码">
+          阅读次数 0
+        </span>
+        
+      </div>
+    </header>
+
+    
+    
+
+
+    <div class="post-content">
+      
+        
+        
+          
+        
+
+        
+          <h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><p><strong>比特(bit)</strong><br>　　也可以称为“位”，是计算机信息中的最小单位，binary digit（二进制数位）的缩写，指的是二进制中的一位。<br><strong>字节(Byte)</strong><br>　　8位（bit）构成一个字节（Byte）<br><strong>字符(Character)</strong><br>　　文字和符号的总称，可以是各个国家的文字、标点符号、图形符号、数字等<br><strong>字符集(Character Set)</strong><br>　　为什么要有字符集？在计算机屏幕上是实体化的文字，而在计算机存储介质中存放的实际是二进制比特流，那么两者之间的转换规则就需要一个统一标准。为了实现转换标准，各种字符集标准就此出现。  简单来说，字符集规定了某个文字对应的二进制存放方式（编码）和某二进制数值串代表了哪个文字（解码）的转换关系。如ASCII、utf-8等就是字符集。<br><strong>字符编码与解码</strong><br>　　文字到0、1的映射称为编码，反过来从0、1到文字叫解码。<br>
+          <div class="read-more">
+            <a href="/2019/01/18/字符编码/" class="read-more-link">阅读更多</a>
+          </div>
+        
+      
+    </div>
+
+    
+
+    
+
+  </article>
+
+      
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
           <a class="post-link" href="/2019/01/15/OpenCV基础/">OpenCV基础</a>
         
       </h1>
@@ -734,69 +785,6 @@ var _hmt = _hmt || [];
 <h2 id="实现进度条"><a href="#实现进度条" class="headerlink" title="实现进度条"></a>实现进度条</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys, time</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> datetime</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">progressbar</span><span class="params">(t_n)</span>:</span></span><br><span class="line">    sys.stdout.write(<span class="string">'\r'</span>)</span><br><span class="line">    sys.stdout.write(t_n)</span><br><span class="line">    sys.stdout.flush()</span><br><span class="line">starttime = datetime.datetime.now()</span><br><span class="line"><span class="keyword">for</span> progress <span class="keyword">in</span> range(<span class="number">100</span>):</span><br><span class="line">    time.sleep(<span class="number">0.5</span>)</span><br><span class="line">    endtime = datetime.datetime.now()</span><br><span class="line">    progressbar(<span class="string">"Download progress: %d%%,running time: %s \r"</span> % (progress,(endtime - starttime)))</span><br><span class="line"><span class="comment"># 第二种  通过清屏方式实现</span></span><br><span class="line">starttime = datetime.datetime.now()</span><br><span class="line"><span class="keyword">for</span> progress <span class="keyword">in</span> range(<span class="number">100</span>):</span><br><span class="line">    time.sleep(<span class="number">0.5</span>)</span><br><span class="line">    endtime = datetime.datetime.now()</span><br><span class="line">    os.system(<span class="string">'cls'</span>)  <span class="comment"># windows</span></span><br><span class="line">    <span class="comment"># os.system('clear') # Linux</span></span><br><span class="line">    print(<span class="string">"Download progress: %d%%,running time: %s"</span> % (progress,(endtime - starttime)))</span><br><span class="line"><span class="comment"># 通过tqdm模块</span></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">from</span> tqdm <span class="keyword">import</span> tqdm</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> tqdm(range(<span class="number">1</span>, <span class="number">500</span>)):</span><br><span class="line">    time.sleep(<span class="number">0.01</span>)</span><br></pre></td></tr></table></figure>
           <div class="read-more">
             <a href="/2018/12/14/Python小技巧/" class="read-more-link">阅读更多</a>
-          </div>
-        
-      
-    </div>
-
-    
-
-    
-
-  </article>
-
-      
-        
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2018/12/12/Python高级技巧/">Python高级技巧</a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <span class="post-time">
-          2018-12-12
-        </span>
-        
-          <span class="post-category">
-            
-              <a href="/categories/Python/">Python</a>
-            
-          </span>
-        
-        
-        <span class="post-visits"
-             data-url="/2018/12/12/Python高级技巧/"
-             data-title="Python高级技巧">
-          阅读次数 0
-        </span>
-        
-      </div>
-    </header>
-
-    
-    
-
-
-    <div class="post-content">
-      
-        
-        
-          
-        
-
-        
-          <h2 id="函数式编程"><a href="#函数式编程" class="headerlink" title="函数式编程"></a>函数式编程</h2><h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><img src="/2018/12/12/Python高级技巧/fun.png" title="函数式编程">
-<p>函数式编程特点：  </p>
-<ul>
-<li>把计算视为函数而不是指令</li>
-<li>纯函数式编程：不需要变量，没有副作用，测试简单</li>
-<li>支持高阶函数</li>
-</ul>
-          <div class="read-more">
-            <a href="/2018/12/12/Python高级技巧/" class="read-more-link">阅读更多</a>
           </div>
         
       
