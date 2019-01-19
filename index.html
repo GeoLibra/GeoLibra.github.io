@@ -238,6 +238,67 @@ var _hmt = _hmt || [];
     <header class="post-header">
       <h1 class="post-title">
         
+          <a class="post-link" href="/2019/01/19/OpenCV-第2篇/">OpenCV 第2篇</a>
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2019-01-19
+        </span>
+        
+        
+        <span class="post-visits"
+             data-url="/2019/01/19/OpenCV-第2篇/"
+             data-title="OpenCV 第2篇">
+          阅读次数 0
+        </span>
+        
+      </div>
+    </header>
+
+    
+    
+
+
+    <div class="post-content">
+      
+        
+        
+
+        
+          <h2 id="Open处理视频"><a href="#Open处理视频" class="headerlink" title="Open处理视频"></a>Open处理视频</h2><h3 id="打开摄像头"><a href="#打开摄像头" class="headerlink" title="打开摄像头"></a>打开摄像头</h3><p>要使用摄像头，需要使用<code>cv2.VideoCapture(0)</code>创建VideoCapture对象，参数0指的是摄像头的编号，如果电脑有两个摄像头的话访问第二个摄像头就传入1，以此类推。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 打开摄像头并灰度化显示</span></span><br><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line">capturecv2.VideoCapture(<span class="number">0</span>)</span><br><span class="line"><span class="keyword">while</span>(<span class="keyword">True</span>):</span><br><span class="line">    <span class="comment"># 获取一帧</span></span><br><span class="line">    ret,frame=capture.read()</span><br><span class="line">    <span class="comment"># 将这帧转为灰度图</span></span><br><span class="line">    gray=cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)</span><br><span class="line">    cv2.imshow(<span class="string">'frame'</span>,gray)</span><br><span class="line">    <span class="keyword">if</span> cv2.waitKey(<span class="number">1</span>)==ord(<span class="string">'q):</span></span><br><span class="line"><span class="string">        break</span></span><br></pre></td></tr></table></figure></p>
+<p>capture.read()函数返回的第一个参数ret（return value）是一个布尔值，表示当前这一帧是否获取正确。cv2.cvtColor()用来转换颜色，这里将彩色图转为灰度图。<br>另外，通过cap.get(propid)可以获取摄像头的一些属性，比如捕获的分辨率、亮度和对比度等。propid是从0~18的数字，代表不同的属性。更多的属性参考<a href="https://docs.opencv.org/3.3.0/d4/d15/group__videoio__flags__base.html#gaeb8dd9c89c10a5c63c139bf7c4f5704d" target="_blank" rel="noopener">VideoCaptureProperties</a><br>也可以使用cap.set(propId,value)来修改属性值。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 获取捕获的分辨率</span></span><br><span class="line"><span class="comment"># propId可以直接写数字 也可以用OpenCV的符号表示</span></span><br><span class="line">width,height=capture.get(<span class="number">3</span>),capture.get(<span class="number">4</span>)</span><br><span class="line"><span class="comment"># 以原分辨率的一倍来捕获</span></span><br><span class="line">capture.set(cv2.CAP_PROP_FRAME_WIDTH,width*<span class="number">2</span>)</span><br><span class="line">capture.set(cv2.CAP_PROP_FRAME_HEIGHT,height*<span class="number">2</span>)</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>某些摄像头设定分辨率等参数时会无效，因为它有固定的分辨率大小支持，一般可在摄像头的资料页中找到</p>
+</blockquote>
+<h3 id="播放本地视频"><a href="#播放本地视频" class="headerlink" title="播放本地视频"></a>播放本地视频</h3><p>把摄像头的编号换成视频的路径就可以播放本地视频了。cv2.waitKey()，它的参数表示暂停时间，所以这个值越大，视频播放速度越慢，反之，播放速度越快，通常设置为25或30。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 播放本地视频</span></span><br><span class="line">capture=cv2.VideoCapture(<span class="string">'demo.mp4'</span>)</span><br><span class="line"><span class="keyword">while</span>(capture.isOpened()):</span><br><span class="line">    ret,frame=capture.read()</span><br><span class="line">    gray=cv2.cvtColor(frame,cv2.COLOR_BGR2GAY)</span><br><span class="line">    cv2.imshow(<span class="string">'frame'</span>,gray)</span><br><span class="line">    <span class="keyword">if</span> cv2.waitKey(<span class="number">30</span>)==ord(<span class="string">'q'</span>):</span><br><span class="line">        <span class="keyword">break</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="录制视频"><a href="#录制视频" class="headerlink" title="录制视频"></a>录制视频</h3><p>保存图片是cv2.imwrite()，保存视频需要创建一个VideoWriter的对象，需要传入四个参数：</p>
+<ul>
+<li>输出文件名</li>
+<li>编码方式FourCC码</li>
+<li>帧率FPS</li>
+<li>要保存的分辨率大小</li>
+</ul>
+<p>FourCC是用来指定视频编码方式的四字节码，所有的编码可参考Video Codes。如MJPG编码写法如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cv2.VideoWriter_fourcc(*<span class="string">'MJPG'</span>)</span><br><span class="line"><span class="comment"># 或</span></span><br><span class="line">cv2.VideoWriter_fourcc(<span class="string">'M'</span>,<span class="string">'J'</span>,<span class="string">'P'</span>,<span class="string">'G'</span>)</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">capture=cv2.VideoCapture(<span class="number">0</span>)</span><br><span class="line"><span class="comment"># 定义编码方式并创建VideoWriter对象</span></span><br><span class="line">fource=cv2.VideoWriter_fourcc(*<span class="string">'MJPG'</span>)</span><br><span class="line">outfile=cv2.VideoWriter(<span class="string">'result.mp4'</span>,fourcc,<span class="number">25.</span>,(<span class="number">640</span>,<span class="number">480</span>))</span><br><span class="line"><span class="keyword">while</span>(capture.isOpened()):</span><br><span class="line">    ret,frame=capture.read()</span><br><span class="line">    <span class="keyword">if</span> ret:</span><br><span class="line">        outfile.write(frame)</span><br><span class="line">        cv2.imshow(<span class="string">'frame'</span>,frame)</span><br><span class="line">        <span class="keyword">if</span> cv2.waitKey(<span class="number">1</span>)==ord(<span class="string">'q'</span>):</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">break</span></span><br></pre></td></tr></table></figure>
+
+        
+      
+    </div>
+
+    
+
+    
+
+  </article>
+
+      
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
           <a class="post-link" href="/2019/01/18/字符编码/">字符编码</a>
         
       </h1>
@@ -727,64 +788,6 @@ var _hmt = _hmt || [];
 <p>　　Natural Earth Data提供高中低三种不同分辨率的全球矢量数据集，包括行政区划、道路交通、城市、水系、海岸线等。Natural Earth Data的最大优势就是数据是开放性的，用户有传播和修改数据的权限。<br>
           <div class="read-more">
             <a href="/2018/12/16/GIS数据下载集锦/" class="read-more-link">阅读更多</a>
-          </div>
-        
-      
-    </div>
-
-    
-
-    
-
-  </article>
-
-      
-        
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2018/12/14/Python小技巧/">Python小技巧</a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <span class="post-time">
-          2018-12-14
-        </span>
-        
-          <span class="post-category">
-            
-              <a href="/categories/Python/">Python</a>
-            
-          </span>
-        
-        
-        <span class="post-visits"
-             data-url="/2018/12/14/Python小技巧/"
-             data-title="Python小技巧">
-          阅读次数 0
-        </span>
-        
-      </div>
-    </header>
-
-    
-    
-
-
-    <div class="post-content">
-      
-        
-        
-          
-        
-
-        
-          <p>本文介绍一些Python使用的小技巧。</p>
-<h2 id="实现进度条"><a href="#实现进度条" class="headerlink" title="实现进度条"></a>实现进度条</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys, time</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> datetime</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">progressbar</span><span class="params">(t_n)</span>:</span></span><br><span class="line">    sys.stdout.write(<span class="string">'\r'</span>)</span><br><span class="line">    sys.stdout.write(t_n)</span><br><span class="line">    sys.stdout.flush()</span><br><span class="line">starttime = datetime.datetime.now()</span><br><span class="line"><span class="keyword">for</span> progress <span class="keyword">in</span> range(<span class="number">100</span>):</span><br><span class="line">    time.sleep(<span class="number">0.5</span>)</span><br><span class="line">    endtime = datetime.datetime.now()</span><br><span class="line">    progressbar(<span class="string">"Download progress: %d%%,running time: %s \r"</span> % (progress,(endtime - starttime)))</span><br><span class="line"><span class="comment"># 第二种  通过清屏方式实现</span></span><br><span class="line">starttime = datetime.datetime.now()</span><br><span class="line"><span class="keyword">for</span> progress <span class="keyword">in</span> range(<span class="number">100</span>):</span><br><span class="line">    time.sleep(<span class="number">0.5</span>)</span><br><span class="line">    endtime = datetime.datetime.now()</span><br><span class="line">    os.system(<span class="string">'cls'</span>)  <span class="comment"># windows</span></span><br><span class="line">    <span class="comment"># os.system('clear') # Linux</span></span><br><span class="line">    print(<span class="string">"Download progress: %d%%,running time: %s"</span> % (progress,(endtime - starttime)))</span><br><span class="line"><span class="comment"># 通过tqdm模块</span></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">from</span> tqdm <span class="keyword">import</span> tqdm</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> tqdm(range(<span class="number">1</span>, <span class="number">500</span>)):</span><br><span class="line">    time.sleep(<span class="number">0.01</span>)</span><br></pre></td></tr></table></figure>
-          <div class="read-more">
-            <a href="/2018/12/14/Python小技巧/" class="read-more-link">阅读更多</a>
           </div>
         
       

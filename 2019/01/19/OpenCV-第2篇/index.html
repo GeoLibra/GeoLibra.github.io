@@ -17,7 +17,7 @@
 
 
 
-  <meta name="description" content="字符编码"/>
+  <meta name="description" content="OpenCV 第2篇"/>
 
 
 
@@ -40,7 +40,7 @@
 
 
 
-<link rel="canonical" href="https://geolibra.github.io/2019/01/18/字符编码/"/>
+<link rel="canonical" href="https://geolibra.github.io/2019/01/19/OpenCV-第2篇/"/>
 
 
 
@@ -102,7 +102,7 @@ var _hmt = _hmt || [];
   window.config = {"title":"磊哥的小书桌","subtitle":null,"description":null,"author":"hgis","language":null,"timezone":null,"url":"https://geolibra.github.io","root":"/","permalink":":year/:month/:day/:title/","permalink_defaults":null,"source_dir":"source","public_dir":"public","tag_dir":"tags","archive_dir":"archives","category_dir":"categories","code_dir":"downloads/code","i18n_dir":":lang","skip_render":null,"new_post_name":":title.md","default_layout":"post","titlecase":false,"external_link":true,"filename_case":0,"render_drafts":false,"post_asset_folder":true,"relative_link":false,"future":true,"highlight":{"enable":true,"auto_detect":false,"line_number":true,"tab_replace":null,"first_line_number":"always1"},"default_category":"uncategorized","category_map":null,"tag_map":null,"date_format":"YYYY-MM-DD","time_format":"HH:mm:ss","per_page":10,"pagination_dir":"page","theme":"even","deploy":{"type":"git","repository":"git@github.com:GeoLibra/GeoLibra.github.io.git","branch":"master"},"ignore":[],"keywords":null,"email":"674530915@qq.com","index_generator":{"per_page":10,"order_by":"-date","path":""},"tag_cloud":{"textFont":"Trebuchet MS, Helvetica","textColour":"\\#eea849","textHeight":25,"outlineColour":"\\#E2E1D1"},"archive_generator":{"per_page":10,"yearly":true,"monthly":true,"daily":false},"category_generator":{"per_page":10},"tag_generator":{"per_page":10},"marked":{"gfm":true,"pedantic":false,"sanitize":false,"tables":true,"breaks":true,"smartLists":true,"smartypants":true,"modifyAnchors":"","autolink":true},"server":{"port":4000,"log":false,"compress":false,"header":true},"since":2018,"favicon":"/favicon.ico","rss":"default","menu":{"Home":"/","Archives":"/archives/","Tags":"/tags","Categories":"/categories","About":"/about"},"color":"default","mode":"default","toc":true,"fancybox":true,"pjax":true,"copyright":{"enable":true,"license":"<a rel=\"license\" href=\"http://creativecommons.org/licenses/by-nc/4.0/\" target=\"_blank\">知识共享署名-非商业性使用 4.0 国际许可协议</a>"},"reward":{"enable":false,"qrCode":{"wechat":null,"alipay":null}},"social":{"email":"674530915@qq.com","stack-overflow":null,"twitter":null,"facebook":null,"linkedin":null,"google":null,"github":"https://github.com/GeoLibra","weibo":null,"zhihu":null,"douban":null,"pocket":null,"tumblr":null,"instagram":null},"leancloud":{"app_id":"ro3TOe5F5DDemxHnSoYVCHli-gzGzoHsz","app_key":"IHyD5EfrggPl57FnwtBEeH0W"},"baidu_analytics":"97659041a2db55d3eb7266f53be7c071","baidu_verification":null,"google_analytics":null,"google_verification":null,"disqus_shortname":null,"changyan":{"appid":null,"appkey":null},"livere_datauid":null,"counter":true,"version":"2.10.1"};
 </script>
 
-    <title> 字符编码 - 磊哥的小书桌 </title>
+    <title> OpenCV 第2篇 - 磊哥的小书桌 </title>
   </head>
 
   <body><div id="mobile-navbar" class="mobile-navbar">
@@ -236,19 +236,19 @@ var _hmt = _hmt || [];
     <header class="post-header">
       <h1 class="post-title">
         
-          字符编码
+          OpenCV 第2篇
         
       </h1>
 
       <div class="post-meta">
         <span class="post-time">
-          2019-01-18
+          2019-01-19
         </span>
         
         
         <span class="post-visits"
-             data-url="/2019/01/18/字符编码/"
-             data-title="字符编码">
+             data-url="/2019/01/19/OpenCV-第2篇/"
+             data-title="OpenCV 第2篇">
           阅读次数 0
         </span>
         
@@ -260,7 +260,7 @@ var _hmt = _hmt || [];
   <div class="post-toc" id="post-toc">
     <h2 class="post-toc-title">文章目录</h2>
     <div class="post-toc-content">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#基本概念"><span class="toc-text">基本概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ASCII"><span class="toc-text">ASCII</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GB2312"><span class="toc-text">GB2312</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Unicode"><span class="toc-text">Unicode</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Open处理视频"><span class="toc-text">Open处理视频</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#打开摄像头"><span class="toc-text">打开摄像头</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#播放本地视频"><span class="toc-text">播放本地视频</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#录制视频"><span class="toc-text">录制视频</span></a></li></ol></li></ol>
     </div>
   </div>
 
@@ -268,20 +268,21 @@ var _hmt = _hmt || [];
 
     <div class="post-content">
       
-        <h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><p><strong>比特(bit)</strong><br>　　也可以称为“位”，是计算机信息中的最小单位，binary digit（二进制数位）的缩写，指的是二进制中的一位。<br><strong>字节(Byte)</strong><br>　　8位（bit）构成一个字节（Byte）<br><strong>字符(Character)</strong><br>　　文字和符号的总称，可以是各个国家的文字、标点符号、图形符号、数字等<br><strong>字符集(Character Set)</strong><br>　　为什么要有字符集？在计算机屏幕上是实体化的文字，而在计算机存储介质中存放的实际是二进制比特流，那么两者之间的转换规则就需要一个统一标准。为了实现转换标准，各种字符集标准就此出现。  简单来说，字符集规定了某个文字对应的二进制存放方式（编码）和某二进制数值串代表了哪个文字（解码）的转换关系。如ASCII、utf-8等就是字符集。<br><strong>字符编码与解码</strong><br>　　文字到0、1的映射称为编码，反过来从0、1到文字叫解码。<br><a id="more"></a></p>
-<h2 id="ASCII"><a href="#ASCII" class="headerlink" title="ASCII"></a>ASCII</h2><p>　　1964年，世界上第一天计算机诞生，设计者用8个晶体管的“通”或“断”组合出一些状态来表达信息。8个晶体管的“通”或“断”即可以代表一个字节，也就是8个比特（bit）表示一个字节（byte）。计算机只能处理数字，如果处理文本，必须先把文本转为数字才能处理。<br>一个字节能表示的最大的整数就是255（二进制11111111=十进制255）。把一些终端的动作、字母、数字和符号用8位(bit)来组合。</p>
-<ul>
-<li>0000 0000 ~ 0001 1111 共 33 种状态用来表示终端的特殊动作，如打印机中的响铃为 0000 0111 ，当打印机遇到 0000 0111 这样的字节传过来时，打印机就开始响铃；</li>
-<li>0010 0000 ~ 0010 1111 、 0011 1010~0110 0000 和 0111 1101 ~ 0111 1110 共 33 种状态来表示英式标点符号，如 0011 1111 即代表英式问号“?”；</li>
-<li>0011 0000 ~ 0011 1001 共 10 种状态来表示“0~9”10个阿拉伯数字；</li>
-<li>0100 0001 ~ 0101 1010 和 0110 0001 ~ 0111 1010共 52种状态来表示大小写英文字母；</li>
-</ul>
-<p>　　一共只用到了128种状态，即128个字符，刚好占用了一个字节中的后7位，共包括33个控制字符和95个可显示字符，<br>这一字符集被称为ASCII（American Standard Code for Information Interchange，美国信息交换标准代码），这一套字符集在1967年被正式公布。</p>
+        <h2 id="Open处理视频"><a href="#Open处理视频" class="headerlink" title="Open处理视频"></a>Open处理视频</h2><h3 id="打开摄像头"><a href="#打开摄像头" class="headerlink" title="打开摄像头"></a>打开摄像头</h3><p>要使用摄像头，需要使用<code>cv2.VideoCapture(0)</code>创建VideoCapture对象，参数0指的是摄像头的编号，如果电脑有两个摄像头的话访问第二个摄像头就传入1，以此类推。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 打开摄像头并灰度化显示</span></span><br><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line">capturecv2.VideoCapture(<span class="number">0</span>)</span><br><span class="line"><span class="keyword">while</span>(<span class="keyword">True</span>):</span><br><span class="line">    <span class="comment"># 获取一帧</span></span><br><span class="line">    ret,frame=capture.read()</span><br><span class="line">    <span class="comment"># 将这帧转为灰度图</span></span><br><span class="line">    gray=cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)</span><br><span class="line">    cv2.imshow(<span class="string">'frame'</span>,gray)</span><br><span class="line">    <span class="keyword">if</span> cv2.waitKey(<span class="number">1</span>)==ord(<span class="string">'q):</span></span><br><span class="line"><span class="string">        break</span></span><br></pre></td></tr></table></figure></p>
+<p>capture.read()函数返回的第一个参数ret（return value）是一个布尔值，表示当前这一帧是否获取正确。cv2.cvtColor()用来转换颜色，这里将彩色图转为灰度图。<br>另外，通过cap.get(propid)可以获取摄像头的一些属性，比如捕获的分辨率、亮度和对比度等。propid是从0~18的数字，代表不同的属性。更多的属性参考<a href="https://docs.opencv.org/3.3.0/d4/d15/group__videoio__flags__base.html#gaeb8dd9c89c10a5c63c139bf7c4f5704d" target="_blank" rel="noopener">VideoCaptureProperties</a><br>也可以使用cap.set(propId,value)来修改属性值。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 获取捕获的分辨率</span></span><br><span class="line"><span class="comment"># propId可以直接写数字 也可以用OpenCV的符号表示</span></span><br><span class="line">width,height=capture.get(<span class="number">3</span>),capture.get(<span class="number">4</span>)</span><br><span class="line"><span class="comment"># 以原分辨率的一倍来捕获</span></span><br><span class="line">capture.set(cv2.CAP_PROP_FRAME_WIDTH,width*<span class="number">2</span>)</span><br><span class="line">capture.set(cv2.CAP_PROP_FRAME_HEIGHT,height*<span class="number">2</span>)</span><br></pre></td></tr></table></figure></p>
 <blockquote>
-<p><strong>位数：ASCII是用7位表示的，能表示128个字符；其扩展使用8位表示，表示256个字符。范围：ASCII从00到7F，扩展从00到FF。</strong></p>
+<p>某些摄像头设定分辨率等参数时会无效，因为它有固定的分辨率大小支持，一般可在摄像头的资料页中找到</p>
 </blockquote>
-<h2 id="GB2312"><a href="#GB2312" class="headerlink" title="GB2312"></a>GB2312</h2><p>　　《信息交换用汉字编码字符集》是由中国国家标准总局1980年发布，1981年5月1日开始实施的一套国家标准，标准号是GB 2312—1980。<br>　　GB 2312或GB 2312-80编码适用于汉字处理、汉字通信等系统之间的信息交换。供包含7445个字符，6763个汉字和其他682个字符。<br>GB 2312对其所收录的字符进行了<strong>“分区”</strong>处理，共94个分区</p>
-<h2 id="Unicode"><a href="#Unicode" class="headerlink" title="Unicode"></a>Unicode</h2><p>为了统一所有文字的编码，Unicode应运而生。Unicode编码定义了几乎所有字符的数字表示，而且Unicode还兼容了很多老版本的编码规范，如ASCII编码。</p>
+<h3 id="播放本地视频"><a href="#播放本地视频" class="headerlink" title="播放本地视频"></a>播放本地视频</h3><p>把摄像头的编号换成视频的路径就可以播放本地视频了。cv2.waitKey()，它的参数表示暂停时间，所以这个值越大，视频播放速度越慢，反之，播放速度越快，通常设置为25或30。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 播放本地视频</span></span><br><span class="line">capture=cv2.VideoCapture(<span class="string">'demo.mp4'</span>)</span><br><span class="line"><span class="keyword">while</span>(capture.isOpened()):</span><br><span class="line">    ret,frame=capture.read()</span><br><span class="line">    gray=cv2.cvtColor(frame,cv2.COLOR_BGR2GAY)</span><br><span class="line">    cv2.imshow(<span class="string">'frame'</span>,gray)</span><br><span class="line">    <span class="keyword">if</span> cv2.waitKey(<span class="number">30</span>)==ord(<span class="string">'q'</span>):</span><br><span class="line">        <span class="keyword">break</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="录制视频"><a href="#录制视频" class="headerlink" title="录制视频"></a>录制视频</h3><p>保存图片是cv2.imwrite()，保存视频需要创建一个VideoWriter的对象，需要传入四个参数：</p>
+<ul>
+<li>输出文件名</li>
+<li>编码方式FourCC码</li>
+<li>帧率FPS</li>
+<li>要保存的分辨率大小</li>
+</ul>
+<p>FourCC是用来指定视频编码方式的四字节码，所有的编码可参考Video Codes。如MJPG编码写法如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cv2.VideoWriter_fourcc(*<span class="string">'MJPG'</span>)</span><br><span class="line"><span class="comment"># 或</span></span><br><span class="line">cv2.VideoWriter_fourcc(<span class="string">'M'</span>,<span class="string">'J'</span>,<span class="string">'P'</span>,<span class="string">'G'</span>)</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">capture=cv2.VideoCapture(<span class="number">0</span>)</span><br><span class="line"><span class="comment"># 定义编码方式并创建VideoWriter对象</span></span><br><span class="line">fource=cv2.VideoWriter_fourcc(*<span class="string">'MJPG'</span>)</span><br><span class="line">outfile=cv2.VideoWriter(<span class="string">'result.mp4'</span>,fourcc,<span class="number">25.</span>,(<span class="number">640</span>,<span class="number">480</span>))</span><br><span class="line"><span class="keyword">while</span>(capture.isOpened()):</span><br><span class="line">    ret,frame=capture.read()</span><br><span class="line">    <span class="keyword">if</span> ret:</span><br><span class="line">        outfile.write(frame)</span><br><span class="line">        cv2.imshow(<span class="string">'frame'</span>,frame)</span><br><span class="line">        <span class="keyword">if</span> cv2.waitKey(<span class="number">1</span>)==ord(<span class="string">'q'</span>):</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">break</span></span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -297,7 +298,7 @@ var _hmt = _hmt || [];
     </p>
     <p class="copyright-item">
       <span>原文链接: </span>
-      <a href="https://geolibra.github.io/2019/01/18/字符编码/">https://geolibra.github.io/2019/01/18/字符编码/</a>
+      <a href="https://geolibra.github.io/2019/01/19/OpenCV-第2篇/">https://geolibra.github.io/2019/01/19/OpenCV-第2篇/</a>
     </p>
     <p class="copyright-item">
       <span>许可协议: </span>
@@ -319,15 +320,9 @@ var _hmt = _hmt || [];
         
   <nav class="post-nav">
     
-      <a class="prev" href="/2019/01/19/OpenCV-第2篇/">
-        <i class="iconfont icon-left"></i>
-        <span class="prev-text nav-default">OpenCV 第2篇</span>
-        <span class="prev-text nav-mobile">上一篇</span>
-      </a>
     
-    
-      <a class="next" href="/2019/01/15/OpenCV基础/">
-        <span class="next-text nav-default">OpenCV基础</span>
+      <a class="next" href="/2019/01/18/字符编码/">
+        <span class="next-text nav-default">字符编码</span>
         <span class="prev-text nav-mobile">下一篇</span>
         <i class="iconfont icon-right"></i>
       </a>
