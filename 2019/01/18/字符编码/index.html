@@ -260,7 +260,7 @@ var _hmt = _hmt || [];
   <div class="post-toc" id="post-toc">
     <h2 class="post-toc-title">文章目录</h2>
     <div class="post-toc-content">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#基本概念"><span class="toc-text">基本概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ASCII"><span class="toc-text">ASCII</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GB2312"><span class="toc-text">GB2312</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Unicode"><span class="toc-text">Unicode</span></a></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#基本概念"><span class="toc-text">基本概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ASCII"><span class="toc-text">ASCII</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GB2312"><span class="toc-text">GB2312</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Unicode"><span class="toc-text">Unicode</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#UTF"><span class="toc-text">UTF</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#UTF-16"><span class="toc-text">UTF-16</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#UTF-8"><span class="toc-text">UTF-8</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#BOM"><span class="toc-text">BOM</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UCS"><span class="toc-text">UCS</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Emoji"><span class="toc-text">Emoji</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Python中的编码"><span class="toc-text">Python中的编码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#前端编码"><span class="toc-text">前端编码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MIME编码"><span class="toc-text">MIME编码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Base64"><span class="toc-text">Base64</span></a></li></ol></li></ol>
     </div>
   </div>
 
@@ -281,7 +281,56 @@ var _hmt = _hmt || [];
 <p><strong>位数：ASCII是用7位表示的，能表示128个字符；其扩展使用8位表示，表示256个字符。范围：ASCII从00到7F，扩展从00到FF。</strong></p>
 </blockquote>
 <h2 id="GB2312"><a href="#GB2312" class="headerlink" title="GB2312"></a>GB2312</h2><p>　　《信息交换用汉字编码字符集》是由中国国家标准总局1980年发布，1981年5月1日开始实施的一套国家标准，标准号是GB 2312—1980。<br>　　GB 2312或GB 2312-80编码适用于汉字处理、汉字通信等系统之间的信息交换。供包含7445个字符，6763个汉字和其他682个字符。<br>　　GB 2312对其所收录的字符进行了“分区”处理，共94个分区，从1到94，每个区有94个位，位从1到91，共8836（94*94）个码位，这种表示方法称为区位码。<br>GB 2312是双字节码，其中高字节码表示区，低字节表示位。各区具体说明如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">01-09 区收除汉字外的682个字符，有164个空位（9*94-682）</span><br><span class="line">10-15 区为空白区，没有使用</span><br><span class="line">16-55 区收录3755个一级汉字（简体），按拼音排序</span><br><span class="line">56-87 区收录3008个二级汉字（简体），按部首/笔画排序</span><br><span class="line">88-94 区位空白区，没有使用</span><br></pre></td></tr></table></figure></p>
-<h2 id="Unicode"><a href="#Unicode" class="headerlink" title="Unicode"></a>Unicode</h2><p>　　为了统一所有文字的编码，Unicode应运而生。Unicode编码定义了几乎所有字符的数字表示，而且Unicode还兼容了很多老版本的编码规范，如ASCII编码。</p>
+<p>　　如何根据区位码计算GB 2312编码了？区位码表示范围为0101-9494（包含的空的区位码）。<a href="https://www.qqxiuzi.cn/zh/hanzi-gb2312-bianma.php" target="_blank" rel="noopener">点击这里</a>查看GB 2312编码区位码。之后按照如下规则转换即可。</p>
+<ol>
+<li>将区（十进制）转为十六进制</li>
+<li>将转化的十六进制加上A0，得到GB 2312编码的高字节</li>
+<li>将位（十进制）转化为十六进制</li>
+<li>将转化的十六进制加上A0，得到GB 2312编码的低字节</li>
+<li>组合区和位，区在高字节，位在低字节</li>
+<li>得到GB 2312</li>
+</ol>
+<img src="/2019/01/18/字符编码/gb2312.png" title="GB2312编码转换流程">
+<p>　　例如：’李’字的区位码为3278（表示在32区，78位）。1. 将32（区）转化为十六进制为20。2. 加上A0为C0。3. 将78（位）转化为十六进制为4E。4. 加上A0为EE。5. 组合区和位，为C0EE。6. 得到GB2312编码，即’李’字的GB2312编码为C0EE。</p>
+<h2 id="Unicode"><a href="#Unicode" class="headerlink" title="Unicode"></a>Unicode</h2><p>　　为了统一所有文字的编码，Unicode应运而生。Unicode编码定义了几乎所有字符的数字表示，而且Unicode还兼容了很多老版本的编码规范，如ASCII编码。<br>我们国家每一个人都对应一个唯一的身份证号码，而Unicode也为每个字符发了一张身份证，这张“身份证”上有一串唯一的数字ID确定了这个字符。<br>这串数字在整个计算机的世界具有唯一性，这串数字ID叫<strong><a href="http://unicode-table.com/cn/" target="_blank" rel="noopener">码点</a></strong>。<br><strong>码点</strong>经过映射后得到的二进制的转换格式单位称之为<strong>码元(Code Unit)</strong>。<strong>码点</strong>就是一串二进制数，<strong>码元</strong>就是切分这个二进制数的方法。<br>举例，如果有一个字符的码点二进制表示有n字节（n*8个二进制数），其码元为8位（1个字节），那么其拥有码元n个。</p>
+<blockquote>
+<p>utf-8就是每读码点8位代表一个字符，utf-16就是每读码点16位代表一个字符</p>
+</blockquote>
+<p>　　Unicode编码发展到今天扩展到了21位，因为一开始老美只考虑那26个英文字母和数字，随着越来越多的国家的语言编码。Unicode不得不继续扩展，目前21位已足够使用。<br>UTF-32的码元是32位，每32位去读一下码点，而码点是Unicode给字符的编码，上文提到最长才21位，因此每一个UTF-32值都可以直接表示对应的码点。<br><strong>什么是编码空间？</strong><br>　　前面提到的Unicode是21位的，21位提供了1,114,112个码点，编码空间就是对应这1,114,112个码点。这么多码点并不代表这么多字符，目前大概只有10%的空间被使用了，人类社会还没创造出1,114,112这么多字符。<br>编码空间被分成17个平面，从00 - 10（十六进制，最高两位），即从0 - 16（十进制），每个平面有65,536个字符（正好填充两个字节，16位）。0号平面叫做<strong>基本多文种平面（BMP，Basic Multilingual Plane）</strong>，码位从0000 - FFFF，涵盖了几乎所有你能遇到的字符，除了emoji（emoji位于1号平面）。其他平面叫做补充平面，大多是空的。</p>
+<blockquote>
+<p>Unicode只是一个符号集，只规定的字符所对应的码点，并没有指定如何存储，如何进行存储出现了不同的编码方案，关于Unicode编码方案主要有两条主线：UCS和UTF。UTF主线由Unicode Consortium进行维护管理，UCS主线由ISO/IEC进行维护管理。</p>
+</blockquote>
+<h3 id="UTF"><a href="#UTF" class="headerlink" title="UTF"></a>UTF</h3><p>　　UTF全称为”Unicode Transformation Format”，在UTF中主要有UTF-8，UTF-16和UTF-32。</p>
+<h4 id="UTF-16"><a href="#UTF-16" class="headerlink" title="UTF-16"></a>UTF-16</h4><p>　　UTF-16的码元是16位，即吗，每16位去读一下码点，获取码点前16位数字，直到读取完成。<br>BMP平面中的每一个码点都直接与一个UTF-16的码元一一映射。<br>由于BMP 几乎包括了所有常见字符，UTF-16一般需要 UTF-32大约一半的空间。至于其它平面里很少使用的码点都是用两个16位的码元来编码的。<br>也就是说<strong>UTF-16对于常见字符使用2个字节，不常用的字符使用4个字节，</strong>大大节省了空间。  </p>
+<h4 id="UTF-8"><a href="#UTF-8" class="headerlink" title="UTF-8"></a>UTF-8</h4><p>　　UTF-8使用1到4个字节来编码一个码点，从0到127的这些码点直接映射成一个字节（多余只包含这个范围字符的文本来说，这一点使得UTF-8完全兼容ASCII，对于ASCII中的字符，UTF-8采用的编码值跟ASCII完全一致）。接下来1,920个码点映射成2个字节，在BMP里所有剩下的码点需要3个字节。Unicode的其他平面里的码点则需要4个字节。UTF-8是基于8位的码元的，因此它不需要关心字节顺序（因为字节就是8位，其它UTF-16和UTF-32在不同的机器编译环境下需要考虑字节的顺序问题）。<br>　　因此，有效率的空间使用，以及不需要关心字节顺序问题使得UTF-8成为存储和交流Unicode文本方面的最佳编码。<br>　　Unicode码点转为UTF-8编码规则如下：</p>
+<ol>
+<li>对于单字节字符，字节第一位设为0，后面7位位这个福海的Unicode码。因此，对于英语字母，UTF-8编码和ASCII码是相同的</li>
+<li>对于n字节的字符（n&gt;1），第一个字节的前n位设为1，第n+1位设为0，后面字节一律设为10.剩下的二进制位位这个字符的Unicode码。</li>
+</ol>
+<p>总的编码规则如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Unicode符号范围　　                 | 　　UTF-8编码方式</span><br><span class="line">　　　　     (十六进制) (十进制)　　　　        | 　　（二进制）</span><br><span class="line">　　----------------------------------------------------------------------------------------------------</span><br><span class="line">0000-0000 007F (0-127)           | 　　 0xxxxxxx</span><br><span class="line">0080-0000 07FF (128-2047)        | 　　 110xxxxx 10xxxxxx</span><br><span class="line">0800-0000 FFFF (2048-65535)      | 　   1110xxxx 10xxxxxx 10xxxxxx</span><br><span class="line">0000-0010 FFFF (65536-1114111)   | 　　 11110xxx 10xxxxxx 10xxxxxx 10xxxxxx</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>字符’A’的Unicode码点为65（十进制），根据上表，在第一行范围，则字符’A’的UTF-8编码为01000001，中文字符’李’的Unicode码点为26446（十进制），二进制为01100111 01001110，十六进制为674E。根据上表，在第三行范围，则将’李’二进制代码从低位到高位依次填入x中，不足的填入0。得到UTF-8编码为11100110 10011101 10001110，即E69D8E（十六进制）。<br>由上述编码规则可知，0000 0000 - 0000 FFFF（第一行到第三行）为Unicode第一个平面（基本多语言平面），而0001 0000 - 10 FFFF（第四行）为Unicode其他平面（辅助平面）。在基本多语言平面对应了绝大多数常用的字符。对于大于65535（十进制）的码点，即在辅助平面上的码点，需要使用4个字节来进行UTF-8编码。</p>
+</blockquote>
+<blockquote>
+<p>JVM中使用的是UTF-16</p>
+</blockquote>
+<h4 id="BOM"><a href="#BOM" class="headerlink" title="BOM"></a>BOM</h4><p>BOM是byte-order mark的缩写，为Unicode标准为了用来区分一个文件是UTF-8还是UTF-16或UTF-32编码方式的记号，又称字节序。<br>UTF-8以单字节为编码单元，并没有字节序的问题，而UTF-16以两个字节为编码单元，在解释一个UTF-16文本前，首先要弄清楚每个编码单元的字节序。</p>
+<h3 id="UCS"><a href="#UCS" class="headerlink" title="UCS"></a>UCS</h3><p>　　UCS全称为”Universal Character Set”，在UCS中主要有UCS-2和UCS-4。<br><strong>UCS-2</strong><br>　　UCS-2是定长字节的，固定使用2个字节进行编码，从0000（十六进制）- FFFF（十六进制）的码位范围，对应第一个Unicode平面。采用BOM(Byte Order Mark)机制，该机制作用如下：1. 确定字节流采用的是大端序还是小端序。2. 确定字节流的Unicode编码方案。<br><strong>UCS-4</strong><br>　　UCS-4是定长字节的，固定使用4个字节进行编码。也采用了BOM机制。</p>
+<h2 id="Emoji"><a href="#Emoji" class="headerlink" title="Emoji"></a>Emoji</h2><p>　　Emoji急速一种在Unicode位于<code>\u1F601</code>-<code>\u1F64F</code>区段的字符,这个显然超过了目前最常用的UTF-8字符集的编码范围<code>\u0000</code>-<code>\uFFFF</code>。<br>将Emoji存储与MySQL时可能存在一些问题。一般而言MySQL默认字符集都会配置成UTF-8（三字节），而utf8mb4在5.5以后才被支持。那么当把一个需要4字节UTF-8编码才能表示的字符存入MySQL时就会报错：<code>ERROR 1366: Incorrect string value: &#39;\xF0\x9D\x8C\x86&#39; for column</code>。也就是试图将一串Bytes插入到一列中，而这串Bytes的第一个字节是<code>\xF0</code>意味着这是一个四字节的UTF-8编码。但当MySQL字符集配置为UTF-8时就无法存储这样的字符而报错。<br>　　遇到此问题有以下两种方案：</p>
+<ol>
+<li>审计MySQL到5.6或更高的版本，并将表字符集切换为utf8mb4</li>
+<li>把内容存入数据库之前做一次过滤，将Emoji字符替换成一段特殊的文字编码，再存入数据库。之后数据库获取或前端展示时再将这段特殊文字编码转换成Emoji显示。</li>
+</ol>
+<h2 id="Python中的编码"><a href="#Python中的编码" class="headerlink" title="Python中的编码"></a>Python中的编码</h2><p>　　Python2中默认的字符编码是ASCII码，python3默认使用unicode编码</p>
+<p>总结：  </p>
+<ol>
+<li>为了处理英文字符，产生了ASCII码  </li>
+<li>为了处理中文字符，产生了GB2312  </li>
+<li>为了处理各国字符，产生了Unicode  </li>
+<li>为了提高Unicode存储和传输性能，产生了UTF-8，它是Unicode的一种实现形式。</li>
+</ol>
+<h2 id="前端编码"><a href="#前端编码" class="headerlink" title="前端编码"></a>前端编码</h2><h2 id="MIME编码"><a href="#MIME编码" class="headerlink" title="MIME编码"></a>MIME编码</h2><p>　　MIME 是“多用途网际邮件扩充协议”的缩写，在 MIME 协议之前，邮件的编码曾经有过 UUENCODE 等编码方式 ，但是由于 MIME 协议算法简单，并且易于扩展，现在已经成为邮件编码方式的主流，不仅是用来传输 8 bit 的字符，也可以用来传送二进制的文件 ，如邮件附件中的图像、音频等信息，而且扩展了很多基于MIME 的应用。从编码方式来说，MIME 定义了两种编码方法Base64与QP(Quote-Printable)</p>
+<h3 id="Base64"><a href="#Base64" class="headerlink" title="Base64"></a>Base64</h3><p>参考:<br><a href="https://www.itcodemonkey.com/article/12576.html" target="_blank" rel="noopener">https://www.itcodemonkey.com/article/12576.html</a><br><a href="https://www.cnblogs.com/leesf456/p/5317574.html" target="_blank" rel="noopener">https://www.cnblogs.com/leesf456/p/5317574.html</a><br><a href="http://djt.qq.com/article/view/658?ADTAG=email.InnerAD.weekly.20130902&amp;bsh_bid=281085951" target="_blank" rel="noopener">http://djt.qq.com/article/view/658?ADTAG=email.InnerAD.weekly.20130902&amp;bsh_bid=281085951</a><br><a href="https://apps.timwhitlock.info/emoji/tables/unicode" target="_blank" rel="noopener">https://apps.timwhitlock.info/emoji/tables/unicode</a><br><a href="https://www.cnblogs.com/cenalulu/p/4251639.html" target="_blank" rel="noopener">https://www.cnblogs.com/cenalulu/p/4251639.html</a></p>
 
       
     </div>
