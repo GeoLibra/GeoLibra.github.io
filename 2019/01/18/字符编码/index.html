@@ -269,14 +269,14 @@ var _hmt = _hmt || [];
     <div class="post-content">
       
         <h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><p><strong>比特(bit)</strong><br>　　也可以称为“位”，是计算机信息中的最小单位，binary digit（二进制数位）的缩写，指的是二进制中的一位。<br><strong>字节(Byte)</strong><br>　　8位（bit）构成一个字节（Byte）<br><strong>字符(Character)</strong><br>　　文字和符号的总称，可以是各个国家的文字、标点符号、图形符号、数字等<br><strong>字符集(Character Set)</strong><br>　　为什么要有字符集？在计算机屏幕上是实体化的文字，而在计算机存储介质中存放的实际是二进制比特流，那么两者之间的转换规则就需要一个统一标准。为了实现转换标准，各种字符集标准就此出现。  简单来说，字符集规定了某个文字对应的二进制存放方式（编码）和某二进制数值串代表了哪个文字（解码）的转换关系。如ASCII、utf-8等就是字符集。<br><strong>字符编码与解码</strong><br>　　文字到0、1的映射称为编码，反过来从0、1到文字叫解码。<br><a id="more"></a></p>
-<h2 id="ASCII"><a href="#ASCII" class="headerlink" title="ASCII"></a>ASCII</h2><p>　　1964年，世界上第一天计算机诞生，设计者用8个晶体管的“通”或“断”组合出一些状态来表达信息。8个晶体管的“通”或“断”即可以代表一个字节，也就是8个比特（bit）表示一个字节（byte）。计算机只能处理数字，如果处理文本，必须先把文本转为数字才能处理。<br>一个字节能表示的最大的整数就是255（二进制11111111=十进制255）。把一些终端的动作、字母、数字和符号用8位(bit)来组合。</p>
+<h2 id="ASCII"><a href="#ASCII" class="headerlink" title="ASCII"></a>ASCII</h2><p>　　1964年，世界上第一天计算机诞生，设计者用8个晶体管的“通”或“断”组合出一些状态来表达信息。8个晶体管的“通”或“断”即可以代表一个字节，也就是8个比特（bit）表示一个字节（byte）。计算机只能处理数字，如果处理文本，必须先把文本转为数字才能处理。<br>一个字节能表示的最大的整数就是255。把一些终端的动作、字母、数字和符号用8位(bit)来组合。</p>
 <ul>
 <li>0000 0000 ~ 0001 1111 共 33 种状态用来表示终端的特殊动作，如打印机中的响铃为 0000 0111 ，当打印机遇到 0000 0111 这样的字节传过来时，打印机就开始响铃；</li>
 <li>0010 0000 ~ 0010 1111 、 0011 1010~0110 0000 和 0111 1101 ~ 0111 1110 共 33 种状态来表示英式标点符号，如 0011 1111 即代表英式问号“?”；</li>
 <li>0011 0000 ~ 0011 1001 共 10 种状态来表示“0~9”10个阿拉伯数字；</li>
 <li>0100 0001 ~ 0101 1010 和 0110 0001 ~ 0111 1010共 52种状态来表示大小写英文字母；</li>
 </ul>
-<p>　　一共只用到了128种状态，即128个字符，刚好占用了一个字节中的后7位，共包括33个控制字符和95个可显示字符，<br>这一字符集被称为ASCII（American Standard Code for Information Interchange，美国信息交换标准代码），这一套字符集在1967年被正式公布。</p>
+<p>　　一共只用到了128种状态，即128个字符，刚好占用了一个字节中的后7位，共包括33个控制字符和95个可显示字符，<br>　　这一字符集被称为ASCII（American Standard Code for Information Interchange，美国信息交换标准代码），这一套字符集在1967年被正式公布。</p>
 <blockquote>
 <p><strong>位数：ASCII是用7位表示的，能表示128个字符；其扩展使用8位表示，表示256个字符。范围：ASCII从00到7F，扩展从00到FF。</strong></p>
 </blockquote>
@@ -292,11 +292,11 @@ var _hmt = _hmt || [];
 </ol>
 <img src="/2019/01/18/字符编码/gb2312.png" title="GB2312编码转换流程">
 <p>　　例如：’李’字的区位码为3278（表示在32区，78位）。1. 将32（区）转化为十六进制为20。2. 加上A0为C0。3. 将78（位）转化为十六进制为4E。4. 加上A0为EE。5. 组合区和位，为C0EE。6. 得到GB2312编码，即’李’字的GB2312编码为C0EE。</p>
-<h2 id="Unicode"><a href="#Unicode" class="headerlink" title="Unicode"></a>Unicode</h2><p>　　为了统一所有文字的编码，Unicode应运而生。Unicode编码定义了几乎所有字符的数字表示，而且Unicode还兼容了很多老版本的编码规范，如ASCII编码。<br>我们国家每一个人都对应一个唯一的身份证号码，而Unicode也为每个字符发了一张身份证，这张“身份证”上有一串唯一的数字ID确定了这个字符。<br>这串数字在整个计算机的世界具有唯一性，这串数字ID叫<strong><a href="http://unicode-table.com/cn/" target="_blank" rel="noopener">码点</a></strong>。<br><strong>码点</strong>经过映射后得到的二进制的转换格式单位称之为<strong>码元(Code Unit)</strong>。<strong>码点</strong>就是一串二进制数，<strong>码元</strong>就是切分这个二进制数的方法。<br>举例，如果有一个字符的码点二进制表示有n字节（n*8个二进制数），其码元为8位（1个字节），那么其拥有码元n个。</p>
+<h2 id="Unicode"><a href="#Unicode" class="headerlink" title="Unicode"></a>Unicode</h2><p>　　为了统一所有文字的编码，Unicode应运而生。Unicode编码定义了几乎所有字符的数字表示，而且Unicode还兼容了很多老版本的编码规范，如ASCII编码。<br>我们国家每一个人都对应一个唯一的身份证号码，而Unicode也为每个字符发了一张身份证，这张“身份证”上有一串唯一的数字ID确定了这个字符。<br>　　这串数字在整个计算机的世界具有唯一性，这串数字ID叫<strong><a href="http://unicode-table.com/cn/" target="_blank" rel="noopener">码点</a></strong>。<br>　　<strong>码点</strong>经过映射后得到的二进制的转换格式单位称之为<strong>码元(Code Unit)</strong>。<strong>码点</strong>就是一串二进制数，<strong>码元</strong>就是切分这个二进制数的方法。<br>　　举例，如果有一个字符的码点二进制表示有n字节（n*8个二进制数），其码元为8位（1个字节），那么其拥有码元n个。</p>
 <blockquote>
 <p>utf-8就是每读码点8位代表一个字符，utf-16就是每读码点16位代表一个字符</p>
 </blockquote>
-<p>　　Unicode编码发展到今天扩展到了21位，因为一开始老美只考虑那26个英文字母和数字，随着越来越多的国家的语言编码。Unicode不得不继续扩展，目前21位已足够使用。<br>UTF-32的码元是32位，每32位去读一下码点，而码点是Unicode给字符的编码，上文提到最长才21位，因此每一个UTF-32值都可以直接表示对应的码点。<br><strong>什么是编码空间？</strong><br>　　前面提到的Unicode是21位的，21位提供了1,114,112个码点，编码空间就是对应这1,114,112个码点。这么多码点并不代表这么多字符，目前大概只有10%的空间被使用了，人类社会还没创造出1,114,112这么多字符。<br>编码空间被分成17个平面，从00 - 10（十六进制，最高两位），即从0 - 16（十进制），每个平面有65,536个字符（正好填充两个字节，16位）。0号平面叫做<strong>基本多文种平面（BMP，Basic Multilingual Plane）</strong>，码位从0000 - FFFF，涵盖了几乎所有你能遇到的字符，除了emoji（emoji位于1号平面）。其他平面叫做补充平面，大多是空的。</p>
+<p>　　Unicode编码发展到今天扩展到了21位，因为一开始老美只考虑那26个英文字母和数字，随着越来越多的国家的语言编码。Unicode不得不继续扩展，目前21位已足够使用。<br>UTF-32的码元是32位，每32位去读一下码点，而码点是Unicode给字符的编码，上文提到最长才21位，因此每一个UTF-32值都可以直接表示对应的码点。<br><strong>什么是编码空间？</strong><br>　　前面提到的Unicode是21位的，21位提供了1,114,112个码点，编码空间就是对应这1,114,112个码点。这么多码点并不代表这么多字符，目前大概只有10%的空间被使用了，人类社会还没创造出1,114,112这么多字符。<br>　　编码空间被分成17个平面，从00 - 10（十六进制，最高两位），即从0 - 16（十进制），每个平面有65,536个字符（正好填充两个字节，16位）。0号平面叫做<strong>基本多文种平面（BMP，Basic Multilingual Plane）</strong>，码位从0000 - FFFF，涵盖了几乎所有你能遇到的字符，除了emoji（emoji位于1号平面）。其他平面叫做补充平面，大多是空的。</p>
 <blockquote>
 <p>Unicode只是一个符号集，只规定的字符所对应的码点，并没有指定如何存储，如何进行存储出现了不同的编码方案，关于Unicode编码方案主要有两条主线：UCS和UTF。UTF主线由Unicode Consortium进行维护管理，UCS主线由ISO/IEC进行维护管理。</p>
 </blockquote>
@@ -309,14 +309,14 @@ var _hmt = _hmt || [];
 </ol>
 <p>总的编码规则如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Unicode符号范围　　                 | 　　UTF-8编码方式</span><br><span class="line">　　　　     (十六进制) (十进制)　　　　        | 　　（二进制）</span><br><span class="line">　　----------------------------------------------------------------------------------------------------</span><br><span class="line">0000-0000 007F (0-127)           | 　　 0xxxxxxx</span><br><span class="line">0080-0000 07FF (128-2047)        | 　　 110xxxxx 10xxxxxx</span><br><span class="line">0800-0000 FFFF (2048-65535)      | 　   1110xxxx 10xxxxxx 10xxxxxx</span><br><span class="line">0000-0010 FFFF (65536-1114111)   | 　　 11110xxx 10xxxxxx 10xxxxxx 10xxxxxx</span><br></pre></td></tr></table></figure></p>
 <blockquote>
-<p>字符’A’的Unicode码点为65（十进制），根据上表，在第一行范围，则字符’A’的UTF-8编码为01000001，中文字符’李’的Unicode码点为26446（十进制），二进制为01100111 01001110，十六进制为674E。根据上表，在第三行范围，则将’李’二进制代码从低位到高位依次填入x中，不足的填入0。得到UTF-8编码为11100110 10011101 10001110，即E69D8E（十六进制）。<br>由上述编码规则可知，0000 0000 - 0000 FFFF（第一行到第三行）为Unicode第一个平面（基本多语言平面），而0001 0000 - 10 FFFF（第四行）为Unicode其他平面（辅助平面）。在基本多语言平面对应了绝大多数常用的字符。对于大于65535（十进制）的码点，即在辅助平面上的码点，需要使用4个字节来进行UTF-8编码。</p>
+<p>　　字符’A’的Unicode码点为65（十进制），根据上表，在第一行范围，则字符’A’的UTF-8编码为01000001，中文字符’李’的Unicode码点为26446（十进制），二进制为01100111 01001110，十六进制为674E。根据上表，在第三行范围，则将’李’二进制代码从低位到高位依次填入x中，不足的填入0。得到UTF-8编码为11100110 10011101 10001110，即E69D8E（十六进制）。<br>　　由上述编码规则可知，0000 0000 - 0000 FFFF（第一行到第三行）为Unicode第一个平面（基本多语言平面），而0001 0000 - 10 FFFF（第四行）为Unicode其他平面（辅助平面）。在基本多语言平面对应了绝大多数常用的字符。对于大于65535（十进制）的码点，即在辅助平面上的码点，需要使用4个字节来进行UTF-8编码。</p>
 </blockquote>
 <blockquote>
 <p>JVM中使用的是UTF-16</p>
 </blockquote>
-<h4 id="BOM"><a href="#BOM" class="headerlink" title="BOM"></a>BOM</h4><p>BOM是byte-order mark的缩写，为Unicode标准为了用来区分一个文件是UTF-8还是UTF-16或UTF-32编码方式的记号，又称字节序。<br>UTF-8以单字节为编码单元，并没有字节序的问题，而UTF-16以两个字节为编码单元，在解释一个UTF-16文本前，首先要弄清楚每个编码单元的字节序。</p>
+<h4 id="BOM"><a href="#BOM" class="headerlink" title="BOM"></a>BOM</h4><p>　　BOM是byte-order mark的缩写，为Unicode标准为了用来区分一个文件是UTF-8还是UTF-16或UTF-32编码方式的记号，又称字节序。<br>　　UTF-8以单字节为编码单元，并没有字节序的问题，而UTF-16以两个字节为编码单元，在解释一个UTF-16文本前，首先要弄清楚每个编码单元的字节序。</p>
 <h3 id="UCS"><a href="#UCS" class="headerlink" title="UCS"></a>UCS</h3><p>　　UCS全称为”Universal Character Set”，在UCS中主要有UCS-2和UCS-4。<br><strong>UCS-2</strong><br>　　UCS-2是定长字节的，固定使用2个字节进行编码，从0000（十六进制）- FFFF（十六进制）的码位范围，对应第一个Unicode平面。采用BOM(Byte Order Mark)机制，该机制作用如下：1. 确定字节流采用的是大端序还是小端序。2. 确定字节流的Unicode编码方案。<br><strong>UCS-4</strong><br>　　UCS-4是定长字节的，固定使用4个字节进行编码。也采用了BOM机制。</p>
-<h2 id="Emoji"><a href="#Emoji" class="headerlink" title="Emoji"></a>Emoji</h2><p>　　Emoji急速一种在Unicode位于<code>\u1F601</code>-<code>\u1F64F</code>区段的字符,这个显然超过了目前最常用的UTF-8字符集的编码范围<code>\u0000</code>-<code>\uFFFF</code>。<br>将Emoji存储与MySQL时可能存在一些问题。一般而言MySQL默认字符集都会配置成UTF-8（三字节），而utf8mb4在5.5以后才被支持。那么当把一个需要4字节UTF-8编码才能表示的字符存入MySQL时就会报错：<code>ERROR 1366: Incorrect string value: &#39;\xF0\x9D\x8C\x86&#39; for column</code>。也就是试图将一串Bytes插入到一列中，而这串Bytes的第一个字节是<code>\xF0</code>意味着这是一个四字节的UTF-8编码。但当MySQL字符集配置为UTF-8时就无法存储这样的字符而报错。<br>　　遇到此问题有以下两种方案：</p>
+<h2 id="Emoji"><a href="#Emoji" class="headerlink" title="Emoji"></a>Emoji</h2><p>　　Emoji急速一种在Unicode位于<code>\u1F601</code>-<code>\u1F64F</code>区段的字符,这个显然超过了目前最常用的UTF-8字符集的编码范围<code>\u0000</code>-<code>\uFFFF</code>。<br>　　将Emoji存储与MySQL时可能存在一些问题。一般而言MySQL默认字符集都会配置成UTF-8（三字节），而utf8mb4在5.5以后才被支持。那么当把一个需要4字节UTF-8编码才能表示的字符存入MySQL时就会报错：<code>ERROR 1366: Incorrect string value: &#39;\xF0\x9D\x8C\x86&#39; for column</code>。也就是试图将一串Bytes插入到一列中，而这串Bytes的第一个字节是<code>\xF0</code>意味着这是一个四字节的UTF-8编码。但当MySQL字符集配置为UTF-8时就无法存储这样的字符而报错。<br>　　遇到此问题有以下两种方案：</p>
 <ol>
 <li>审计MySQL到5.6或更高的版本，并将表字符集切换为utf8mb4</li>
 <li>把内容存入数据库之前做一次过滤，将Emoji字符替换成一段特殊的文字编码，再存入数据库。之后数据库获取或前端展示时再将这段特殊文字编码转换成Emoji显示。</li>
