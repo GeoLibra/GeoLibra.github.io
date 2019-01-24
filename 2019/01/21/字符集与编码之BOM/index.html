@@ -261,11 +261,11 @@ var _hmt = _hmt || [];
 
     <div class="post-content">
       
-        <p>　　大端法：以两个UTF-16的编码0x0048与0x4F60为例，写成00 48 4F 60,00与4F都属于高位，这种高位在前的称之为大端法（Big endian）。<br>　　小端法：如果书写成48 00 60 4F，这种低位在前的写法称之为小端法（Little endian）<br>　　其实大小端法是从存储层面考虑的。<br><img src="/2019/01/21/字符集与编码之BOM/BLE.png" title="大小端法存储"><!--nore--><br>　　如上，高位的字节00放到了低地址0x0000上，低位的字节48却放到了高地址0x0001上;与大端法相反，小端法的高低字节反而与地址的高低位自然地对应上了。</p>
+        <p>　　大端法：以两个UTF-16的编码0x0048与0x4F60为例，写成00 48 4F 60,00与4F都属于高位，这种高位在前的称之为大端法（Big endian）。<br>　　小端法：如果书写成48 00 60 4F，这种低位在前的写法称之为小端法（Little endian）<br>　　其实大小端法是从存储层面考虑的。<br><img src="/2019/01/21/字符集与编码之BOM/BLE.png" title="大小端法存储"><a id="more"></a><br>　　如上，高位的字节00放到了低地址0x0000上，低位的字节48却放到了高地址0x0001上;与大端法相反，小端法的高低字节反而与地址的高低位自然地对应上了。</p>
 <blockquote>
 <p>需要强调的是，所谓大小端仅仅是字节间的关系，只有多字节情况才会有所谓的端法，而通常又在偶数字节情况下更为普遍，如UTF-16，UTF-32，这样才能更好分出“两个端”来。</p>
 </blockquote>
-<p>　　BOM是byte-order mark的缩写，为Unicode标准为了用来区分一个文件是UTF-8还是UTF-16或UTF-32编码方式的记号，又称<strong>字节序</strong>。它是插入到以UTF-8、UTF16或UTF-32编码文件开头的特殊标记，用来标记多字节编码文件的编码类型和字节顺序（big-endian或little- endian）。<br><a id="more"></a><br>　　UTF-8以单字节为编码单元，并没有字节序的问题，在UTF-8编码中，其自身已经带了控制信息，如1110xxxx 10xxxxxx 10xxxxxx 10xxxxxx，其中1110就起到了控制作用，所以不需要额外的BOM机制。<br>而UTF-16以两个字节为编码单元，在解释一个UTF-16文本前，首先要弄清楚每个编码单元的字节序。例如“奎”的Unicode编码是594E，“乙”的Unicode编码是4E59。如果我们收到UTF-16字节流“594E”，那么这是“奎”还是“乙”？这是UTF-16文件开头的BOM就有作用了。</p>
+<p>　　BOM是byte-order mark的缩写，为Unicode标准为了用来区分一个文件是UTF-8还是UTF-16或UTF-32编码方式的记号，又称<strong>字节序</strong>。它是插入到以UTF-8、UTF16或UTF-32编码文件开头的特殊标记，用来标记多字节编码文件的编码类型和字节顺序（big-endian或little- endian）。<br>　　UTF-8以单字节为编码单元，并没有字节序的问题，在UTF-8编码中，其自身已经带了控制信息，如1110xxxx 10xxxxxx 10xxxxxx 10xxxxxx，其中1110就起到了控制作用，所以不需要额外的BOM机制。<br>而UTF-16以两个字节为编码单元，在解释一个UTF-16文本前，首先要弄清楚每个编码单元的字节序。例如“奎”的Unicode编码是594E，“乙”的Unicode编码是4E59。如果我们收到UTF-16字节流“594E”，那么这是“奎”还是“乙”？这是UTF-16文件开头的BOM就有作用了。</p>
 <p>　　在UTF-8文件中放置BOM主要是微软的习惯，BOM其实是为UTF-16和UTF-32准备的，微软在UTF-8使用BOM是因为这样可以把UTF-8和ASCII等编码明确区分开，但这样的文件在Window以外的其他操作系统里会带来问题。<br>　　以Windows下的文本文件为例：<br><img src="/2019/01/21/字符集与编码之BOM/txt.png" title="txt编码方式"><br>　　Windows下保存txt可以选择ANSI、Unicode、Unicode big endian 、UTF-8四种编码方式。</p>
 <ul>
 <li>其中ANSI是默认编码方式，对于英文文件采用ASCII编码，简体中文采用GB 2312（只针对Windows简体中文版，如果是繁体中文则采用Big5编码）</li>
