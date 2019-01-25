@@ -238,6 +238,67 @@ var _hmt = _hmt || [];
     <header class="post-header">
       <h1 class="post-title">
         
+          <a class="post-link" href="/2018/12/23/Python多线程/">Python多线程</a>
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2018-12-23
+        </span>
+        
+          <span class="post-category">
+            
+              <a href="/categories/Python/">Python</a>
+            
+          </span>
+        
+        
+        <span class="post-visits"
+             data-url="/2018/12/23/Python多线程/"
+             data-title="Python多线程">
+          阅读次数 0
+        </span>
+        
+      </div>
+    </header>
+
+    
+    
+
+
+    <div class="post-content">
+      
+        
+        
+          
+        
+
+        
+          <h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>　　多线程和多进程是不一样的，一个是 thread 库，一个是 multiprocessing 库。GIL的全称是Global Interpreter Lock(全局解释器锁)，来源是python设计之初的考虑，为了数据安全所做的决定。每个CPU在同一时间只能执行一个线程（在单核CPU下的多线程其实都只是并发，不是并行，并发和并行从宏观上来讲都是同时处理多路请求的概念。但并发和并行又有区别，并行是指两个或者多个事件在同一时刻发生；而并发是指两个或多个事件在同一时间间隔内发生。）<br>　　在Python多线程下，每个线程的执行方式：</p>
+<ul>
+<li>获取GIL</li>
+<li>执行代码直到sleep或者是python虚拟机将其挂起。</li>
+<li>释放GIL
+          <div class="read-more">
+            <a href="/2018/12/23/Python多线程/" class="read-more-link">阅读更多</a>
+          </div>
+        
+      
+    </div>
+
+    
+
+    
+
+  </article>
+
+      
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
           <a class="post-link" href="/2018/12/16/GIS数据下载集锦/">GIS数据下载集锦</a>
         
       </h1>
@@ -757,63 +818,6 @@ var _hmt = _hmt || [];
           <img src="/2018/12/01/用Python进行卫星影像分析/source.png" title="数据源"><center><a href="https://www.planet.com/explorer/#/area-coverage/0.53,1/cloud_cover/0,0.25/types/PSScene4Band/mosaic/global_monthly_2018_10_mosaic/center/13.440,2.162/zoom/2" target="_blank" rel="noopener">数据源</a></center><br><center>数据是当今的新石油，但如果这些数据被实际用于监测世界各地的石油呢？</center><br>石油是一个涉及许多国家的地区，长期以来一直是风暴的中心。监测全球石油库存并不容易，因为没有人清楚地球上剩余的石油量。<br>
           <div class="read-more">
             <a href="/2018/12/01/用Python进行卫星影像分析/" class="read-more-link">阅读更多</a>
-          </div>
-        
-      
-    </div>
-
-    
-
-    
-
-  </article>
-
-      
-        
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2018/12/01/传统式、背照式、堆叠式CMOS传感器的区别/">传统式、背照式、堆栈式CMOS传感器的区别</a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <span class="post-time">
-          2018-12-01
-        </span>
-        
-          <span class="post-category">
-            
-              <a href="/categories/科技/">科技</a>
-            
-          </span>
-        
-        
-        <span class="post-visits"
-             data-url="/2018/12/01/传统式、背照式、堆叠式CMOS传感器的区别/"
-             data-title="传统式、背照式、堆栈式CMOS传感器的区别">
-          阅读次数 0
-        </span>
-        
-      </div>
-    </header>
-
-    
-    
-
-
-    <div class="post-content">
-      
-        
-        
-          
-        
-
-        
-          <h2 id="前照式CMOS"><a href="#前照式CMOS" class="headerlink" title="前照式CMOS"></a>前照式CMOS</h2><p>传统的CMOS真正名称为前照式CMOS（FrontSide lllumination，缩写为FSI）。<br><img src="/2018/12/01/传统式、背照式、堆叠式CMOS传感器的区别/cmos.jpg" title="前照式与背照式的区别"><br>一般的CMOS像素由一下几部分构成：片上透镜、彩色滤光片、金属排线、光电二极管以及基板。传统的CMOS是左图中的前照式结构，当光线射入像素，经过了片上透镜和彩色滤光片后，先通过金属排线层，最后光线才被光电二极管接收。<br>在金属排线这层光线会被部分阻挡和反射，光电二极管吸收的光线就会减少，而且反射还有可能串扰旁边的像素，导致颜色失真。（目前中低档的CMOS排线层用的是比较廉价的铝，铝对整个可见光波段（380~780nm）基本保持在90%左右的反射率）<br>
-          <div class="read-more">
-            <a href="/2018/12/01/传统式、背照式、堆叠式CMOS传感器的区别/" class="read-more-link">阅读更多</a>
           </div>
         
       

@@ -238,6 +238,64 @@ var _hmt = _hmt || [];
     <header class="post-header">
       <h1 class="post-title">
         
+          <a class="post-link" href="/2019/01/25/Ubuntu下安装PyPy/">Ubuntu下安装PyPy</a>
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2019-01-25
+        </span>
+        
+          <span class="post-category">
+            
+              <a href="/categories/Python/">Python</a>
+            
+          </span>
+        
+        
+        <span class="post-visits"
+             data-url="/2019/01/25/Ubuntu下安装PyPy/"
+             data-title="Ubuntu下安装PyPy">
+          阅读次数 0
+        </span>
+        
+      </div>
+    </header>
+
+    
+    
+
+
+    <div class="post-content">
+      
+        
+        
+          
+        
+
+        
+          <ol>
+<li>下载<a href="http://pypy.org/download.html" target="_blank" rel="noopener">PyPy</a>,解压即可使用<img src="/2019/01/25/Ubuntu下安装PyPy/pypy_install.png" title="pypy安装">
+          <div class="read-more">
+            <a href="/2019/01/25/Ubuntu下安装PyPy/" class="read-more-link">阅读更多</a>
+          </div>
+        
+      
+    </div>
+
+    
+
+    
+
+  </article>
+
+      
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
           <a class="post-link" href="/2019/01/21/字符集与编码之BOM/">字符集与编码之BOM</a>
         
       </h1>
@@ -710,67 +768,6 @@ var _hmt = _hmt || [];
           <p>　　BOM（Byte Order Mark）是Unicode规范中推荐的标记字节顺序的方法。比如UTF-16，如果接受者收到的BOM是FEFF，表明这个字节流是Big-Endian；如果收到FFFE，表明这个字节流是Little-Endian。<br>UTF-8不需要BOM来表明字节顺序，但可以用BOM来表明“UTF-8编码”的身份。BOM的UFT-8编码是EF BB BF，所以接受者收到以EF BB BF开头的字节流，就知道这是UTF-8编码。<br>
           <div class="read-more">
             <a href="/2019/01/02/Python字符串转列表出现-ufeff/" class="read-more-link">阅读更多</a>
-          </div>
-        
-      
-    </div>
-
-    
-
-    
-
-  </article>
-
-      
-        
-  <article class="post">
-    <header class="post-header">
-      <h1 class="post-title">
-        
-          <a class="post-link" href="/2018/12/23/Python多线程/">Python多线程</a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <span class="post-time">
-          2018-12-23
-        </span>
-        
-          <span class="post-category">
-            
-              <a href="/categories/Python/">Python</a>
-            
-          </span>
-        
-        
-        <span class="post-visits"
-             data-url="/2018/12/23/Python多线程/"
-             data-title="Python多线程">
-          阅读次数 0
-        </span>
-        
-      </div>
-    </header>
-
-    
-    
-
-
-    <div class="post-content">
-      
-        
-        
-          
-        
-
-        
-          <h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>　　多线程和多进程是不一样的，一个是 thread 库，一个是 multiprocessing 库。GIL的全称是Global Interpreter Lock(全局解释器锁)，来源是python设计之初的考虑，为了数据安全所做的决定。每个CPU在同一时间只能执行一个线程（在单核CPU下的多线程其实都只是并发，不是并行，并发和并行从宏观上来讲都是同时处理多路请求的概念。但并发和并行又有区别，并行是指两个或者多个事件在同一时刻发生；而并发是指两个或多个事件在同一时间间隔内发生。）<br>　　在Python多线程下，每个线程的执行方式：</p>
-<ul>
-<li>获取GIL</li>
-<li>执行代码直到sleep或者是python虚拟机将其挂起。</li>
-<li>释放GIL
-          <div class="read-more">
-            <a href="/2018/12/23/Python多线程/" class="read-more-link">阅读更多</a>
           </div>
         
       
